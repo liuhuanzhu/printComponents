@@ -44,16 +44,20 @@
 			public var maskSprite:Sprite=null;
 			public var uiSprite:UIComponent=null;
 			public var uiMask:UIComponent=null;
+			private var paperWidth:int=0;
+			private var paperHeight:int=0;
+			private var pageWidth:int=0;
+			private var pageHeight:int=0;
 			private function init():void
 			{
 				creat();
 			}
 			public function creat():void
 			{
-				var paperWidth:int=SetupInfo.getInstance().paperWidthSize;
-				var paperHeight:int=SetupInfo.getInstance().paperHeightSize;
-				var pageWidth:int=paperWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
-				var pageHeight:int=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
+				paperWidth=SetupInfo.getInstance().paperWidthSize;
+				paperHeight=SetupInfo.getInstance().paperHeightSize;
+				pageWidth=paperWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
+				pageHeight=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
 				uiMask=new UIComponent();
 				this.addElement(uiMask);
 				uiSprite=new UIComponent();
@@ -62,7 +66,6 @@
 				this.height=paperHeight;
 				main.width=pageWidth;
 				main.height=pageHeight;
-				main.x=SetupInfo.getInstance().printLeft;
 				main.y=SetupInfo.getInstance().printTop+SetupInfo.getInstance().printHeaderNum;
 				headTxt.x=0;
 				headTxt.y=SetupInfo.getInstance().printHeaderNum;
@@ -105,10 +108,9 @@
 				{
 					gridX=Number(LayoutMap.getSimple().gridXml.@x);
 					gridY=Number(LayoutMap.getSimple().gridXml.@y);
-					advancedGrid.x=gridX+marginLeft;
+					advancedGrid.x=marginLeft;
 					advancedGrid.y=gridY+marginTop+headNum;
 					advancedGrid.height-=10;
-					advancedGrid.width=paperWidth-advancedGrid.x;
 					bottomSprite.x=bottomX+marginLeft;
 					bottomSprite.y=advancedGrid.height+advancedGrid.y;
 				}
@@ -159,6 +161,7 @@
 			private function dataGridCreat(event:FlexEvent):void
 			{
 				advancedGrid.height=NovaAdvancedDataGrid.getInstance().dataGridHeight;
+				advancedGrid.width=pageWidth;
 				coorLocataXY();
 			}
 			/** 

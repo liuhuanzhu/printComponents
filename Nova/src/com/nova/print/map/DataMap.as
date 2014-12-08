@@ -73,6 +73,7 @@ package com.nova.print.map
 		{
 			_gridData=new ArrayCollection();
 			if(!SetupInfo.getInstance().hasGrid) return;
+			_totalFieldArr=[];
 			var dataXml:XML=new XML(_dataXml.DataGrid.RowData);
 			var colXml:XML=new XML(_dataXml.DataGrid.ColModel);
 			var totalXml:XML=null;

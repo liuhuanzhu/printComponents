@@ -21,7 +21,7 @@ package  com.nova.print.control
 	{
 		private static var novaAdvancedDataGrid:NovaAdvancedDataGrid=null;
 		private var _dataGridHeight:int=0;//计算表格的实际高度
-		public var colHeight:int=50;
+		public var colHeight:int=40;
 		public static function getInstance():NovaAdvancedDataGrid
 		{
 			if(novaAdvancedDataGrid==null)

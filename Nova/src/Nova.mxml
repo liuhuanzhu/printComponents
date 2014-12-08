@@ -27,13 +27,13 @@
 			import mx.graphics.ImageSnapshot;
 			private var setting:XML=<Properties>
   <printRange>0</printRange>
-  <paperWidthSize>650</paperWidthSize>
-  <paperHeightSize>350</paperHeightSize>
+  <paperWidthSize>595</paperWidthSize>
+  <paperHeightSize>842</paperHeightSize>
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
   <printRowNumber>6</printRowNumber>
-  <paperSelectIndex>5</paperSelectIndex>
-  <printLayout>hor</printLayout>
+  <paperSelectIndex>0</paperSelectIndex>
+  <printLayout>ver</printLayout>
   <printIsTaoda>false</printIsTaoda>
   <isPrintHeader>false</isPrintHeader>
   <isPrintLines>false</isPrintLines>
@@ -49,94 +49,73 @@
   <printRight>15</printRight>
   <printTop>0</printTop>
   <printBottom>0</printBottom>
-  <rowPages>1</rowPages>
+  <rowPages>3</rowPages>
   <colPages>1</colPages>
-  <printFoldMax>4</printFoldMax>
+  <printFoldMax>10</printFoldMax>
   <borderWidth>2</borderWidth>
-  <offsetX>80</offsetX>
-  <offsetY>30</offsetY>
+  <offsetX>0</offsetX>
+  <offsetY>50</offsetY>
 </Properties>;
 			private var layoutXml:XML=<Layouts>
-	<Label y="50" width="700" text="计划单" fontSize="25"/>
-  <BorderContainer x="14" y="90" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
-<Label x="19" y="0" text="制单日期:" height="20"/>
-		<Label x="65" y="0" id="makeDate"/>
-		<Label x="272" y="0" text="计划类型:" height="20"/>
-		<Label x="312" y="0" id="planTypeName"/>
-		<Label x="484" y="0" text="计划单编号:" height="20"/>
-		<Label x="554" y="0" id="code"/>
-		<Label x="19" y="20" text="本位:" height="20"/>
-		<Label x="75" y="20" id="localCurrenciesName"/>
-		<Label x="272" y="20" text="金额单位:" height="20"/>
-		<Label x="327" y="20" id="localCurrenciesUnit"/>
-		<Label x="484" y="20" text="计划类型:" height="20"/>
-		<Label x="544" y="20" id="planType"/>
-		<Label x="19" y="40" text="制单人编号:" height="20"/>
-		<Label x="75" y="40" id="touchingUserCode"/>
-		<Label x="272" y="40" text="制单人姓名:" height="20"/>
-		<Label x="327" y="40" id="touchingUserName"/>
-		<Label x="484" y="40" text="所属部门 :" height="20"/>
-		<Label x="534" y="40" id="departmentName"/>
-  </BorderContainer>
-	<Grids id="entry" x="18" y="153" width="404" height="105">
-		<column dataField="rowNumber" headerText="序号" unique="1" textAlign="center"/>
-		<column dataField="materialName" headerText="物品名称" unique="2"/>
-		<column dataField="specificationName" headerText="规格型号" unique="3"/>
-		<column dataField="technicalParameters" headerText="技术参数" unique="4"/>
-		<column dataField="unitName" headerText="单位" unique="5"/>
-		<column dataField="planNum" headerText="数量" unique="6"/>
-		<column dataField="referenceForeignPrice" headerText="含税单价" unique="7"/>
-		<column dataField="referenceForeignAmounts" headerText="含税金额" unique="8"/>
-		<column dataField="recommendSupplier" headerText="供应商" unique="9"/>
-		<column dataField="deliveryDate" headerText="计划交货日期" unique="10"/>
-		<column dataField="remark" headerText="计划说明" unique="11"/>
-	</Grids>
-	<BorderContainer x="17" y="800" width="677" height="163" id="bottom" xmlns="library://ns.adobe.com/flex/spark">
-		<Label x="19" y="0" text="负责人:"/>
-		<Label x="272" y="0" text="审核人:"/>
-		<Label x="484" y="0" text="制单人:"/>
-  </BorderContainer>
-  <Declarations xmlns="http://ns.adobe.com/mxml/2009">
-	<column>1</column>
-	<column>2</column>
-	<column>3</column>
-	<column>4</column>
-	<column>5</column>
-  </Declarations>
-</Layouts>;
+<Label y="20" width="700" id="printCompanyName" fontSize="18"/>
+			<Label x="250" y="45" width="700" text="转账凭证" fontSize="22"/>
+			<BorderContainer x="0" y="20" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
+					<Label x="0" y="65" id="voucherDate"/>
+					<Label x="255" y="65" text="附件:" height="20" width="30"/>
+					<Label x="295" y="65" id="attachmentNum"/>
+					<Label x="315" y="65" text="张" height="20"/>
+					<Label x="470" y="65" text="凭证号:" height="20" width="40"/>
+					<Label x="506" y="65" id="voucherCode"/>
+				</BorderContainer>
+			<BorderContainer x="0" y="100" width="659" height="153" id="bottom" xmlns="library://ns.adobe.com/flex/spark">
+				<Label x="0" y="1" text="会计主管:" height="20"/>
+				<Label x="50" y="1" id="supervisorName"/>
+				<Label x="140" y="1" text="出纳:" height="20" width="30"/>
+				<Label x="165" y="1" id="cashierName"/>
+				<Label x="235" y="1" text="复核:" height="20" width="30"/>
+				<Label x="260" y="1" id="reviewName"/>
+				<Label x="335" y="1" text="制单:" height="20" width="30"/>
+				<Label x="360" y="1" id="touchingName"/>
+				<Label x="455" y="1" text="经办人:" height="20" width="40"/>
+				<Label x="490" y="1" id="transactor"/>
+			</BorderContainer>
+<Grids id="entry" x="0" y="100" width="404" height="305">
+	<column dataField="summary" headerText="摘要名称" unique="1" letterSpace="10"/>
+	<column dataField="subjectName" headerText="会计科目" unique="4" letterSpace="10"/>
+	<columns headerText="金额" letterSpace="20">
+	  <column dataField="jie" headerText="借方" unique="2" letterSpace="5" width="90"/>
+	  <column dataField="dai" headerText="贷放" unique="2" letterSpace="5" width="87"/>
+	</columns>
+  </Grids>
+			<Declarations xmlns="http://ns.adobe.com/mxml/2009">
+				<column>1</column>
+				<column>2</column>
+				<column>3</column>
+				<column>4</column>
+			</Declarations>
+		</Layouts>;
 			private var dataXml:XML=<Data>
 			<printCompanyName>胜利油田华滨实业有限公司井下作业维修分公司</printCompanyName>
 			<voucherCategory>付款凭证</voucherCategory>
 			<oppositeSubjectName>银行存款/工商银行/滨南支行</oppositeSubjectName>
-			<makeDate>2014年09月28日</makeDate>
-			<planTypeName>1</planTypeName>
-			<code>FC2006</code>
-			<localCurrenciesName>赵黎明</localCurrenciesName>
-			<localCurrenciesUnit>22</localCurrenciesUnit>
-			<planType>类型</planType>
-			<touchingUserCode>222</touchingUserCode>
-			<touchingUserName>赵黎明</touchingUserName>
-			<departmentName>工商部</departmentName>
+			<voucherDate>2014年09月28日</voucherDate>
+			<attachmentNum>1</attachmentNum>
+			<voucherCode>FC2006</voucherCode>
+			<supervisorName>赵黎明</supervisorName>
+			<cashierName></cashierName>
+			<reviewName></reviewName>
+			<touchingName>赵黎明</touchingName>
+			<transactor>赵黎明</transactor>
 			<DataGrid>
 				<ColModel>
-					<HeaderText DataField="rowNumber" text="序号" />
-					<HeaderText DataField="materialName" text="物品名称"/>
-					<HeaderText DataField="specificationName" text="规格型号" />
-					<HeaderText DataField="technicalParameters" text="技术参数"/>
-					<HeaderText DataField="unitName" text="单位" unique="5"/>
-					<HeaderText DataField="planNum" text="数量" unique="6"/>
-					<HeaderText DataField="referenceForeignPrice" text="含税单价" />
-					<HeaderText DataField="referenceForeignAmounts" text="含税金额" />
-					<HeaderText DataField="recommendSupplier" text="供应商" />
-					<HeaderText DataField="deliveryDate" text="计划交货日期" />
-					<HeaderText DataField="remark" text="计划说明" />
+					<HeaderText DataField="summary" text="摘要名称" />
+					<HeaderText DataField="subjectName" text="会计科目" />
+					<HeaderText DataField="jie" text="借方" />
+					<HeaderText DataField="dai" text="贷方" />
 				</ColModel>
 				<RowData>
-					<Item rowNumber="报销费用销费用销费用销费用销费用销费用销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
-					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
-					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
-					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
-					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
+					<Item summary="收到滨州合丰高效生态产业技术开发有限公司借款费用" subjectName="银行存款/东营市商业银行/滨州分行营业部"  jie="275,000,00" dai=""/>
+					<Item summary="滨州合丰高效生态产业技术开发有限公司贷款费用" subjectName="银行存款/东营市商业银行/滨州分行营业部"  dai="275,000,00" jie=""/>
 				</RowData>
 			</DataGrid>
 		</Data>;

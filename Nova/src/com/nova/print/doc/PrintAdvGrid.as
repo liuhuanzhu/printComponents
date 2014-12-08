@@ -27,13 +27,16 @@ package com.nova.print.doc
 		private var gridColumnWidth:int=0;
 		private var borderWidth:int=0;
 		private var dataArray:ArrayCollection;
-		private var colHeight:int=50;//表格的每行高度
+		private var colHeight:int=40;//表格的每行高度
 		private var dynamicGridWidthArray:Array=[];//动态计算并存储每一列的列宽
 		private var dynamicLocalX:Array=[];//记录每一列的X坐标
 		private var isTotalCol:int=0;//是否存在合计行  默认为0
 		private var advGridHeadTxtArray:Array=[];//存储表格列标题的数组
 		private var moreColumnArray:Array=[];//存储多列的数组
 		private var simpleColumnWidth:Array=[];//按照顺序获取某一列的宽度
+		private var gridType:int=0;//是否是复杂表格  复杂表格标题行的高度乘以2否则乘以1
+		private var headYArray:Array=[];//存储表格标题的y坐标
+		private var headHeight:int=0;//设置标题的高度
 		public function PrintAdvGrid(_rowCurrentPage:int,_colCurrentPage:int)
 		{
 			if(!SetupInfo.getInstance().hasGrid) return;
@@ -42,23 +45,25 @@ package com.nova.print.doc
 			colCurrentPage=_colCurrentPage;
 			gridWidth=getWidth();
 			dataArray=PrintDataMap.getSimple().getData(colCurrentPage);
+			gridType=LayoutMap.getSimple().gridType;
 			if(dataArray.contains(DataMap.getSimple().totalItem))
 			{
 				dataArray.removeItemAt(dataArray.getItemIndex(DataMap.getSimple().totalItem));
 			}
 			borderWidth=SetupInfo.getInstance().borderWidth;
-			dataLength=SetupInfo.getInstance().printRowNumber+1;
+			dataLength=SetupInfo.getInstance().printRowNumber;
 			gridHeadArray=FoldAdvancedGridMap.getSimple().getColumnArrByID(rowCurrentPage);
 			headLength=gridHeadArray.length;
 			gridColumnWidth=Math.ceil(gridWidth/headLength);
 			advGridHeadTxtArray=gotoGetHeader(gridHeadArray);
 			if(isTotalCol==1)
 			{
-				gridHeight+=colHeight;
 				dataArray.addItemAt(DataMap.getSimple().totalItem,dataArray.length);
 			}
 			dataLength+=isTotalCol;
-			gridHeight=dataLength*colHeight;
+			setHeaderY();
+			gridHeight=dataLength*colHeight+headHeight;
+			trace("dataLength: "+dataLength+"|headHeight: "+headHeight+"|gridHeight: "+gridHeight);
 			indexAdvGridColumnWidth();
 			graphicsRow();
 			printLine();
@@ -81,7 +86,7 @@ package com.nova.print.doc
 		}
 		public function getWidth():int
 		{
-			var pageWidth:int=SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().offsetX-40;
+			var pageWidth:int=SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().offsetX-20;
 			return pageWidth;
 		}
 /**
@@ -189,28 +194,27 @@ package com.nova.print.doc
  * */
 		private function graphicsRow():void
 		{
-			var rowLength:int=dataLength+1;
 			this.graphics.clear();
 			this.graphics.lineStyle(borderWidth);
 			this.graphics.moveTo(0,0);
 			this.graphics.lineTo(gridWidth,0);
 			this.graphics.moveTo(0,0);
-			this.graphics.lineTo(0,rowLength*colHeight);
+			this.graphics.lineTo(0,gridHeight);
 			this.graphics.lineStyle(1,0x000000,0.4);
-			this.graphics.moveTo(0,colHeight*2);
-			this.graphics.lineTo(gridWidth,colHeight*2);
-			for(var i:int=3;i<=rowLength;i++)
+			this.graphics.moveTo(0,headHeight);
+			this.graphics.lineTo(gridWidth,headHeight);
+			for(var i:int=1;i<=dataLength;i++)
 			{
-				if(i==rowLength)
+				if(i==dataLength)
 				{
 					this.graphics.lineStyle(borderWidth);
 				}
-				this.graphics.moveTo(0,i*colHeight);
-				this.graphics.lineTo(gridWidth,i*colHeight);
+				this.graphics.moveTo(0,i*colHeight+headHeight);
+				this.graphics.lineTo(gridWidth,i*colHeight+headHeight);
 			}
 			this.graphics.lineStyle(borderWidth);
 			this.graphics.moveTo(gridWidth,0);
-			this.graphics.lineTo(gridWidth,rowLength*colHeight);
+			this.graphics.lineTo(gridWidth,gridHeight);
 			this.graphics.endFill();
 		}
 /**
@@ -267,13 +271,13 @@ package com.nova.print.doc
 			{
 				this.graphics.lineStyle(1,0x000000,0.4);
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],0);
-				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],rowLength*colHeight+isMin);
+				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],dataLength*colHeight+isMin+headHeight);
 				this.graphics.endFill();
 			}
-			var header:PrintDocTxt=new PrintDocTxt(gm.parentHeader,"center",columnWidth,gm.letterSpac);
+			var header:PrintDocTxt=new PrintDocTxt(gm.parentHeader,"center",columnWidth,headHeight,false,gm.letterSpac);
 			this.addChild(header);
 			header.x=simpleColumnWidth[simpleColumnWidth.length-2];
-			header.y=10;
+			header.y=headYArray[0];
 			//trace("加载单个列: 列名："+gm.parentHeader+"|宽度|"+columnWidth+"|位置|"+header.x);
 		}
 /**
@@ -281,7 +285,6 @@ package com.nova.print.doc
  * */
 		private function graphicsRowsByGroupMap(gm:GroupMap):void
 		{
-			var rowLength:int=dataLength+1;
 			var parentHeader:String=gm.parentHeader;
 			var columnWidth:int=0;
 			var length:int=gm.sonHeaderArray.length;
@@ -293,7 +296,7 @@ package com.nova.print.doc
 				var array:Array=indexGridHeader(parentHeader,sonHeader);
 				columnWidth=array[3];
 				simpleColumnWidth.push(simpleColumnWidth[simpleColumnWidth.length-1]+columnWidth);
-				var lineHeight:int=rowLength*colHeight;
+				var lineHeight:int=dataLength*colHeight+headHeight;
 				if(DataMap.getSimple().totalFieldArr.indexOf(sonField)!=-1)
 				{
 					lineHeight-=20;
@@ -304,7 +307,7 @@ package com.nova.print.doc
 				var header:PrintDocTxt=new PrintDocTxt(sonHeader,"center",columnWidth,gm.letterSpacArr[i]);
 				this.addChild(header);
 				header.x=simpleColumnWidth[simpleColumnWidth.length-2];
-				header.y=22;
+				header.y=headYArray[2];
 			}
 			var endHeader:String=gm.sonHeaderArray[gm.sonHeaderArray.length-1];
 			var endArray:Array=indexGridHeader(parentHeader,endHeader);
@@ -314,7 +317,7 @@ package com.nova.print.doc
 			if(simpleColumnWidth[simpleColumnWidth.length-1]<gridWidth)
 			{
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],0);
-				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],rowLength*colHeight);
+				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],dataLength*colHeight+headHeight);
 			}
 			var firstLocal:int=simpleColumnWidth[simpleColumnWidth.length-length-1];
 			var endLocal:int=simpleColumnWidth[simpleColumnWidth.length-1];
@@ -323,16 +326,16 @@ package com.nova.print.doc
 			this.graphics.lineTo(endLocal,20);
 			this.graphics.endFill();
 			//trace("加载复杂列中的单个列: 列名："+endHeader+"|宽度|"+columnWidth+"|位置|"+simpleColumnWidth[simpleColumnWidth.length-1]);
-			var endHeaderDoc:PrintDocTxt=new PrintDocTxt(endHeader,"center",columnWidth,gm.letterSpacArr[gm.letterSpacArr.length-1]);
+			var endHeaderDoc:PrintDocTxt=new PrintDocTxt(endHeader,"center",columnWidth,headHeight,true,gm.letterSpacArr[gm.letterSpacArr.length-1]);
 			this.addChild(endHeaderDoc);
 			endHeaderDoc.x=simpleColumnWidth[simpleColumnWidth.length-2];
-			endHeaderDoc.y=22;
+			endHeaderDoc.y=headYArray[2];
 			
 			//trace("加载复杂列: 列名："+gm.parentHeader+"|宽度|"+columnWidth+"|位置|"+simpleColumnWidth[simpleColumnWidth.length-1]);
-			var parentDoc:PrintDocTxt=new PrintDocTxt(gm.parentHeader,"center",endLocal-firstLocal,gm.letterSpac);
+			var parentDoc:PrintDocTxt=new PrintDocTxt(gm.parentHeader,"center",endLocal-firstLocal,headHeight,true,gm.letterSpac);
 			this.addChild(parentDoc);
 			parentDoc.x=firstLocal;
-			parentDoc.y=1;
+			parentDoc.y=headYArray[1];
 		}
 		private function printContent():void
 		{
@@ -366,21 +369,37 @@ package com.nova.print.doc
 							txt="..."	
 						}
 					}
-					var nt:PrintDocTxt=new PrintDocTxt(txt,align,gridW);
+					var nt:PrintDocTxt=new PrintDocTxt(txt,align,gridW,headHeight,true);
 					nt.x=localX;
-					nt.y=colHeight*(j+2)+3;
+					nt.y=colHeight*j+3+headHeight;
 					if(obj.nova=="total" && DataMap.getSimple().totalFieldArr.indexOf(field)!=-1)
 					{
 						nt.creatBg(false);
-						trace("文字:  "+txt+"|"+obj.nova+"|------------------------------------------------------------------------------false");
 					}
 					else
 					{
 						nt.creatBg();
-						trace("文字:  "+txt+"|"+obj.nova+"|------------------true");
 					}
 					this.addChild(nt);
 				}
+			}
+		}
+/**
+ * 根据是否是是复杂表格对列标题的y坐标进行设置
+ * */
+		private function setHeaderY():void
+		{
+			if(gridType==0)
+			{
+				headHeight=25;
+				headYArray[0]=5;
+			}
+			else
+			{
+				headHeight=40;
+				headYArray[0]=13;
+				headYArray[1]=2;
+				headYArray[2]=22;
 			}
 		}
 		override public function getHeight():int

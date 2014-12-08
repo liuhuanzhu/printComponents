@@ -21,8 +21,8 @@ package com.nova.print.doc
 		/**
 		 * 打印机偏移距离
 		 * */
-		private var offsetX:int=80;
-		private var offsetY:int=0;
+		private var offsetX:int=0;
+		private var offsetY:int=50;
 		private var rotationSprite:int=0;
 		private var rotationArr:Array=[];
 		private var localArr:Array=[];
@@ -36,7 +36,7 @@ package com.nova.print.doc
 		
 			var ground:Sprite=new Sprite();
 			ground.graphics.clear();
-			ground.graphics.beginFill(0xffffff,0);
+			ground.graphics.beginFill(0xffffff,1);
 			ground.graphics.drawRect(0,0,SetupInfo.getInstance().paperRealWidth,SetupInfo.getInstance().paperRealHeight);
 			ground.graphics.endFill();
 			this.addChild(ground);
