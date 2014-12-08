@@ -1,0 +1,22 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+.myTabs {
+	up-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSkin");
+	down-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSkin");
+	over-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSkin");
+	disabled-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSkin");
+	selected-up-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSelectedSkin");
+	selected-down-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSelectedSkin");
+	selected-over-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSelectedSkin");
+	selected-disabled-skin:ClassReference("com.nova.print.skin.TabNavigatorTabSelectedSkin");
+	fontWeight:bold;
+	fontSize:12;
+}
+mx|Accordion
+{
+	textSelectedColor:0xffffff;
+	color:0xffffff;
+}
+

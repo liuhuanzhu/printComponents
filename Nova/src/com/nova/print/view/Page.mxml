@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009"  
+				   xmlns:s="library://ns.adobe.com/flex/spark"   borderVisible="true"
+				   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" creationComplete="init()">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.nova.print.control.NovaAdvancedDataGrid;
+			import com.nova.print.control.NovaLabel;
+			import com.nova.print.control.NovaText;
+			import com.nova.print.doc.PrintDoc;
+			import com.nova.print.doc.PrintHeader;
+			import com.nova.print.doc.PrintText;
+			import com.nova.print.map.DataMap;
+			import com.nova.print.map.FoldAdvancedGridMap;
+			import com.nova.print.map.LayoutMap;
+			import com.nova.print.map.PrintMap;
+			import com.nova.print.map.TaoDa;
+			import com.nova.print.util.SetupInfo;
+			
+			import mx.charts.chartClasses.NumericAxis;
+			import mx.collections.ArrayCollection;
+			import mx.controls.AdvancedDataGrid;
+			import mx.controls.Alert;
+			import mx.controls.DataGrid;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.core.UIComponent;
+			import mx.events.AdvancedDataGridEvent;
+			import mx.events.DataGridEvent;
+			import mx.events.FlexEvent;
+			import mx.graphics.ImageSnapshot;
+			
+			
+			public var advancedGrid:AdvancedDataGrid=null;
+			private var topSprite:PrintText=null;
+			private var printHeader:PrintHeader=null;
+			public var bottomSprite:PrintText=null;
+			public var maskSprite:Sprite=null;
+			public var uiSprite:UIComponent=null;
+			public var uiMask:UIComponent=null;
+			private function init():void
+			{
+				creat();
+			}
+			public function creat():void
+			{
+				var paperWidth:int=SetupInfo.getInstance().paperWidthSize;
+				var paperHeight:int=SetupInfo.getInstance().paperHeightSize;
+				var pageWidth:int=paperWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
+				var pageHeight:int=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
+				uiMask=new UIComponent();
+				this.addElement(uiMask);
+				uiSprite=new UIComponent();
+				main.addElement(uiSprite);
+				this.width=paperWidth;
+				this.height=paperHeight;
+				main.width=pageWidth;
+				main.height=pageHeight;
+				main.x=SetupInfo.getInstance().printLeft;
+				main.y=SetupInfo.getInstance().printTop+SetupInfo.getInstance().printHeaderNum;
+				headTxt.x=0;
+				headTxt.y=SetupInfo.getInstance().printHeaderNum;
+				footTxt.x=0;
+				footTxt.y=this.height-SetupInfo.getInstance().printFooterNum-15;
+				creatTf();
+				creatGrid();
+				creatMaskSprite();
+				
+			}
+			/** 创建文本  */
+			private function creatTf():void
+			{
+				topSprite=new PrintText("top");
+				printHeader=new PrintHeader();
+				printHeader.creatHeader();
+				uiSprite.addChild(printHeader);
+				uiSprite.addChild(topSprite);
+				bottomSprite=new PrintText("bottom");
+				uiSprite.addChild(bottomSprite);
+			}
+/**
+ * 创建后进行坐标定位
+ *   */
+			private function coorLocataXY():void
+			{
+				var paperWidth:int=SetupInfo.getInstance().paperWidthSize-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight-5;
+				var marginLeft:int=SetupInfo.getInstance().printLeft;
+				var marginTop:int=SetupInfo.getInstance().printTop;
+				var headNum:int=SetupInfo.getInstance().printHeaderNum;
+				var topX:int=Number(LayoutMap.getSimple().topXml.@x);
+				var topY:int=Number(LayoutMap.getSimple().topXml.@y);
+				var bottomX:int=Number(LayoutMap.getSimple().bottomXml.@x);
+				var bottomY:int=Number(LayoutMap.getSimple().bottomXml.@y);
+				var gridX:int=0;
+				var gridY:int=0;
+				topSprite.x=topX+marginLeft;
+				topSprite.y=marginTop+headNum+topY;
+				if(SetupInfo.getInstance().hasGrid)
+				{
+					gridX=Number(LayoutMap.getSimple().gridXml.@x);
+					gridY=Number(LayoutMap.getSimple().gridXml.@y);
+					advancedGrid.x=gridX+marginLeft;
+					advancedGrid.y=gridY+marginTop+headNum;
+					advancedGrid.height-=10;
+					advancedGrid.width=paperWidth-advancedGrid.x;
+					bottomSprite.x=bottomX+marginLeft;
+					bottomSprite.y=advancedGrid.height+advancedGrid.y;
+				}
+				else
+				{
+					bottomSprite.x=bottomX+marginLeft;
+					bottomSprite.y=bottomY+marginTop+headNum;
+				}
+			}
+			/** 
+			 * 不进行折页时的创建表格
+			 * */
+			public function creatGrid():void
+			{
+				if(!SetupInfo.getInstance().hasGrid) 
+				{
+					coorLocataXY();
+					return;
+				}
+				creatAdvancedGrid();
+			}
+
+
+			private function creatAdvancedGrid():void
+			{
+				if(advancedGrid==null)
+				{
+					advancedGrid=new AdvancedDataGrid();
+					main.addElement(advancedGrid);
+				}
+				NovaAdvancedDataGrid.getInstance().creatAdvancedDataGrid(advancedGrid);
+				advancedGrid.addEventListener(FlexEvent.CREATION_COMPLETE,dataGridCreat);
+				advancedGrid.addEventListener(AdvancedDataGridEvent.COLUMN_STRETCH,dataGridColumnStretch);
+			}
+/**
+ * 表格改变列宽的时候创建
+ *   */
+			private function dataGridColumnStretch(event:AdvancedDataGridEvent):void
+			{
+				var columns:Array=[];
+				columns=advancedGrid.columns;
+				var column:AdvancedDataGridColumn=AdvancedDataGridColumn(columns[event.columnIndex]);
+				PrintMap.getSimple().updateRecordAdvDataFieldArray(column);
+			}
+			/**
+			 * 表格创建完毕后获取界面的总体高度
+			 *   */
+			private function dataGridCreat(event:FlexEvent):void
+			{
+				advancedGrid.height=NovaAdvancedDataGrid.getInstance().dataGridHeight;
+				coorLocataXY();
+			}
+			/** 
+			 * 创建遮罩
+			 *   */
+			public function creatMaskSprite():void
+			{
+				var paperWidth:int=SetupInfo.getInstance().paperWidthSize;
+				var paperHeight:int=SetupInfo.getInstance().paperHeightSize;
+				var width:int=paperWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
+				var height:int=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
+				if(maskSprite==null)
+				{
+					maskSprite=new Sprite();
+					uiMask.addChild(maskSprite);
+				}
+				maskSprite.x=SetupInfo.getInstance().printLeft;
+				maskSprite.y=SetupInfo.getInstance().printTop+SetupInfo.getInstance().printHeaderNum;
+				maskSprite.graphics.clear();
+				maskSprite.graphics.beginFill(0xcccccc);
+				maskSprite.graphics.drawRect(0,0,width,height);
+				maskSprite.graphics.endFill();
+				main.mask=maskSprite;
+			}
+			/**
+			 * 左右边距   上下边距  和  页眉页脚边距  大小发生改变更新
+			 *   */
+			public function updateHeadFoot():void
+			{
+				main.x=SetupInfo.getInstance().printLeft;
+				main.y=SetupInfo.getInstance().printTop+SetupInfo.getInstance().printHeaderNum;
+				headTxt.x=0;
+				headTxt.y=SetupInfo.getInstance().printHeaderNum;
+				footTxt.x=0;
+				footTxt.y=this.height-SetupInfo.getInstance().printFooterNum-15;
+				creatMaskSprite();
+			}
+			public function clear():void
+			{
+				if(topSprite)
+				{
+					for(var i:int=topSprite.numChildren-1;i>=0;i--)
+					{
+						topSprite.removeChild(topSprite.getChildAt(i));
+					}
+					topSprite=null;
+				}
+				if(advancedGrid)
+				{
+					advancedGrid.removeEventListener(FlexEvent.CREATION_COMPLETE,dataGridCreat);
+					advancedGrid.removeEventListener(DataGridEvent.COLUMN_STRETCH,dataGridColumnStretch);
+					main.removeElement(advancedGrid);
+					advancedGrid=null;
+				}
+				main.removeAllElements();
+			}
+			public function page(type:String):void
+			{
+				switch(type)
+				{
+					case "next":
+					{
+						SetupInfo.getInstance().rowCurrentPage++;
+						SetupInfo.getInstance().rowCurrentPage=Math.min(SetupInfo.getInstance().rowCurrentPage,SetupInfo.getInstance().printTotalPages);
+						break;
+					}
+					case "pre":
+					{
+						SetupInfo.getInstance().rowCurrentPage--;
+						SetupInfo.getInstance().rowCurrentPage=Math.max(SetupInfo.getInstance().rowCurrentPage,1);
+						break;
+					}
+					case "end":
+					{
+						SetupInfo.getInstance().rowCurrentPage=SetupInfo.getInstance().printTotalPages;
+						break;
+					}
+					case "first":
+					{
+						SetupInfo.getInstance().rowCurrentPage=1;
+						break;
+					}
+					default:
+					{
+						break;
+					}
+				}
+				SetupInfo.getInstance().colCurrentPage=Math.ceil(SetupInfo.getInstance().rowCurrentPage/SetupInfo.getInstance().rowPages);
+				pageNum.text=SetupInfo.getInstance().colCurrentPage+"-"+SetupInfo.getInstance().rowCurrentPage;
+				pageUpdate();
+			}
+/**
+ * 页面的刷新
+ *   */
+			public function pageUpdate():void
+			{
+				this.clear();
+				this.creat();
+			}
+		]]>
+	</fx:Script>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		.header
+		{
+			textAlign:center
+		}
+	</fx:Style>
+	<s:Group id="main"  />
+	<s:Label  width="100%" text="{SetupInfo.getInstance().printFooter}" textAlign="center" alpha="0.5" id="footTxt"/>
+	<s:Label    width="100%" alpha="0.5" text="{SetupInfo.getInstance().printHeader}" textAlign="center" id="headTxt"
+			 verticalAlign="middle"/>
+	<s:Label top="5" right="5"    text="1-1" textAlign="right" id="pageNum" visible="false"
+			 />
+	<!--<s:filters>
+		<flash.filters:DropShadowFilter id='dropShadowFilter' xmlns:flash.filters='flash.filters.*' 
+										angle='0'
+										blurX='8' blurY='8'
+										distance='0'
+										alpha='0.3' color='#000000' 
+										knockout='false' quality='2'
+										strength='2' inner='false' hideObject='false'/> 
+	</s:filters>-->
+</s:BorderContainer>

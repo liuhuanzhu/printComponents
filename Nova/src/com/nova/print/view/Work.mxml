@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark"  creationComplete="init()"
+				   borderVisible="false"  backgroundAlpha="0.45" backgroundColor="#F6F6FD"
+				   xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%" xmlns:view="com.nova.print.view.*">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.TweenLite;
+			import com.greensock.easing.Elastic;
+			import com.greensock.plugins.TransformAroundCenterPlugin;
+			import com.greensock.plugins.TweenPlugin;
+			import com.nova.print.doc.PrintDoc;
+			import com.nova.print.event.PrintEvents;
+			import com.nova.print.map.DataMap;
+			import com.nova.print.map.FoldAdvancedGridMap;
+			import com.nova.print.map.LayoutMap;
+			import com.nova.print.map.PrintDataMap;
+			import com.nova.print.map.PrintMap;
+			import com.nova.print.util.SetupInfo;
+			
+			import flash.sampler.Sample;
+			
+			import flashx.textLayout.elements.BreakElement;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.core.UIComponent;
+			import mx.effects.MaskEffect;
+			import mx.events.FlexEvent;
+			import mx.graphics.ImageSnapshot;
+			import mx.printing.FlexPrintJob;
+			import mx.printing.FlexPrintJobScaleType;
+			import mx.printing.PrintDataGrid;
+			private function init():void
+			{
+				tool.addEventListener(PrintEvents.PrintChange,printChangeHandler);
+				printPage.addEventListener(PrintEvents.PrintChange,printChangeHandler);
+				this.addEventListener(PrintEvents.PrintChange,printChangeHandler);
+				toolStateChange();
+			}
+			private function printChangeHandler(event:PrintEvents):void
+			{
+				var changeType:String=event.info;
+				switch(changeType)
+				{
+					case "printLayout":
+					case "paperSize":
+						page.pageUpdate();
+						break;
+					case "emptyRowNum":
+					case "printNums":
+					case "isEmpty":
+						pageUpdateGrid();
+						break;
+					case "next":
+					case "pre":
+					case "first":
+					case "end":
+						page.page(changeType);
+						break;
+					case "changeGrid":
+						changeGridHandler();
+						break;
+					case "print":
+						gotoPrint();
+						break;
+					case "toFold":
+						updatePagesByFixFold();
+						break;
+					case "margin":
+						page.updateHeadFoot();
+						break;
+					case "state":
+						toolStateChange();
+						break;
+					case "foldNumChange":
+						updatePagesByFixFold();
+						break;
+					case "headCheck":
+						allGridCheckHandler();
+						break;
+				}
+			}
+			private function toolStateChange():void
+			{
+				var scaleWidth:int=Capabilities.screenResolutionX;
+				var workWitdh:int=page.width;
+				ruleGap.width=tool.width;
+				if(tool.currentState=="open")
+				{
+					var num:int=scaleWidth-ruleGap.width;
+					var numPage:int=(num-page.width)/2;
+					var gapX:int=(workWitdh-printPage.width)/2
+					printPage.x=gapX+numPage+ruleGap.width;
+				}
+				else
+				{
+					printPage.x=(scaleWidth-printPage.width)/2+30;
+				}
+			}
+			private function pageUpdateGrid():void
+			{
+				DataMap.getSimple().clearTotalItem();
+				PrintDataMap.getSimple().initData();
+				SetupInfo.getInstance().rowCurrentPage=1;
+				SetupInfo.getInstance().printTotalPages=SetupInfo.getInstance().rowPages*SetupInfo.getInstance().colPages;
+				page.pageUpdate();
+			}
+			/**
+			 * 更换纸张大小
+			 *   */
+			private function changePaperSize():void
+			{
+				page.clear();
+				page.creat();
+			}
+			/**
+			 * 固定和变动  折页更改   更新界面展示
+			 *   */
+			private function updatePagesByFixFold():void
+			{
+				SetupInfo.getInstance().rowCurrentPage=1;
+				var fixBol:Boolean=SetupInfo.getInstance().printFixChangeBol;
+				var gridType:int=LayoutMap.getSimple().gridType;
+				if(fixBol)
+				{
+					FoldAdvancedGridMap.getSimple().getPagesByFix();
+				}
+				else
+				{
+					FoldAdvancedGridMap.getSimple().getPageByChange();
+				}
+				SetupInfo.getInstance().printTotalPages=SetupInfo.getInstance().colPages*SetupInfo.getInstance().rowPages;
+				page.pageUpdate();
+			}
+			private function gotoPrint():void
+			{
+				//A4 561 595  
+				//凭证:361 397   横向731 760
+				var printJob:PrintJob=new PrintJob();
+				
+				if(printJob.start())
+				{
+					SetupInfo.getInstance().paperRealWidth=printJob.pageWidth;
+					SetupInfo.getInstance().paperRealHeight=printJob.pageHeight;
+					if(!SetupInfo.getInstance().hasGrid)
+					{
+						SetupInfo.getInstance().colPages=1;
+						SetupInfo.getInstance().rowPages=1;
+					}
+					var array:Array=PrintMap.getSimple().getPrintRange();
+					for(var i:int=0;i<array.length;i++)
+					{
+						var sprite:PrintDoc=array[i] as PrintDoc;
+						printJob.addPage(sprite);
+					}
+				}
+				printJob.send(); 
+				
+			}
+			
+			
+			
+ 
+			/**
+			 * 表格属性CheckBox更换
+			 *   */
+			private function changeGridHandler():void
+			{
+				 var headName:String=tool.gridPro.selectedItem.headName;
+				 var unique:String=tool.gridPro.selectedItem.unique;
+				LayoutMap.getSimple().findHeaderVisible(headName,unique);
+				updatePagesByFixFold(); 
+			}
+			/**
+			 * 表格属性全部选择
+			 *   */
+			private function allGridCheckHandler():void
+			{
+				var columns:Array=[];
+				columns=page.advancedGrid.columns;
+				LayoutMap.getSimple().gridVisibleAll();
+				tool.GridProCreat();
+				updatePagesByFixFold(); 
+			}
+		]]>
+	</fx:Script>
+	
+	<s:HGroup width="100%" height="100%"  id="main" >
+		<mx:HRule height="30" width="339" alpha="0" id="ruleGap"/>
+		<s:Scroller x="0" y="0" width="100%" height="100%"  horizontalScrollPolicy="auto" id="scroller"  >
+			<s:VGroup id="viewMain" y="0" width="100%" height="80%"  horizontalAlign="center" 
+					  paddingTop="0">
+				<mx:HRule height="20" alpha="0"/>
+				<view:Page id="page"/>
+				<mx:HRule height="10" alpha="0"/>
+			</s:VGroup>
+		</s:Scroller>
+	</s:HGroup>
+	<view:SetTool id="tool" width="339" />
+	<view:PrintPage id="printPage"   bottom="20"/>
+	
+</s:BorderContainer>

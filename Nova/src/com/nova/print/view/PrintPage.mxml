@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="28">
+	<fx:Script>
+		<![CDATA[
+			import com.nova.print.event.PrintEvents;
+			import com.nova.print.map.PrintMap;
+			import com.nova.print.util.SetupInfo;
+			private function pageNextClick(event:MouseEvent):void
+			{
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"next"));
+			}
+			private function pagePreClick(event:MouseEvent):void
+			{
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"pre"));
+			}
+			private function pageFirstClick(event:MouseEvent):void
+			{
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"first"));
+			}
+			private function pageEndClick(event:MouseEvent):void
+			{
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"end"));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<mx:Blur id="blurOn" blurXFrom="0.0" blurXTo="10.0" blurYFrom="0.0" blurYTo="10.0" />
+		<mx:Blur id="blurOut" blurXFrom="10.0" blurXTo="0.0" blurYFrom="10.0" blurYTo="0.0"/>
+	</fx:Declarations>
+	<s:Image x="0" y="2" source="assets/image/nextPage_backGround.png"/>
+	<s:Image x="10" y="6" source="assets/image/first_page.png" mouseDownEffect="{blurOn}" mouseUpEffect="{blurOut}" buttonMode="true" id="firstPage" click="pageFirstClick(event)"/>
+	<s:Image x="54" y="5" source="assets/image/left_page.png" mouseDownEffect="{blurOn}" mouseUpEffect="{blurOut}" buttonMode="true" id="prePage" click="pagePreClick(event)"/>
+	<s:Image  right="0" y="2" source="assets/image/nextPage_backGround.png"/>
+	<s:Image right="8" y="6" source="assets/image/end_page.png" mouseDownEffect="{blurOn}" mouseUpEffect="{blurOut}" buttonMode="true" id="endPage" click="pageEndClick(event)"/>
+	<s:Image x="339" y="6" source="assets/image/right_page.png" mouseDownEffect="{blurOn}" mouseUpEffect="{blurOut}" buttonMode="true" id="nextPage" click="pageNextClick(event)"/>
+	<s:Label x="166" y="3"  text="{SetupInfo.getInstance().rowCurrentPage}" textAlign="left" />
+	<s:Label x="186" y="3" text="/"/>
+	<s:Label x="194" y="3"  text="{SetupInfo.getInstance().printTotalPages}" textAlign="right"/>
+</s:Group>

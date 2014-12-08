@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						  xmlns:s="library://ns.adobe.com/flex/spark" 
+						  xmlns:mx="library://ns.adobe.com/flex/mx" 
+						  focusEnabled="true" creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import com.nova.print.event.PrintEvents;
+			import com.nova.print.util.SetupInfo;
+			
+			import mx.controls.Alert;
+			private function init():void
+			{
+				
+			}
+			private function headChange():void
+			{
+				if(!check.selected)
+				{
+					check.selected=true;
+					SetupInfo.getInstance().gridHeadCheckBol=true;
+				}
+				else
+				{
+					this.parentDocument.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"headCheck"));
+				}
+				
+			}
+		]]>
+	</fx:Script>
+	<s:HGroup width="100%" height="100%" horizontalAlign="center" verticalAlign="middle" >
+		<s:CheckBox selected="{SetupInfo.getInstance().gridHeadCheckBol}" change="headChange()" id="check"/>
+	</s:HGroup>
+</s:MXDataGridItemRenderer>

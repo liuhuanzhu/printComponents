@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				   xmlns:s="library://ns.adobe.com/flex/spark"
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   width="339" height="100%" backgroundAlpha="0.45" backgroundColor="#F6F6FD"
+				   borderVisible="false" creationComplete="init()" currentState="open"
+				   fontFamily="宋体" fontSize="13"
+				   width.open="339"
+				   width.show="35">
+	<s:states>
+		<s:State name="open"/>
+		<s:State name="show"/>
+	</s:states>
+	<fx:Declarations>
+		<s:Move id="moveEffect" target="{this}" duration="1000"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.nova.print.event.PrintEvents;
+			import com.nova.print.map.DataMap;
+			import com.nova.print.map.FoldAdvancedGridMap;
+			import com.nova.print.map.LayoutMap;
+			import com.nova.print.map.PrintMap;
+			import com.nova.print.util.BindingVO;
+			import com.nova.print.util.SetupInfo;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.Grid;
+			import mx.controls.Alert;
+			import mx.events.EffectEvent;
+			import mx.events.FlexEvent;
+			import mx.events.NumericStepperEvent;
+			
+			import spark.filters.DropShadowFilter;
+			[Bindable]
+			private var paperArray:ArrayCollection=new ArrayCollection([{name:"A4[595*842]",pw:595,ph:842},
+																		  {name:"A3[842*1191]",pw:842,ph:1191},
+																		  {name:"A5[420*595]",pw:420,ph:595},
+																		  {name:"B4[729*1032]",pw:729,ph:1032},
+																		  {name:"B5[516*729]",pw:516,ph:729},
+																		  {name:"凭证",pw:350,ph:650}
+																		]);
+			public static   var gridArray:ArrayCollection;
+			private var localX:int=-310;
+			private function init():void
+			{
+				if(!SetupInfo.getInstance().hasGrid)
+				{
+					accordion.removeElement(page);
+					accordion.removeElement(grid);
+				}
+			}
+			public function toHide():void
+			{
+				moveEffect.xFrom=0;
+				moveEffect.xTo=localX;
+				moveEffect.play();
+				moveEffect.addEventListener(EffectEvent.EFFECT_END,moveEffectEnd);
+			}
+			public function toShow():void
+			{
+				this.currentState="open";
+				moveEffect.xFrom=localX;
+				moveEffect.xTo=0;
+				moveEffect.play();
+				moveEffect.addEventListener(EffectEvent.EFFECT_END,moveEffectEnd);
+			}
+			private function moveEffectEnd(event:EffectEvent):void
+			{
+				if(this.x==localX)
+				{
+					this.currentState="show";
+					this.x=0;
+				}
+				moveEffect.removeEventListener(EffectEvent.EFFECT_END,moveEffectEnd);
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"state"));
+			}
+			/**
+			 * 打印纸张布局方向更改
+			 *   */
+			private function changePaperLayout(event:MouseEvent):void
+			{
+				 var clickID:String=event.target.parent.id;
+				 var dropshow:spark.filters.DropShadowFilter=new spark.filters.DropShadowFilter(0);
+				if(clickID=="layoutVer")
+				{
+					layoutVer.filters=[dropshow];
+					layoutHor.filters=[];
+					SetupInfo.getInstance().printLayout="ver";
+					SetupInfo.getInstance().paperWidthSize=SetupInfo.getInstance().printInitPaperArr[0];
+					SetupInfo.getInstance().paperHeightSize=SetupInfo.getInstance().printInitPaperArr[1];
+				}
+				else
+				{
+					layoutVer.filters=[];
+					layoutHor.filters=[dropshow];
+					SetupInfo.getInstance().printLayout="hor";
+					SetupInfo.getInstance().paperWidthSize=SetupInfo.getInstance().printInitPaperArr[1];
+					SetupInfo.getInstance().paperHeightSize=SetupInfo.getInstance().printInitPaperArr[0];
+				}
+				Image(event.target.parent).mouseEnabled=false;
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"printLayout")); 
+			}
+			
+		
+			
+			/**
+			 * 更改打印纸张大小
+			 *   */
+			private function changePrintPaper(event:Event):void
+			{
+				var dropshow:spark.filters.DropShadowFilter=new spark.filters.DropShadowFilter(0);
+				var item:Object=paperList.selectedItem;
+				SetupInfo.getInstance().paperSelectIndex=paperList.selectedIndex;
+				SetupInfo.getInstance().paperWidthSize=Number(item.pw);
+				SetupInfo.getInstance().paperHeightSize=Number(item.ph);
+				layoutVer.filters=[dropshow];
+				layoutHor.filters=[];
+				SetupInfo.getInstance().printLayout="ver";
+				SetupInfo.getInstance().printInitPaperArr=[SetupInfo.getInstance().paperWidthSize,SetupInfo.getInstance().paperHeightSize];
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"paperSize"));
+				
+			}
+			private function paperCreatHandler(event:FlexEvent):void
+			{
+				var dropshow:spark.filters.DropShadowFilter=new spark.filters.DropShadowFilter(0);
+				paperList.selectedIndex=SetupInfo.getInstance().paperSelectIndex;
+				var item:Object=paperList.selectedItem;
+				SetupInfo.getInstance().paperWidthSize=Number(item.pw);
+				SetupInfo.getInstance().paperHeightSize=Number(item.ph);
+				SetupInfo.getInstance().printInitPaperArr=[SetupInfo.getInstance().paperWidthSize,SetupInfo.getInstance().paperHeightSize];
+				if(SetupInfo.getInstance().printLayout=="ver")
+				{
+					layoutVer.filters=[dropshow];
+					layoutHor.filters=[];
+				}
+				else
+				{
+					layoutVer.filters=[];
+					layoutHor.filters=[dropshow];
+				}
+			}
+			
+			/**
+			 * 更新页眉页脚
+			 *   */
+			private function changeHead(event:Event):void
+			{
+				SetupInfo.getInstance().printFooter=printFooter.text;
+				SetupInfo.getInstance().printHeader=printHeader.text;
+			}
+			/**  更新页眉和页脚的距离  */
+			private function printHeadMargin(event:Event):void
+			{
+				SetupInfo.getInstance().printHeaderNum=printHead.value;
+				SetupInfo.getInstance().printFooterNum=printFoot.value;
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"margin"));
+				this.setFocus();
+			}
+			/**  更新页眉和页脚的距离  */
+			private function printMargin(event:Event):void
+			{
+				SetupInfo.getInstance().printLeft=printLeft.value;
+				SetupInfo.getInstance().printRight=printRight.value;
+				SetupInfo.getInstance().printTop=printTop.value;
+				SetupInfo.getInstance().printBottom=printBottom.value;
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"margin"));
+				this.setFocus();
+			}
+			/**
+			 * 执行打印
+			 *   */
+			private function gotoPrint(event:MouseEvent):void
+			{
+				indexPrintRange();
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"print"));
+			}
+			/**
+			 * 是否套打
+			 *   */
+			private function changeTaoda(event:Event):void
+			{
+				
+				
+			}
+			/**
+			 * 更改打印范围
+			 *   */
+			private function changePrintRange(event:Event):void
+			{
+					
+				printNumTxt.enabled=printRadioPart.selected;
+				if(printRadioAll.selected || printRadioCurrent.selected || oddRadio.selected || evenRadio.selected)
+				{
+					SetupInfo.getInstance().printRange=[0];
+					printNumTxt.text="例如: 1-5,8,11-13";
+				}
+			}
+			private function indexPrintRange():void
+			{
+				var array:Array=[];
+				if(printRadioAll.selected)
+				{
+					array=[-2];
+				}
+				else if(printRadioCurrent.selected)
+				{
+					array=[-1];
+				}
+				else if(oddRadio.selected)
+				{
+					array=[-3];
+				}
+				else if(evenRadio.selected)
+				{
+					array=[-4];
+				}
+				else 
+				{
+					if(printNumTxt.text=="例如: 1-5,8,11-13")
+					{
+						array=[-1];
+					}
+					else
+					{
+						var numStr:String=printNumTxt.text;
+						var length:int=numStr.length;
+						if(length==1)
+						{
+							array=[Number(printNumTxt.text)];
+						}
+						else
+						{
+							array=[Number(printNumTxt.text.charAt(0)),Number(printNumTxt.text.charAt(2))];
+						}
+					}
+				}
+				SetupInfo.getInstance().printRange=array;
+			}
+			/**
+			 * 打印份数文本获取焦点
+			 *   */
+			private function printNumTxtFouce(event:FocusEvent):void
+			{
+				if(event.type=="focusIn")
+				{
+					if(printNumTxt.text=="例如: 1-5,8,11-13")
+					{
+						printNumTxt.text="";
+					}
+				}
+				else
+				{
+					if(printNumTxt.text=="" || printNumTxt.text=="0")
+					{
+						printNumTxt.text="例如: 1-5,8,11-13";
+					}
+					else if(printNumTxt.text.length==2 && printNumTxt.text.charAt(1)=="-")
+					{
+						printNumTxt.text="例如: 1-5,8,11-13";
+					}
+					else if(printNumTxt.text.length==3)
+					{
+						var f:Number=Number(printNumTxt.text.charAt(0));
+						var e:Number=Number(printNumTxt.text.charAt(2));
+						if(e>SetupInfo.getInstance().printTotalPages)
+						{
+							printNumTxt.text="例如: 1-5,8,11-13";
+						}
+					}
+				}
+			}
+			/**
+			 * 检测打印份数是否符合打印要求
+			 *   */
+			private function indexPrintNumberTxt(event:Event):void
+			{
+				var txt:String=printNumTxt.text;
+				var txtArr:Array=txt.split("-");
+				if(txtArr.length==1)
+				{
+					
+					if(txt!="-" && txt!="" && Number(txt)<=SetupInfo.getInstance().printTotalPages)
+					{
+						SetupInfo.getInstance().printRange=[txt];
+					}
+					else
+					{
+						printNumTxt.text="例如: 1-5,8,11-13";
+						printNumTxt.alpha=0.6;
+						this.setFocus();
+					}
+				}
+				else if(txtArr.length==2)
+				{
+					
+					if(txt=="-")
+					{
+						printNumTxt.text="例如: 1-5,8,11-13";
+						printNumTxt.alpha=0.6;
+						this.setFocus();
+					}
+					else
+					{
+						if(txtArr[1]!="")
+						{
+							if(Number(txtArr[0])>=Number(txtArr[1]))
+							{
+								printNumTxt.text="例如: 1-5,8,11-13";
+								printNumTxt.alpha=0.6;
+								this.setFocus();
+							}
+							else
+							{
+								SetupInfo.getInstance().printRange=txtArr;
+							}
+						}
+					}
+				}
+				else
+				{
+					printNumTxt.text="例如: 1-5,8,11-13";
+					printNumTxt.alpha=0.6;
+					this.setFocus();
+				}
+			}
+			/**
+			 * 永久保存打印设置
+			 *   */
+			private function exportProperties(event:MouseEvent):void
+			{
+				PrintMap.getSimple().exportLayout();
+				SetupInfo.getInstance().exportProperties();
+				try
+				{
+					this.mouseChildren=false;
+					ExternalInterface.call("gotoSave",PrintMap.getSimple().exportLayoutXml.toXMLString(),SetupInfo.getInstance().exportPropertiesXml.toXMLString());
+				} 
+				catch(error:Error) 
+				{
+					Alert.show("发送消息失败: 此容器不支持传出调用");
+				}
+				catch(error:SecurityError) 
+				{
+					Alert.show("发送消息失败: 无权访问的安全沙箱");
+				}
+				ExternalInterface.addCallback("getSaveState",getSaveState);
+			}
+			private function getSaveState(value:String):void
+			{
+				
+				if(value=="sucess")
+				{
+					Alert.show("保存成功!");
+				}
+				else
+				{
+					Alert.show("保存失败!");
+				}
+				this.mouseChildren=true;
+			}
+			
+			/**
+			 * 关闭打印组件
+			 *   */	
+			private function closePrintView(event:MouseEvent):void
+			{
+				//ExternalInterface.call("closePrint","");
+			}
+			/**
+			 * 表格属性创建时给表格添加集合
+			 * */
+			public function GridProCreat():void
+			{
+				gridArray=new ArrayCollection();
+				var xml:XML=null;
+				var gridType:int=LayoutMap.getSimple().gridType;
+				xml=LayoutMap.getSimple().gridXml;
+				for(var i:int=0;i<xml.children().length();i++)
+				{
+					var xx:XML=xml.children()[i] as XML;
+					if(xx.children().length()>1)
+					{
+						for(var j:int=0;j<xx.children().length();j++)
+						{
+							var xxx:XML=xx.children()[j] as XML;
+							var selectBol:Boolean=true;
+							var unique:String=xxx.@unique;
+							if(xxx.@visible=="false")
+							{
+								selectBol=false;
+							}
+							if(unique.length<=0)
+							{
+								unique="";
+							}
+							var bv:BindingVO=new BindingVO(xxx.@headerText,selectBol,unique);
+							gridArray.addItem(bv);
+						}
+					}
+					else
+					{
+						var select:Boolean=true;
+						if(xx.@visible=="false")
+						{
+							select=false;
+						}
+						var xxUnique:String=xx.@unique;
+						if(xxUnique.length<=0)
+						{
+							xxUnique="";
+						}
+						var obj:BindingVO=new BindingVO(xx.@headerText,select,xxUnique);
+						gridArray.addItem(obj);
+					}
+				}
+				gridPro.dataProvider=gridArray;
+			}
+			/**
+			 * 选择taoda
+			 * */
+			public function taoDaChange():void
+			{
+				showHeader.enabled=taoDa.selected;
+				showLine.enabled=taoDa.selected;
+				if(!taoDa.selected)
+				{
+					showHeader.selected=false;
+					showLine.selected=false;
+				}
+				SetupInfo.getInstance().isPrintHeader=showHeader.selected;
+				SetupInfo.getInstance().isPrintLines=showLine.selected;
+				SetupInfo.getInstance().printIsTaoda=taoDa.selected;
+			}
+			/**
+			 * 是否选择补空行
+			 * */
+			public function emptyRowChange():void
+			{
+				if(isEmptyRow.selected)
+				{
+					printNums.maximum=100;
+				}
+				else
+				{
+					printNums.maximum=SetupInfo.getInstance().rows;
+					SetupInfo.getInstance().printRowNumber=SetupInfo.getInstance().rows;
+				}
+				SetupInfo.getInstance().isEmptyRow=isEmptyRow.selected;
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"isEmpty"));
+			}
+			private function updateGridProWidth():void
+			{
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"updateGridProWidth"));
+			}
+			/**
+			 * 固定和变动方式
+			 *   */
+			private function fixedChange(event:Event):void
+			{
+				gdImage.visible=fixed.selected;
+				bdImage.visible=change.selected;
+				SetupInfo.getInstance().printFixChangeBol=fixed.selected;
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"toFold"));
+			}
+			private function foldChange(event:Event):void
+			{
+				SetupInfo.getInstance().printFirstRow=firstFold.value;
+				SetupInfo.getInstance().printEndRow=endFold.value;
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"toFold"));
+				this.setFocus();
+			}
+			/**  每页显示多少行   改变  */
+			private function printNumsChange(event:Event):void
+			{
+				SetupInfo.getInstance().printRowNumber=printNums.value;
+				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"printNums"));
+				this.setFocus();
+			}
+			/**
+			 * 先行后列  还是 先列后行
+			 *   */
+			private function colToRowChange(event:Event):void
+			{
+				SetupInfo.getInstance().rowToCol=orderRow.selected;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:RadioButtonGroup id="radiogroup2"/>
+		<mx:Blur id="blurOn" blurXFrom="0.0" blurXTo="10.0" blurYFrom="0.0" blurYTo="10.0" />
+		<mx:Blur id="blurOut" blurXFrom="10.0" blurXTo="0.0" blurYFrom="10.0" blurYTo="0.0"/>
+		<s:RadioButtonGroup id="radiogroup3"  change="changePrintRange(event)"/>
+		<s:RadioButtonGroup id="radiogroup4"  change="fixedChange(event)"/>
+		<s:RadioButtonGroup id="radiogroup5"  change="colToRowChange(event)"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Style source="assets/css/style.css"/>
+	<s:SWFLoader includeIn="open" x="160" y="40" buttonMode="true" click="gotoPrint(event)"
+				 source="assets/image/print.swf"/>
+	<s:SWFLoader includeIn="open" x="12" y="40" buttonMode="true" click="exportProperties(event)"
+				 source="assets/image/save.swf"/>
+	<mx:Accordion id="accordion" includeIn="open" x="0" y="119" borderAlpha="0" headerHeight="36"
+				  headerStyleName="myTabs" openDuration="400" resizeToContent="true">
+		<s:NavigatorContent width="298" height="172" label="页码选择">
+			<s:BorderContainer width="298" height="172" backgroundAlpha="0.45"
+							   backgroundColor="#F6F6FD" borderAlpha="0">
+				<s:Image x="0" y="0" source="assets/image/1_1.png"/>
+				<s:TextInput x="103" y="125" width="155" borderVisible="true" id="printNumTxt" text="例如: 1-5,8,11-13" enabled="false" change="indexPrintNumberTxt(event)" focusIn="printNumTxtFouce(event)"  focusOut="printNumTxtFouce(event)" />
+				<s:RadioButton id="printRadioAll" x="18" y="15" groupName="radiogroup3"
+							   selected="true"/>
+				<s:RadioButton id="printRadioCurrent" x="19" y="43" groupName="radiogroup3"/>
+				<s:RadioButton x="19" y="71" groupName="radiogroup3" id="oddRadio"/>
+				<s:RadioButton x="18" y="99" groupName="radiogroup3" id="evenRadio"/>
+				<s:RadioButton x="18" y="126"  id="printRadioPart" groupName="radiogroup3"/>
+			</s:BorderContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="298" height="156" label="页面设置"  >
+			<s:BorderContainer width="298" height="156" backgroundAlpha="0.45"
+							   backgroundColor="#F6F6FD" borderAlpha="0">
+				<s:Image x="0" y="0" source="assets/image/2_1.png"/>
+				<s:DropDownList x="85" y="5" width="173" height="22" skinClass="com.nova.print.skin.NovaDropDownListSkin" 
+								id="paperList" dataProvider="{paperArray}" labelField="name" creationComplete="paperCreatHandler(event)"
+								selectedIndex="0" change="changePrintPaper(event)">
+				</s:DropDownList>
+				<s:CheckBox x="21" y="72" id="taoDa" change="taoDaChange()" selected="{SetupInfo.getInstance().printIsTaoda}"/>
+				<s:CheckBox x="90" y="95"  id="showHeader" enabled="false"  selected="{SetupInfo.getInstance().isPrintHeader}" change="taoDaChange()"/>
+				<s:CheckBox x="90" y="123" id="showLine" enabled="false" selected="{SetupInfo.getInstance().isPrintLines}" change="taoDaChange()"/>
+				<s:Image x="88" y="34" source="assets/image/ver.png" filters="{[new spark.filters.DropShadowFilter(0)]}" id="layoutVer" click="changePaperLayout(event)"/>
+				<s:Image x="118" y="38" source="assets/image/hor.png" id="layoutHor" click="changePaperLayout(event)"/>
+			</s:BorderContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="298" height="232" label="折页"  id="page">
+			<s:BorderContainer width="298" height="232" backgroundAlpha="0.45"
+							   backgroundColor="#F6F6FD" borderAlpha="0">
+				<s:Image  id="gdImage" x="0" y="0" width="298" source="assets/image/fold_page1.png" visible="{SetupInfo.getInstance().printFixChangeBol}"/>
+				<s:Image id="bdImage" x="0" y="0" width="298" source="assets/image/fold_page2.png" visible="{!SetupInfo.getInstance().printFixChangeBol}"/>
+				<s:RadioButton x="85" y="9" groupName="radiogroup4" selected="{SetupInfo.getInstance().printFixChangeBol}" id="fixed"  />
+				<s:RadioButton x="174" y="9" groupName="radiogroup4" id="change" selected="{!SetupInfo.getInstance().printFixChangeBol}"/>
+				<s:NumericStepper x="174" y="36" width="65" height="20" minimum="1" skinClass="com.nova.print.skin.NovaNumericStepperSkin" change="foldChange(event)" maximum="{SetupInfo.getInstance().printFixMax}"  value="{SetupInfo.getInstance().printFirstRow}"  id="firstFold" cornerRadius="0"/>
+				<s:NumericStepper x="174" y="65" width="65" height="20"  minimum="1" skinClass="com.nova.print.skin.NovaNumericStepperSkin" change="foldChange(event)"  maximum="{SetupInfo.getInstance().printFoldMax}" id="endFold" value="{SetupInfo.getInstance().printEndRow}" cornerRadius="0"/>
+				<s:NumericStepper x="174" y="131" id="printNums" minimum="1" change="printNumsChange(event)" width="65" cornerRadius="0" height="20" skinClass="com.nova.print.skin.NovaNumericStepperSkin" value="{SetupInfo.getInstance().printRowNumber}"  maximum="{SetupInfo.getInstance().rowNumMax}"  />
+				<s:RadioButton x="86" y="192"  id="orderRow" groupName="radiogroup5" selected="{SetupInfo.getInstance().rowToCol}"/>
+				<s:RadioButton x="176" y="192" id="orderCol" groupName="radiogroup5" selected="{!SetupInfo.getInstance().rowToCol}"/>
+				<s:CheckBox x="99" y="158" change="emptyRowChange()" id="isEmptyRow" selected="{SetupInfo.getInstance().isEmptyRow}"/>
+			</s:BorderContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="298" height="230" label="表格属性"  id="grid">
+			<s:BorderContainer width="298" height="230" backgroundAlpha="0.45"
+							   backgroundColor="#F6F6FD" borderAlpha="0">
+				<s:Image x="0" y="0" source="assets/image/3_1.png"/>
+				<mx:DataGrid id="gridPro" y="35" left="10" right="10" height="170"
+							 allowMultipleSelection="false" alternatingItemColors="{[0xffffff]}"
+							 chromeColor="#FFFFFF" creationComplete="GridProCreat()"
+							 fontFamily="微软雅黑" horizontalGridLineColor="#DEE2E3" sortableColumns="false"
+							 horizontalGridLines="true" useRollOver="false" draggableColumns="false"
+							 verticalGridLineColor="#C3C9CA" verticalScrollPolicy="auto">
+					<mx:columns>
+						<mx:DataGridColumn  width="50"    itemRenderer="{new ClassFactory(DataGridByCheckBox)}" headerRenderer="{new ClassFactory(HeadDataGridCheckItem)}"/>
+						<mx:DataGridColumn  width="100" dataField="headName"  headerText="列名称"></mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+			</s:BorderContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="298" height="240" label="页眉页脚">
+			<s:BorderContainer width="298" height="240" backgroundAlpha="0.45"
+							   backgroundColor="#F6F6FD" borderAlpha="0">
+				<s:Image x="0" y="0" source="assets/image/4_1.png"/>
+				<s:TextArea x="16" y="174" width="247" height="53" borderVisible="true"  change="changeHead(event)" id="printFooter"
+							focusAlpha="0" fontFamily="宋体" fontSize="13" text="{SetupInfo.getInstance().printFooter}"
+							/>
+				<s:NumericStepper id="printHead" x="114" y="11" width="78" height="20" skinClass="com.nova.print.skin.NovaNumericStepperSkin"   value="{SetupInfo.getInstance().printHeaderNum}"
+								   cornerRadius="0" change="printHeadMargin(event)" maximum="20"/> 
+				<s:NumericStepper id="printFoot" x="114" y="38" width="78" height="20" skinClass="com.nova.print.skin.NovaNumericStepperSkin"  value="{SetupInfo.getInstance().printFooterNum}"
+								  cornerRadius="0" change="printHeadMargin(event)" maximum="20"/> 
+				<s:TextArea x="15" y="92" width="247" height="48" borderVisible="true"  change="changeHead(event)" id="printHeader"
+							focusAlpha="0" fontFamily="宋体" fontSize="13" text="{SetupInfo.getInstance().printHeader}"
+							/>
+				
+			</s:BorderContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="298" height="129" label="页边距" >
+			<s:BorderContainer width="298" height="132" backgroundAlpha="0.45"
+							   backgroundColor="#F6F6FD" borderAlpha="0">
+				<s:Image x="0" y="0" width="298" source="assets/image/5_1.png"/>
+				<s:NumericStepper x="69" y="8" width="96" height="20" skinClass="com.nova.print.skin.NovaNumericStepperSkin" value="{SetupInfo.getInstance().printTop}" maximum="40" cornerRadius="0" id="printTop" change="printMargin(event)"/>
+				<s:NumericStepper x="69" y="95" width="96" height="20" skinClass="com.nova.print.skin.NovaNumericStepperSkin" value="{SetupInfo.getInstance().printRight}" maximum="40" cornerRadius="0" id="printRight" change="printMargin(event)"/>
+				<s:NumericStepper x="69" y="66" width="96" height="20" skinClass="com.nova.print.skin.NovaNumericStepperSkin" value="{SetupInfo.getInstance().printLeft}" maximum="40" cornerRadius="0" id="printLeft" change="printMargin(event)"/>
+				<s:NumericStepper x="69" y="37" width="96" height="20" skinClass="com.nova.print.skin.NovaNumericStepperSkin"  value="{SetupInfo.getInstance().printBottom}" maximum="40" cornerRadius="0" id="printBottom" change="printMargin(event)"/>
+				<s:Image x="0" y="130" width="298" source="assets/image/5_2.png"/>
+			</s:BorderContainer>
+		</s:NavigatorContent>
+		
+	</mx:Accordion>
+	<s:SWFLoader includeIn="open" right="45" bottom="5" buttonMode="true"
+				 click="closePrintView(event)" source="assets/image/close.swf"/>
+	<s:Image includeIn="open" y="0" right="41" height="100%" scaleMode="stretch"
+			 source="assets/image/ver_line.png"/>
+	<s:Image id="hide" includeIn="open" x="298" y="253" buttonMode="true" click="toHide()"
+			 source="assets/image/hide.png"/>
+	<s:Image includeIn="show" x="0" y="253" source="assets/image/show.png" buttonMode="true" click="toShow()"/>
+</s:BorderContainer>

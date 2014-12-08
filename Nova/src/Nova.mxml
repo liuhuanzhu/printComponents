@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:view="com.nova.print.view.*"
+			   minWidth="955" minHeight="600" creationComplete="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.nova.print.control.NovaText;
+			import com.nova.print.doc.PrintContinuous;
+			import com.nova.print.doc.PrintDoc;
+			import com.nova.print.map.DataMap;
+			import com.nova.print.map.LayoutMap;
+			import com.nova.print.map.PrintDataMap;
+			import com.nova.print.util.SetupInfo;
+			import com.nova.print.view.Page;
+			import com.nova.print.view.Work;
+			
+			import flashx.textLayout.formats.TextAlign;
+			
+			import mx.controls.Alert;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			import mx.graphics.ImageSnapshot;
+			private var setting:XML=<Properties>
+  <printRange>0</printRange>
+  <paperWidthSize>650</paperWidthSize>
+  <paperHeightSize>350</paperHeightSize>
+  <paperType>A4[595*842]</paperType>
+  <isEmptyRow>true</isEmptyRow>
+  <printRowNumber>6</printRowNumber>
+  <paperSelectIndex>5</paperSelectIndex>
+  <printLayout>hor</printLayout>
+  <printIsTaoda>false</printIsTaoda>
+  <isPrintHeader>false</isPrintHeader>
+  <isPrintLines>false</isPrintLines>
+  <printFixChangeBol>true</printFixChangeBol>
+  <printFirstRow>1</printFirstRow>
+  <printEndRow>4</printEndRow>
+  <rowToCol>true</rowToCol>
+  <printFooterNum>0</printFooterNum>
+  <printHeaderNum>0</printHeaderNum>
+  <printFooter/>
+  <printHeader/>
+  <printLeft>15</printLeft>
+  <printRight>15</printRight>
+  <printTop>0</printTop>
+  <printBottom>0</printBottom>
+  <rowPages>1</rowPages>
+  <colPages>1</colPages>
+  <printFoldMax>4</printFoldMax>
+  <borderWidth>2</borderWidth>
+  <offsetX>80</offsetX>
+  <offsetY>30</offsetY>
+</Properties>;
+			private var layoutXml:XML=<Layouts>
+	<Label y="50" width="700" text="计划单" fontSize="25"/>
+  <BorderContainer x="14" y="90" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
+<Label x="19" y="0" text="制单日期:" height="20"/>
+		<Label x="65" y="0" id="makeDate"/>
+		<Label x="272" y="0" text="计划类型:" height="20"/>
+		<Label x="312" y="0" id="planTypeName"/>
+		<Label x="484" y="0" text="计划单编号:" height="20"/>
+		<Label x="554" y="0" id="code"/>
+		<Label x="19" y="20" text="本位:" height="20"/>
+		<Label x="75" y="20" id="localCurrenciesName"/>
+		<Label x="272" y="20" text="金额单位:" height="20"/>
+		<Label x="327" y="20" id="localCurrenciesUnit"/>
+		<Label x="484" y="20" text="计划类型:" height="20"/>
+		<Label x="544" y="20" id="planType"/>
+		<Label x="19" y="40" text="制单人编号:" height="20"/>
+		<Label x="75" y="40" id="touchingUserCode"/>
+		<Label x="272" y="40" text="制单人姓名:" height="20"/>
+		<Label x="327" y="40" id="touchingUserName"/>
+		<Label x="484" y="40" text="所属部门 :" height="20"/>
+		<Label x="534" y="40" id="departmentName"/>
+  </BorderContainer>
+	<Grids id="entry" x="18" y="153" width="404" height="105">
+		<column dataField="rowNumber" headerText="序号" unique="1" textAlign="center"/>
+		<column dataField="materialName" headerText="物品名称" unique="2"/>
+		<column dataField="specificationName" headerText="规格型号" unique="3"/>
+		<column dataField="technicalParameters" headerText="技术参数" unique="4"/>
+		<column dataField="unitName" headerText="单位" unique="5"/>
+		<column dataField="planNum" headerText="数量" unique="6"/>
+		<column dataField="referenceForeignPrice" headerText="含税单价" unique="7"/>
+		<column dataField="referenceForeignAmounts" headerText="含税金额" unique="8"/>
+		<column dataField="recommendSupplier" headerText="供应商" unique="9"/>
+		<column dataField="deliveryDate" headerText="计划交货日期" unique="10"/>
+		<column dataField="remark" headerText="计划说明" unique="11"/>
+	</Grids>
+	<BorderContainer x="17" y="800" width="677" height="163" id="bottom" xmlns="library://ns.adobe.com/flex/spark">
+		<Label x="19" y="0" text="负责人:"/>
+		<Label x="272" y="0" text="审核人:"/>
+		<Label x="484" y="0" text="制单人:"/>
+  </BorderContainer>
+  <Declarations xmlns="http://ns.adobe.com/mxml/2009">
+	<column>1</column>
+	<column>2</column>
+	<column>3</column>
+	<column>4</column>
+	<column>5</column>
+  </Declarations>
+</Layouts>;
+			private var dataXml:XML=<Data>
+			<printCompanyName>胜利油田华滨实业有限公司井下作业维修分公司</printCompanyName>
+			<voucherCategory>付款凭证</voucherCategory>
+			<oppositeSubjectName>银行存款/工商银行/滨南支行</oppositeSubjectName>
+			<makeDate>2014年09月28日</makeDate>
+			<planTypeName>1</planTypeName>
+			<code>FC2006</code>
+			<localCurrenciesName>赵黎明</localCurrenciesName>
+			<localCurrenciesUnit>22</localCurrenciesUnit>
+			<planType>类型</planType>
+			<touchingUserCode>222</touchingUserCode>
+			<touchingUserName>赵黎明</touchingUserName>
+			<departmentName>工商部</departmentName>
+			<DataGrid>
+				<ColModel>
+					<HeaderText DataField="rowNumber" text="序号" />
+					<HeaderText DataField="materialName" text="物品名称"/>
+					<HeaderText DataField="specificationName" text="规格型号" />
+					<HeaderText DataField="technicalParameters" text="技术参数"/>
+					<HeaderText DataField="unitName" text="单位" unique="5"/>
+					<HeaderText DataField="planNum" text="数量" unique="6"/>
+					<HeaderText DataField="referenceForeignPrice" text="含税单价" />
+					<HeaderText DataField="referenceForeignAmounts" text="含税金额" />
+					<HeaderText DataField="recommendSupplier" text="供应商" />
+					<HeaderText DataField="deliveryDate" text="计划交货日期" />
+					<HeaderText DataField="remark" text="计划说明" />
+				</ColModel>
+				<RowData>
+					<Item rowNumber="报销费用销费用销费用销费用销费用销费用销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
+					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
+					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
+					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
+					<Item rowNumber="报销费用" materialName="管理费用" deliveryDate="deliveryDate" remark="remark" specificationName="通讯费" referenceForeignAmounts="2"  recommendSupplier="recommendSupplier" technicalParameters="1.00" unitName="1.00"  planNum="745.7" referenceForeignPrice="1"  />
+				</RowData>
+			</DataGrid>
+		</Data>;
+			private var work:Work=null;
+			[Embed(source="assets/font/SIMSUN.TTC", fontFamily="SONG", mimeType="application/x-font",embedAsCFF= "false")]
+			public var SONG:Class;    
+			private function init():void
+			{
+				
+				
+				getLayout(layoutXml);
+				ExternalInterface.addCallback("getLayout",getLayout);
+				ExternalInterface.addCallback("getData",getData);
+				ExternalInterface.addCallback("getProperties",getProperties);
+				ExternalInterface.call("creationComplete","");
+			}
+			/** 
+			 * 打印来自设计局设计的mxml页面  保存所有的界面xml
+			 *   */
+			private function getLayout(_designerXml:String):void
+			{
+				var xml:XML=new XML(_designerXml);
+				LayoutMap.getSimple().setLayout(xml);
+				getData(dataXml.toXMLString());
+			}
+			/**
+			 * 获取打印数据
+			 *   */
+			private function getData(_printData:String):void
+			{
+				var xml:XML=new XML(_printData);
+				DataMap.getSimple().setData(xml);
+				getProperties(setting);
+			}
+			/**
+			 * 获取打印设置
+			 *   */
+			private function getProperties(_properties:String):void
+			{
+				if(_properties!="")
+				{
+					SetupInfo.getInstance().getProperties(new XML(_properties));
+				}
+				else
+				{
+					SetupInfo.getInstance().gotoPropertiesDefault();
+				}
+				work=new Work();
+				this.addElement(work);
+			}
+			/**
+			 * 获取连打数据
+			 *   */
+			private function getContinuousXmls(_continuous:XML):void
+			{
+				PrintContinuous.getPc().loadAllXml(new XML(_continuous));
+			}
+		]]>
+	</fx:Script>
+	
+</s:Application>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+			 minWidth="21" minHeight="36">
+	<!-- layer 1: fill -->
+	
+	<s:Group left="0" right="0" top="0" bottom="0">
+		<s:BitmapImage source="assets/image/acc_default.png"/>
+	</s:Group>
+	<s:Group  right="5" top="13" bottom="0">
+		<s:BitmapImage source="assets/image/arrow_down.png"/>
+	</s:Group>
+</s:SparkSkin>
