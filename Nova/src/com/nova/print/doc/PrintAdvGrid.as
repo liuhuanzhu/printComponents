@@ -86,7 +86,7 @@ package com.nova.print.doc
 		}
 		public function getWidth():int
 		{
-			var pageWidth:int=SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().offsetX-20;
+			var pageWidth:int=SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().offsetX-40;
 			return pageWidth;
 		}
 /**
