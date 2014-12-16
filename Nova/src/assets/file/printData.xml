@@ -1,0 +1,37 @@
+﻿<Data>
+  <printCompanyName>胜利油田华滨实业有限公司</printCompanyName>
+  <voucherCategory>机关付款凭证</voucherCategory>
+  <oppositeSubjectName>库存现金</oppositeSubjectName>
+  <voucherDate>2014年12月01日</voucherDate>
+  <attachmentNum>1</attachmentNum>
+  <voucherCode>JG2002</voucherCode>
+  <supervisorName></supervisorName>
+  <cashierName></cashierName>
+  <reviewName>赵黎明</reviewName>
+  <touchingName>刘红红</touchingName>
+  <transactor>赵黎明</transactor>
+  <DataGrid>
+    <TotalCol>
+      <Item summary="人民币（大写）：壹仟叁佰肆拾叁元整" elliName="debit,summary" subjectName="" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="1,343.00" debit="1,343.00" credit="" fieldName="summary,subjectName,subjectName2,subjectName3"></Item>
+    </TotalCol>
+    <ColModel>
+      <HeaderText DataField="summary" text="摘要"></HeaderText>
+      <HeaderText DataField="subjectName" text="科目"></HeaderText>
+      <HeaderText DataField="subjectName2"></HeaderText>
+      <HeaderText DataField="subjectName3"></HeaderText>
+      <HeaderText DataField="subjectName4"></HeaderText>
+      <HeaderText DataField="subjectName5"></HeaderText>
+      <HeaderText DataField="subjectName6"></HeaderText>
+      <HeaderText DataField="subjectName7"></HeaderText>
+      <HeaderText DataField="subjectName8"></HeaderText>
+      <HeaderText DataField="subjectName9"></HeaderText>
+      <HeaderText DataField="subjectName10"></HeaderText>
+      <HeaderText DataField="amount" text="金额"></HeaderText>
+      <HeaderText DataField="debit" text="借方"></HeaderText>
+      <HeaderText DataField="credit" text="贷方"></HeaderText>
+    </ColModel>
+    <RowData>
+      <Item summary="付安全赔款" subjectName="其他应付款" subjectName2="其他往来" subjectName3="安全赔偿金" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="1,343.00" debit="1,343.00" credit=""></Item>
+    </RowData>
+  </DataGrid>
+</Data>

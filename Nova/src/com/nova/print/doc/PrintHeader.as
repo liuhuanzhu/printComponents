@@ -18,13 +18,9 @@ package com.nova.print.doc
 
 	public class PrintHeader extends Sprite
 	{
-		/**
-		 * 加载标题的方法
-		 * xx.@text,xx.@fontSize,xx.@y,xx.@id
-		 * */
 		
 		
-		public function creatHeader():void
+		public function creatHeader(_w:int):void
 		{
 			var array:Array=LayoutMap.getSimple().headingArray;
 			if(array==null) return;
@@ -58,13 +54,13 @@ package com.nova.print.doc
 				textFormat.align=TextFormatAlign.CENTER;
 				text.setTextFormat(textFormat);
 				text.embedFonts=true;
-			//	text.border=true;
+				//text.border=true;
 				//text.borderColor=0x000000;
 				var marginTop:int=SetupInfo.getInstance().printTop;
 				var headNum:int=SetupInfo.getInstance().printHeaderNum;
 				yy+=marginTop+headNum;
 				text.y=yy;
-				text.width=SetupInfo.getInstance().paperWidthSize;
+				text.width=_w;
 				this.addChild(text);
 				trace("加载标题的宽度为:   "+text.width);
 			}
@@ -83,5 +79,7 @@ package com.nova.print.doc
 			}
 			return text;
 		}
+
+
 	}
 }

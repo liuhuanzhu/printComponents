@@ -36,14 +36,15 @@ package com.nova.print.doc
 		
 			var ground:Sprite=new Sprite();
 			ground.graphics.clear();
+			//ground.graphics.lineStyle(1);
 			ground.graphics.beginFill(0xffffff,1);
 			ground.graphics.drawRect(0,0,SetupInfo.getInstance().paperRealWidth,SetupInfo.getInstance().paperRealHeight);
 			ground.graphics.endFill();
 			this.addChild(ground);
 			
 			
-			offsetX=SetupInfo.getInstance().offsetX;
-			offsetY=SetupInfo.getInstance().offsetY;
+			offsetX=SetupInfo.getInstance().offsetX+SetupInfo.getInstance().printLeft;
+			offsetY=SetupInfo.getInstance().offsetY+SetupInfo.getInstance().printTop;
 			
 			var topX:Number=offsetX;
 			var topY:Number=LayoutMap.getSimple().getTopY()+offsetY;
@@ -62,11 +63,10 @@ package com.nova.print.doc
 			var bottom:PrintText=new PrintText("bottom");
 			this.addChild(bottom);
 			bottom.x=bottomX;
-			bottom.y=grid.height+grid.y;
+			bottom.y=grid.getHeight()+gridY;
 			
 			var header:PrintHeader=new PrintHeader();
-			header.creatHeader();
-			header.x=offsetX-20;
+			header.creatHeader(SetupInfo.getInstance().paperRealWidth);
 			header.y+=offsetY;
 			this.addChild(header);
 			

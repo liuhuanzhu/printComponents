@@ -13,6 +13,7 @@ package com.nova.print.doc
 		private var txtField:TextField=null;
 		private var maskSprite:Sprite=null;
 		private var txtWidth:int=0;
+		private var adjustHeight:int=2;//调整的高度  合计行不换行后 垂直居中需要调整。
 		public function PrintDocTxt(txt:String,_algin:String,_width:int,_height:int=20,isWrap:Boolean=false,letter:int=0)
 		{
 			txtField=new TextField();
@@ -44,10 +45,19 @@ package com.nova.print.doc
 		}
 		public function creatBg(bol:Boolean=true):void
 		{
+			txtField.y=(txtField.height-txtField.textHeight)/2-adjustHeight;
 			if(bol)
 			{
-				//txtField.mask=maskSprite;
-				//this.addChild(maskSprite);
+				txtField.mask=maskSprite;
+				this.addChild(maskSprite);
+			}
+			else
+			{
+				txtField.wordWrap=false;
+				if(Math.ceil(txtField.height/25)>=2)
+				{
+					txtField.y+=txtField.height/4;
+				}
 			}
 		}
 	}

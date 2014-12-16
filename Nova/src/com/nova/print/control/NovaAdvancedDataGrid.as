@@ -21,7 +21,7 @@ package  com.nova.print.control
 	{
 		private static var novaAdvancedDataGrid:NovaAdvancedDataGrid=null;
 		private var _dataGridHeight:int=0;//计算表格的实际高度
-		public var colHeight:int=40;
+		public var colHeight:int=25;
 		public static function getInstance():NovaAdvancedDataGrid
 		{
 			if(novaAdvancedDataGrid==null)
@@ -64,6 +64,13 @@ package  com.nova.print.control
 			{
 				dataProvider.addItem(DataMap.getSimple().totalItem);
 			}
+			var isWarp:Boolean=false;
+			colHeight=SetupInfo.getInstance().colHeight;
+			isWarp=Math.ceil(colHeight/25)<2?false:true;
+			if(isWarp)
+			{
+				colHeight+=5;
+			}
 			advancedGrid.groupedColumns=array;
 			advancedGrid.resizableColumns=true;
 			advancedGrid.mouseChildren=true;
@@ -79,11 +86,13 @@ package  com.nova.print.control
 			advancedGrid.setStyle("headerStyleName","header");
 			advancedGrid.setStyle("chromeColor",0xffffff);
 			advancedGrid.setStyle("fontFamily","SONG");
+			advancedGrid.setStyle("verticalAlign","middle");
 			advancedGrid.setStyle("fontSize",10);
+			advancedGrid.setStyle("kerning",true);
 			advancedGrid.setStyle("leading",3);
 			advancedGrid.verticalScrollPolicy="off";
 			advancedGrid.rowHeight=colHeight;
-			advancedGrid.wordWrap=true;
+			advancedGrid.wordWrap=isWarp;
 			advancedGrid.dataProvider=dataProvider;
 			//总共显示的行数为  每页显示多少行+补空行数目
 			var length:int=dataProvider.length;

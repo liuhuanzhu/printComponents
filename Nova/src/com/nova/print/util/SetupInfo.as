@@ -31,8 +31,8 @@ package com.nova.print.util
 		private var _printLayout:String="ver";
 		private var _printTop:Number=0;
 		private var _printBottom:Number=0;
-		private var _printLeft:Number=15;
-		private var _printRight:Number=15;
+		private var _printLeft:Number=20;
+		private var _printRight:Number=20;
 		private var _printPaperWidth:Number=400;
 		private var _printPaperHeight:Number=800;
 		private var _printIsTaoda:Boolean=false;
@@ -90,6 +90,7 @@ package com.nova.print.util
 		
 		private var _offsetY:int=0;
 		
+		private var _colHeight:int=25;
 		
 		private var _borderWidth:int=2;
 		
@@ -137,9 +138,10 @@ package com.nova.print.util
 			_exportPropertiesXml.appendChild(<rowPages>{_rowPages}</rowPages>);
 			_exportPropertiesXml.appendChild(<colPages>{_colPages}</colPages>);
 			_exportPropertiesXml.appendChild(<printFoldMax>{_printFoldMax}</printFoldMax>);
-			_exportPropertiesXml.appendChild(<borderWidth>{_borderWidth}</borderWidth>);
+			/*_exportPropertiesXml.appendChild(<borderWidth>{_borderWidth}</borderWidth>);
 			_exportPropertiesXml.appendChild(<offsetX>{_offsetX}</offsetX>);
-			_exportPropertiesXml.appendChild(<offsetY>{_offsetY}</offsetY>);
+			_exportPropertiesXml.appendChild(<colHeight>{_colHeight}</colHeight>);
+			_exportPropertiesXml.appendChild(<offsetY>{_offsetY}</offsetY>);*/
 			trace("打印设置：  "+_exportPropertiesXml);
 			
 		}
@@ -167,10 +169,8 @@ package com.nova.print.util
 			this._printBottom=int(xml.printBottom);
 			this._printTop=int(xml.printTop);
 			this._rowPages=int(xml.rowPages);
-			this._borderWidth=int(xml.borderWidth);
 			this._printInitPaperArr=[_paperWidthSize,_paperHeightSize];
-			this._offsetX=int(xml.offsetX);
-			this._offsetY=int(xml.offsetY);
+			setCoverSet();
 			if(SetupInfo.getInstance().hasGrid)
 			{
 				this._rows=DataMap.getSimple().gridData.length;
@@ -199,6 +199,17 @@ package com.nova.print.util
 			}
 		
 		}
+/**
+ * 取得在coverSet.xml中的值
+ * */
+		public function setCoverSet():void
+		{
+			var xml:XML=new XML(PrintUtil.getSimple().coverSetXml);
+			this._borderWidth=xml.borderWidth;
+			this._colHeight=xml.colHeight;
+			this._offsetX=xml.offsetX;
+			this._offsetY=xml.offsetY;
+		}
 		private function getBoolean(bolStr:String):Boolean
 		{
 			if(bolStr=="true")
@@ -210,6 +221,7 @@ package com.nova.print.util
 		public function gotoPropertiesDefault():void
 		{
 			_printInitPaperArr=[595,842];
+			setCoverSet();
 			if(SetupInfo.getInstance().hasGrid)
 			{
 				SetupInfo.getInstance().printRowNumber=DataMap.getSimple().gridData.length;
@@ -958,6 +970,18 @@ package com.nova.print.util
 		public function set printInitPaperArr(value:Array):void
 		{
 			_printInitPaperArr = value;
+		}
+/**
+ * 设置每行的行高  并且动态计算是否自动换行。
+ * */
+		public function get colHeight():int
+		{
+			return _colHeight;
+		}
+
+		public function set colHeight(value:int):void
+		{
+			_colHeight = value;
 		}
 
 

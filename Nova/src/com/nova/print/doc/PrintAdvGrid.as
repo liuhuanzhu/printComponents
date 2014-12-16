@@ -27,7 +27,7 @@ package com.nova.print.doc
 		private var gridColumnWidth:int=0;
 		private var borderWidth:int=0;
 		private var dataArray:ArrayCollection;
-		private var colHeight:int=40;//表格的每行高度
+		private var colHeight:int=25;//表格的每行高度
 		private var dynamicGridWidthArray:Array=[];//动态计算并存储每一列的列宽
 		private var dynamicLocalX:Array=[];//记录每一列的X坐标
 		private var isTotalCol:int=0;//是否存在合计行  默认为0
@@ -37,6 +37,7 @@ package com.nova.print.doc
 		private var gridType:int=0;//是否是复杂表格  复杂表格标题行的高度乘以2否则乘以1
 		private var headYArray:Array=[];//存储表格标题的y坐标
 		private var headHeight:int=0;//设置标题的高度
+		private var iswrap:Boolean=false;//动态计算是否换行。
 		public function PrintAdvGrid(_rowCurrentPage:int,_colCurrentPage:int)
 		{
 			if(!SetupInfo.getInstance().hasGrid) return;
@@ -60,6 +61,8 @@ package com.nova.print.doc
 			{
 				dataArray.addItemAt(DataMap.getSimple().totalItem,dataArray.length);
 			}
+			colHeight=SetupInfo.getInstance().colHeight;
+			iswrap=Math.ceil(colHeight/25)<2?false:true;
 			dataLength+=isTotalCol;
 			setHeaderY();
 			gridHeight=dataLength*colHeight+headHeight;
@@ -86,7 +89,7 @@ package com.nova.print.doc
 		}
 		public function getWidth():int
 		{
-			var pageWidth:int=SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().offsetX-40;
+			var pageWidth:int=SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight-SetupInfo.getInstance().offsetX;
 			return pageWidth;
 		}
 /**
@@ -263,15 +266,16 @@ package com.nova.print.doc
 			simpleColumnWidth.push(simpleColumnWidth[simpleColumnWidth.length-1]+columnWidth);
 			var field:String=gm.sonFieldArray[0];
 			var isMin:int=0;
-			if(DataMap.getSimple().totalFieldArr!=null && DataMap.getSimple().totalFieldArr.indexOf(field)!=-1)
+			var lineHeight:int=gridHeight;
+			if(DataMap.getSimple().totalFieldArr!=null && DataMap.getSimple().totalFieldArr.indexOf(field)!=-1 && DataMap.getSimple().totalFieldArr[DataMap.getSimple().totalFieldArr.length-1]!=field)
 			{
-				isMin=-20;
+				lineHeight-=colHeight;
 			}
 			if(index<advGridHeadTxtArray.length-1)
 			{
 				this.graphics.lineStyle(1,0x000000,0.4);
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],0);
-				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],dataLength*colHeight+isMin+headHeight);
+				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight);
 				this.graphics.endFill();
 			}
 			var header:PrintDocTxt=new PrintDocTxt(gm.parentHeader,"center",columnWidth,headHeight,false,gm.letterSpac);
@@ -296,13 +300,13 @@ package com.nova.print.doc
 				var array:Array=indexGridHeader(parentHeader,sonHeader);
 				columnWidth=array[3];
 				simpleColumnWidth.push(simpleColumnWidth[simpleColumnWidth.length-1]+columnWidth);
-				var lineHeight:int=dataLength*colHeight+headHeight;
+				var lineHeight:int=gridHeight;
 				if(DataMap.getSimple().totalFieldArr.indexOf(sonField)!=-1)
 				{
-					lineHeight-=20;
+					//lineHeight-=headHeight;
 				}
-				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],20);
-				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight);
+				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],headHeight/2);
+				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight-colHeight);
 			//	trace("加载复杂列中的单个列: 列名："+sonHeader+"|宽度|"+columnWidth+"|位置|"+simpleColumnWidth[simpleColumnWidth.length-1]+"列的字段名: "+gm.sonFieldArray[i]);
 				var header:PrintDocTxt=new PrintDocTxt(sonHeader,"center",columnWidth,gm.letterSpacArr[i]);
 				this.addChild(header);
@@ -369,9 +373,10 @@ package com.nova.print.doc
 							txt="..."	
 						}
 					}
-					var nt:PrintDocTxt=new PrintDocTxt(txt,align,gridW,headHeight,true);
+					var nt:PrintDocTxt=new PrintDocTxt(txt,align,gridW,colHeight,iswrap);
 					nt.x=localX;
-					nt.y=colHeight*j+3+headHeight;
+					nt.y=colHeight*j+headHeight;
+					var hasMask:Boolean=true;
 					if(obj.nova=="total" && DataMap.getSimple().totalFieldArr.indexOf(field)!=-1)
 					{
 						nt.creatBg(false);
@@ -380,6 +385,7 @@ package com.nova.print.doc
 					{
 						nt.creatBg();
 					}
+				//	trace("printContent:  "+txt+"| "+field+"|   "+DataMap.getSimple().totalFieldArr.indexOf(field)+"|  nova:"+obj.nova);
 					this.addChild(nt);
 				}
 			}
@@ -404,7 +410,7 @@ package com.nova.print.doc
 		}
 		override public function getHeight():int
 		{
-			return this.gridHeight+15;
+			return this.gridHeight;
 		}
 	}
 }

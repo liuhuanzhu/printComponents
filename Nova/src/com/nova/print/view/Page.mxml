@@ -81,7 +81,7 @@
 			{
 				topSprite=new PrintText("top");
 				printHeader=new PrintHeader();
-				printHeader.creatHeader();
+				printHeader.creatHeader(SetupInfo.getInstance().paperWidthSize);
 				uiSprite.addChild(printHeader);
 				uiSprite.addChild(topSprite);
 				bottomSprite=new PrintText("bottom");
