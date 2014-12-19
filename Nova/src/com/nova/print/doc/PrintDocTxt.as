@@ -56,7 +56,7 @@ package com.nova.print.doc
 				txtField.wordWrap=false;
 				if(Math.ceil(txtField.height/25)>=2)
 				{
-					txtField.y+=txtField.height/4;
+					txtField.y+=txtField.textHeight/2;
 				}
 			}
 		}

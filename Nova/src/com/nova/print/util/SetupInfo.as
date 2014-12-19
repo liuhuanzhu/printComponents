@@ -98,6 +98,9 @@ package com.nova.print.util
 		private var _gridIsEnable:Boolean=true;
 		
 		
+		
+		private var _setXml:XML=null;
+		
 		public static function getInstance():SetupInfo
 		{
 			if(setupInfo==null)
@@ -147,6 +150,7 @@ package com.nova.print.util
 		}
 		public function getProperties(xml:XML):void
 		{
+			_setXml=xml;
 			this._paperType=xml.paperType;
 			this._paperSelectIndex=int(xml.paperSelectIndex);
 			this._paperWidthSize=int(xml.paperWidthSize);
@@ -204,11 +208,22 @@ package com.nova.print.util
  * */
 		public function setCoverSet():void
 		{
+			if(PrintUtil.getSimple().coverSetXml==null)
+			{
+				PrintUtil.getSimple().coverSetXml=<sets>
+													<colHeight>25</colHeight>
+													<borderWidth>2</borderWidth>  
+												  	<offsetX>80</offsetX>  
+												  	<offsetY>30</offsetY> 
+												</sets>;
+			}
+			if(_setXml==null){_setXml=<Properties></Properties>;}
 			var xml:XML=new XML(PrintUtil.getSimple().coverSetXml);
 			this._borderWidth=xml.borderWidth;
 			this._colHeight=xml.colHeight;
 			this._offsetX=xml.offsetX;
 			this._offsetY=xml.offsetY;
+			_setXml.appendChild(xml.children());
 		}
 		private function getBoolean(bolStr:String):Boolean
 		{
@@ -982,6 +997,18 @@ package com.nova.print.util
 		public function set colHeight(value:int):void
 		{
 			_colHeight = value;
+		}
+/**
+ * 初始化的时候获取的设置XML
+ * */
+		public function get setXml():XML
+		{
+			return _setXml;
+		}
+
+		public function set setXml(value:XML):void
+		{
+			_setXml = value;
 		}
 
 

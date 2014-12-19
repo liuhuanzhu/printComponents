@@ -46,20 +46,20 @@
 			
 			private function init():void
 			{
-				
-				PrintUtil.getSimple().addEventListener(PrintEvents.PrintChange,layoutCompleteHandler);
-				PrintUtil.getSimple().startLoad(VERSION);
-			}
-			
-			/**
-			 * 发布版
-			 *   */
-			private function releaseVersion():void
-			{
-				ExternalInterface.addCallback("getLayout",getLayout);
-				ExternalInterface.addCallback("getData",getData);
-				ExternalInterface.addCallback("getProperties",getProperties);
-				ExternalInterface.call("creationComplete","");
+				 Security.allowDomain("*");
+				 ExternalInterface.call("AsCreatComplete"); 
+				 if(ExternalInterface.available)
+				 {
+					 ExternalInterface.addCallback("getProperties",getProperties);
+					 ExternalInterface.addCallback("getLayout",getLayout);
+					 ExternalInterface.addCallback("getData",getData);
+					 ExternalInterface.addCallback("getSetting",getSetting);
+				 }
+				if(VERSION==1)
+				{
+					 PrintUtil.getSimple().addEventListener(PrintEvents.PrintChange,layoutCompleteHandler);
+					 PrintUtil.getSimple().startLoad(VERSION);
+				}
 			}
 			/**
 			 * 布局版
@@ -75,17 +75,7 @@
 			}
 			private function layoutCompleteHandler(event:PrintEvents):void
 			{
-				
-				if(VERSION==0)
-				{
-					trace(PrintUtil.getSimple().coverSetXml);
-					releaseVersion();
-				}
-				else
-				{
-					layoutVersion();
-				}
-				
+				layoutVersion();
 			}
 			
 			/** 
@@ -105,27 +95,30 @@
 				DataMap.getSimple().setData(xml);
 			}
 			/**
+			 * 获取临时的打印设置
+			 * */
+			 private function getSetting(_setting:String):void
+			 {
+				 var xml:XML=new XML(_setting);
+				 PrintUtil.getSimple().coverSetXml=xml;
+			 }
+			/**
+			 * 
 			 * 获取打印设置
 			 *   */
 			private function getProperties(_properties:String):void
 			{
-				if(_properties!="")
-				{
-					SetupInfo.getInstance().getProperties(new XML(_properties));
-				}
-				else
+				var xml:XML=new XML(_properties);
+				if(xml.toString()=="")
 				{
 					SetupInfo.getInstance().gotoPropertiesDefault();
 				}
+				else
+				{
+					SetupInfo.getInstance().getProperties(xml);
+				}
 				work=new Work();
 				this.addElement(work);
-			}
-			/**
-			 * 获取连打数据
-			 *   */
-			private function getContinuousXmls(_continuous:XML):void
-			{
-				PrintContinuous.getPc().loadAllXml(new XML(_continuous));
 			}
 		]]>
 	</fx:Script>
