@@ -1,0 +1,28 @@
+<Properties>
+   <printRange>0</printRange>  
+  <paperWidthSize>650</paperWidthSize>  
+  <paperHeightSize>350</paperHeightSize>  
+  <paperType>A4[595*842]</paperType>
+ <isEmptyRow>true</isEmptyRow>  
+  <printRowNumber>6</printRowNumber>  
+  <paperSelectIndex>5</paperSelectIndex>  
+  <printLayout>hor</printLayout>  
+  <printIsTaoda>false</printIsTaoda>  
+  <isPrintHeader>false</isPrintHeader>  
+  <isPrintLines>false</isPrintLines>  
+  <printFixChangeBol>true</printFixChangeBol>  
+  <printFirstRow>1</printFirstRow>  
+  <printEndRow>4</printEndRow>  
+  <rowToCol>true</rowToCol>  
+   <printFooterNum>0</printFooterNum>  
+  <printHeaderNum>0</printHeaderNum>  
+  <printFooter></printFooter>  
+  <printHeader></printHeader>  
+  <printLeft>15</printLeft>  
+  <printRight>15</printRight>  
+ <printTop>0</printTop>  
+  <printBottom>0</printBottom>  
+  <rowPages>1</rowPages>  
+  <colPages>1</colPages>  
+  <printFoldMax>4</printFoldMax>  
+</Properties>
