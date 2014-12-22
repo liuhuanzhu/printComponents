@@ -19,7 +19,10 @@ package com.nova.print.doc
 	{
 		private var rowCurrentPage:int=0;
 		private var colCurrentPage:int=0;
-		private var dataLength:int=0;//行数目
+		private var dataLength:int=0;
+		
+		
+		//行数目
 		private var headLength:int=0;//列数目
 		public var gridWidth:int=0;//表格总宽度  
 		private var gridHeight:int=0;//表格高度
@@ -267,7 +270,7 @@ package com.nova.print.doc
 			var field:String=gm.sonFieldArray[0];
 			var isMin:int=0;
 			var lineHeight:int=gridHeight;
-			if(DataMap.getSimple().totalFieldArr!=null && DataMap.getSimple().totalFieldArr.indexOf(field)!=-1 && DataMap.getSimple().totalFieldArr[DataMap.getSimple().totalFieldArr.length-1]!=field)
+			if(DataMap.getSimple().totalFieldArr!=null && DataMap.getSimple().totalFieldArr.length>=1 && DataMap.getSimple().totalFieldArr.indexOf(field)!=-1)
 			{
 				lineHeight-=colHeight;
 			}
@@ -277,7 +280,9 @@ package com.nova.print.doc
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],0);
 				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight);
 				this.graphics.endFill();
+				
 			}
+			trace("执行画线sonField:  "+field+"|||lineHeight: "+lineHeight+"|开始坐标: "+headHeight/2);
 			var header:PrintDocTxt=new PrintDocTxt(gm.parentHeader,"center",columnWidth,headHeight,false,gm.letterSpac);
 			this.addChild(header);
 			header.x=simpleColumnWidth[simpleColumnWidth.length-2];
@@ -301,13 +306,13 @@ package com.nova.print.doc
 				columnWidth=array[3];
 				simpleColumnWidth.push(simpleColumnWidth[simpleColumnWidth.length-1]+columnWidth);
 				var lineHeight:int=gridHeight;
-				if(DataMap.getSimple().totalFieldArr.indexOf(sonField)!=-1)
+				if(DataMap.getSimple().totalFieldArr!=null && DataMap.getSimple().totalFieldArr.length>=1 && DataMap.getSimple().totalFieldArr.indexOf(sonField)!=-1)
 				{
-					//lineHeight-=headHeight;
+					lineHeight-=colHeight;
 				}
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],headHeight/2);
-				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight-colHeight);
-			//	trace("加载复杂列中的单个列: 列名："+sonHeader+"|宽度|"+columnWidth+"|位置|"+simpleColumnWidth[simpleColumnWidth.length-1]+"列的字段名: "+gm.sonFieldArray[i]);
+				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight);
+				trace("执行画线sonField:  "+sonField+"|||lineHeight: "+lineHeight+"|开始坐标: "+headHeight/2);
 				var header:PrintDocTxt=new PrintDocTxt(sonHeader,"center",columnWidth,gm.letterSpacArr[i]);
 				this.addChild(header);
 				header.x=simpleColumnWidth[simpleColumnWidth.length-2];
@@ -321,7 +326,8 @@ package com.nova.print.doc
 			if(simpleColumnWidth[simpleColumnWidth.length-1]<gridWidth)
 			{
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],0);
-				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],dataLength*colHeight+headHeight);
+				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],gridHeight);
+				trace("复杂列的最后一个画线"+sonField+"|||lineHeight: "+lineHeight+"|开始坐标: "+0);
 			}
 			var firstLocal:int=simpleColumnWidth[simpleColumnWidth.length-length-1];
 			var endLocal:int=simpleColumnWidth[simpleColumnWidth.length-1];
@@ -329,7 +335,6 @@ package com.nova.print.doc
 			this.graphics.moveTo(firstLocal,20);
 			this.graphics.lineTo(endLocal,20);
 			this.graphics.endFill();
-			//trace("加载复杂列中的单个列: 列名："+endHeader+"|宽度|"+columnWidth+"|位置|"+simpleColumnWidth[simpleColumnWidth.length-1]);
 			var endHeaderDoc:PrintDocTxt=new PrintDocTxt(endHeader,"center",columnWidth,headHeight,true,gm.letterSpacArr[gm.letterSpacArr.length-1]);
 			this.addChild(endHeaderDoc);
 			endHeaderDoc.x=simpleColumnWidth[simpleColumnWidth.length-2];
@@ -407,6 +412,10 @@ package com.nova.print.doc
 				headYArray[1]=2;
 				headYArray[2]=22;
 			}
+		}
+		override public function getGridWidth():int
+		{
+			return this.gridWidth;
 		}
 		override public function getHeight():int
 		{

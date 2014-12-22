@@ -8,5 +8,9 @@ package com.nova.print.doc
 		{
 			return 0;	
 		}
+		public function getGridWidth():int
+		{
+			return 0;
+		}
 	}
 }

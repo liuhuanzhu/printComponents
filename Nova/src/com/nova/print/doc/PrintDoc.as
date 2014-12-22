@@ -66,8 +66,9 @@ package com.nova.print.doc
 			bottom.y=grid.getHeight()+gridY;
 			
 			var header:PrintHeader=new PrintHeader();
-			header.creatHeader(SetupInfo.getInstance().paperRealWidth);
+			header.creatHeader(grid.getGridWidth());
 			header.y+=offsetY;
+			header.x+=offsetX;
 			this.addChild(header);
 			
 			
