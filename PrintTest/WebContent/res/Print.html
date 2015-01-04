@@ -6,72 +6,100 @@
 		<style>
 			*{margin:0;padding:0;}
 			html,body{width:100%;height:100%;overflow-y:hidden;}
+			div{width:100%;height:100%;background-color:#ffffff;z-index:990;}
+			#multiPage{position:fixed;left:0;top:0;width:100%;height:100%;z-index:991;}
+			#multiPage img{position:absolute;left:0;top:0;right:0;bottom:0;width:100px;height:100px;margin:auto;}
 		</style>
 	</head>
 	<body>
+	<div id="singPage">
 		<object id="Nova"  name="Nova" 
-			  type="application/x-shockwave-flash" data="Nova.swf" width="100%" height="100%">
-			    <param name="movie" value="Nova.swf"/>
-			    <param name="quality" value="high"/>
-			    <param name="allowscriptaccess" value="always"/>
-			    <a href="http://www.adobe.com/go/getflash">
-			        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
-			    </a>
-		  </object>
-		 <script type="text/javascript" src="../js/jquery.js"></script>
-		  <script type="text/javascript">
-		 	 var loadIx=0;
-		  	  //swf已经创建完毕
-			  function AsCreatComplete()
-			  {
-				  loadXml("file/coverSet.xml",function(xml){
-					  thisMovie("Nova").getSetting(xml);
-					  sendLayout();
-				  })
-			  }
-		  	  //发送layout
-		  	  function sendLayout()
-		  	  {
-		  		loadXml("file/printLayout.xml",function(xml){
-					  thisMovie("Nova").getLayout(xml);
-					  sendData();
-				  })
-		  	  }
-		  	  //发送data
-		  	  function sendData()
-		  	  {
-		  		 loadXml("file/printData.xml",function(xml){
-					  thisMovie("Nova").getData(xml);
-					  sendProperties();
-				  })
-		  	  }
-		  	 //发送打印设置
-		  	  function sendProperties()
-		  	  {
-		  		 loadXml("file/printSet.xml",function(xml){
-					 thisMovie("Nova").getProperties(xml);
-				  })
-		  	  }
-		  	  function loadXml(requestUrl,successHandler)
-		  	  {
-		  		  $.ajax({
-		  			 url: requestUrl,
-		  			 type: "POST",
-                     dataType: "text",
-                     success:successHandler
-		  		  })
-		  	  }
-		  	  
-			  function thisMovie(movieName)
-			  {   
-		         if(navigator.appName.indexOf("Microsoft")!=-1)
-		         {   
-		            return window[movieName];   
-		         }else
-		         {   
-		             return document[movieName];   
-		         }   
-			  } 
-		  </script>
-	</body>
+		  type="application/x-shockwave-flash" data="Nova.swf" width="100%" height="100%">
+		    <param name="movie" value="Nova.swf"/>
+		    <param name="quality" value="high"/>
+		    <param name="allowscriptaccess" value="always"/>
+		    <a href="http://www.adobe.com/go/getflash">
+		        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
+		    </a>
+	 	</object>
+	</div>
+	<div id="multiPage">
+		<img src="assets/loading.gif"/>
+	</div>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript">
+		var printType = 0;
+		var layoutUrl="file/printLayout.xml";
+		var dataUrl="file/printData.xml";
+		var setUrl="file/coverSet.xml";
+		var propertiesUrl="file/printSet.xml";
+		$(window).ready(function() {
+			var search = location.search;
+			var printTypes = search.split("=");
+			printType = printTypes[1];
+		})
+		//swf已经创建完毕
+		function AsCreatComplete() {
+			console.log(printType);
+			if (printType == "0") {
+				$("#multiPage").hide();
+			}
+			else{
+				layoutUrl="file/printLayouts.xml";
+				dataUrl="file/printDatas.xml";
+				setUrl="file/coverSet.xml";
+				propertiesUrl="file/printSets.xml";
+			}
+			loadXml(setUrl, function(xml) {
+				thisMovie("Nova").getPrintType(printType);
+				thisMovie("Nova").getSetting(xml);
+				console.log(thisMovie("Nova").getPrintType+"coverSet: "+xml);
+				sendLayout();
+			})
+		}
+		//发送layout
+		function sendLayout() {
+			loadXml(layoutUrl, function(xml) {
+				thisMovie("Nova").getLayout(xml);
+				console.log("layout: "+xml);
+				sendData();
+			})
+		}
+		//发送data
+		function sendData() {
+			loadXml(dataUrl, function(xml) {
+				thisMovie("Nova").getData(xml);
+				console.log("data: "+xml);
+				sendProperties();
+			})
+		}
+		//发送打印设置
+		function sendProperties() {
+			loadXml(propertiesUrl, function(xml) {
+				console.log("set: "+xml);
+				thisMovie("Nova").getProperties(xml);
+			})
+		}
+		function loadXml(requestUrl, successHandler) {
+			$.ajax({
+				url : requestUrl,
+				type : "POST",
+				dataType : "text",
+				success : successHandler
+			})
+		}
+		//连打模式  打印启动后 关闭浏览器
+		function closePrint()
+		{
+			window.close();
+		}
+		function thisMovie(movieName) {
+			if (navigator.appName.indexOf("Microsoft") != -1) {
+				return window[movieName];
+			} else {
+				return document[movieName];
+			}
+		}
+	</script>
+</body>
 </html>

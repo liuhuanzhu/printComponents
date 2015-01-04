@@ -1,37 +1,38 @@
 <Layouts>
-			<Label y="45" width="700" text="记账凭证" fontSize="22"/>
-			<Label x="0" y="103" id="voucherDate" fontSize="10"/>
-			<BorderContainer x="0" y="20" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
-					<Label y="85" x="0" id="printCompanyName" />
-					<Label x="455" y="70" text="附件:" height="20" width="30"/>
-					<Label x="495" y="70" id="attachmentNum" width="40"/>
-					<Label x="513" y="70" text="张" height="20" />
-					<Label x="455" y="85" text="凭证号:" height="20" width="40"/>
-					<Label x="491" y="85" id="voucherCode"/>
-			</BorderContainer>
-			<BorderContainer x="0" y="125" width="659" height="153" id="bottom" xmlns="library://ns.adobe.com/flex/spark">
-				<Label x="0" y="1" text="会计主管:" height="20"/>
-				<Label x="50" y="1" id="supervisorName"/>
-				<Label x="100" y="1" text="出纳:" height="20" width="30"/>
-				<Label x="125" y="1" id="cashierName"/>
-				<Label x="195" y="1" text="复核:" height="20" width="30"/>
-				<Label x="220" y="1" id="reviewName"/>
-				<Label x="295" y="1" text="制单:" height="20" width="30"/>
-				<Label x="320" y="1" id="touchingName"/>
-				<Label x="395" y="1" text="经办人:" height="20" width="40"/>
-			</BorderContainer>
-			<Grids id="entry" x="0" y="120" width="404" height="305">
-				<column dataField="summary" headerText="摘要" unique="1" letterSpace="10"/>
-				<column dataField="subjectName" headerText="会计科目" unique="2" letterSpace="10" width="196"/>
-				<columns headerText="金额">
-				  <column dataField="debit" headerText="借方" unique="4" visible="" textAlign="right" letterSpace="5"/>
-				  <column dataField="credit" headerText="贷方" unique="4" visible="" textAlign="right" letterSpace="5"/>
-				</columns>
-			  </Grids>
-			<Declarations xmlns="http://ns.adobe.com/mxml/2009">
-				<column>1</column>
-				<column>2</column>
-				<column>3</column>
-				<column>4</column>
-			</Declarations>
-</Layouts>
+							
+				<Label y="20" width="700" id="printCompanyName" fontSize="18"/>
+							<Label y="45" width="700" text="记账凭证" fontSize="22"/>
+							<BorderContainer x="0" y="20" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
+									<Label x="0" y="65" id="voucherDate"/>
+									<Label x="180" y="65" text="附件:" height="20" width="30"/>
+									<Label x="220" y="65" id="attachmentNum" width="40"/>
+									<Label x="238" y="65" text="张" height="20" />
+									<Label x="380" y="65" text="凭证号:" height="20" width="40"/>
+									<Label x="416" y="65" id="voucherCode"/>
+								</BorderContainer>
+							<BorderContainer x="0" y="100" width="659" height="153" id="bottom" xmlns="library://ns.adobe.com/flex/spark">
+								<Label x="0" y="1" text="会计主管:" height="20"/>
+								<Label x="50" y="1" id="supervisorName"/>
+								<Label x="100" y="1" text="出纳:" height="20" width="30"/>
+								<Label x="125" y="1" id="cashierName"/>
+								<Label x="195" y="1" text="复核:" height="20" width="30"/>
+								<Label x="220" y="1" id="reviewName"/>
+								<Label x="295" y="1" text="制单:" height="20" width="30"/>
+								<Label x="320" y="1" id="touchingName"/>
+								<Label x="395" y="1" text="经办人:" height="20" width="40"/>
+							</BorderContainer>
+				<Grids id="entry" x="0" y="100" width="404" height="305">
+					<column dataField="summary" headerText="摘要名称" unique="1" letterSpace="10"/>
+					<column dataField="subjectName" headerText="会计科目" unique="2" letterSpace="10" width="196"/>
+					<columns headerText="金额">
+					  <column dataField="debit" headerText="借方" unique="4" visible="" textAlign="right" letterSpace="5" width="146"/>
+					  <column dataField="credit" headerText="贷方" unique="4" visible="" textAlign="right" letterSpace="5" width="146"/>
+					</columns>
+				  </Grids>
+							<Declarations xmlns="http://ns.adobe.com/mxml/2009">
+								<column>1</column>
+								<column>2</column>
+								<column>3</column>
+								<column>4</column>
+							</Declarations>
+						</Layouts>

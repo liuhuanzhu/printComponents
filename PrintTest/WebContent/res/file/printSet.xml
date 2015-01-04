@@ -1,12 +1,12 @@
 <Properties>
   <printRange>0</printRange>
-  <paperWidthSize>595</paperWidthSize>
-  <paperHeightSize>842</paperHeightSize>
+  <paperWidthSize>650</paperWidthSize>
+  <paperHeightSize>832</paperHeightSize>
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
-  <printRowNumber>13</printRowNumber>
-  <paperSelectIndex>0</paperSelectIndex>
-  <printLayout>ver</printLayout>
+  <printRowNumber>6</printRowNumber>
+  <paperSelectIndex>5</paperSelectIndex>
+  <printLayout>hor</printLayout>
   <printIsTaoda>false</printIsTaoda>
   <isPrintHeader>false</isPrintHeader>
   <isPrintLines>false</isPrintLines>
@@ -18,13 +18,13 @@
   <printHeaderNum>0</printHeaderNum>
   <printFooter/>
   <printHeader/>
-  <printLeft>20</printLeft>
-  <printRight>20</printRight>
+  <printLeft>15</printLeft>
+  <printRight>15</printRight>
   <printTop>0</printTop>
   <printBottom>0</printBottom>
   <rowPages>1</rowPages>
   <colPages>1</colPages>
-  <printFoldMax>3</printFoldMax>
+  <printFoldMax>4</printFoldMax>
   <borderWidth>2</borderWidth>
   <offsetX>0</offsetX>
   <offsetY>30</offsetY>

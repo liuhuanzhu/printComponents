@@ -12,7 +12,23 @@
 </head>
 <body>
 	<div>
-		<a href="res/Print.html">执行打印</a>
+		<a href="#" id="singePage">单凭证打印</a>
 	</div>
+	<div>
+		<a href="#" id="multiPage">连续打印</a>
+	</div>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script>
+			$("#singePage").click(function(e){
+				e=e||window.event;
+				e.preventDefault();
+				window.open("res/Print.html?printType=0");
+			})
+			$("#multiPage").click(function(e){
+				e=e||window.event;
+				e.preventDefault();
+				window.open("res/Print.html?printType=1");
+			})
+	</script>
 </body>
 </html>
