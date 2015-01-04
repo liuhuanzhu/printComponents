@@ -97,7 +97,7 @@ package com.nova.print.util
 		private var _gridHeadCheckBol:Boolean=true;
 		private var _gridIsEnable:Boolean=true;
 		
-		
+		private var _multiPrintType:int=0;
 		
 		private var _setXml:XML=null;
 		
@@ -1009,6 +1009,19 @@ package com.nova.print.util
 		public function set setXml(value:XML):void
 		{
 			_setXml = value;
+		}
+/**
+ * 是否是连打  默认为单页打印0
+ * 连打为1
+ * */
+		public function get multiPrintType():int
+		{
+			return _multiPrintType;
+		}
+
+		public function set multiPrintType(value:int):void
+		{
+			_multiPrintType = value;
 		}
 
 

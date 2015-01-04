@@ -42,7 +42,6 @@ package com.nova.print.doc
 			ground.graphics.endFill();
 			this.addChild(ground);
 			
-			
 			offsetX=SetupInfo.getInstance().offsetX+SetupInfo.getInstance().printLeft;
 			offsetY=SetupInfo.getInstance().offsetY+SetupInfo.getInstance().printTop;
 			

@@ -36,6 +36,7 @@ package com.nova.print.map
  * */
 		public function setLayout(xml:XML):void
 		{
+			this.initialState();
 			_layoutXml=xml;
 			_allColumnIndex=0;
 			for(var i:int=0;i<xml.children().length();i++)
@@ -139,6 +140,22 @@ package com.nova.print.map
 		{
 			_declarationsXml=xx;
 		}
+/**
+ * 所有数据恢复到初始状态
+ * */		
+		private function initialState():void
+		{
+			_topXml=null;
+			_bottomXml=null;
+			_gridXml=null;
+			_layoutXml=null;
+			_declarationsXml=null;
+			_headingArray=null;
+			_headerXml=null;
+			_gridType=0;
+			_allColumnIndex=0;
+		}
+		
 /**
  * 操作项表格属性中的操作列是否显示
  * 根据gridType不同来分别解析操作

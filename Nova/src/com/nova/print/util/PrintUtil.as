@@ -57,7 +57,7 @@ package com.nova.print.util
 					if(version==1)
 					{
 						trace("继续加载");
-						_loader.load(new URLRequest("assets/file/printLayout.xml"));
+						_loader.load(new URLRequest("assets/file/printLayouts.xml"));
 						_loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					}
 					else
@@ -73,7 +73,7 @@ package com.nova.print.util
 				{
 					_loader.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 					_layoutXml=new XML(event.target.data);
-					_loader.load(new URLRequest("assets/file/printData.xml"));
+					_loader.load(new URLRequest("assets/file/printDatas.xml"));
 					_loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					break;
 				}
@@ -81,7 +81,7 @@ package com.nova.print.util
 				{
 					_loader.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 					_dataXml=new XML(event.target.data);
-					_loader.load(new URLRequest("assets/file/printSet.xml"));
+					_loader.load(new URLRequest("assets/file/printSets.xml"));
 					_loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					break;
 				}
@@ -89,16 +89,19 @@ package com.nova.print.util
 				{
 					_loader.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 					_settingXml=new XML(event.target.data);
-					_settingXml.appendChild(_coverSetXml.children());
+					if(SetupInfo.getInstance().multiPrintType==0)
+					{
+						_settingXml.appendChild(_coverSetXml.children());
+					}
 					break;
 				}
 			}
 			if(type==4)
 			{
-				trace("coveSetXml:  "+_coverSetXml);
-				trace("LayoutXml:  "+_layoutXml);
-				trace("DataXml:  "+_dataXml);
-				trace("SetXml:  "+_settingXml);
+				//trace("coveSetXml:  "+_coverSetXml);
+				//trace("LayoutXml:  "+_layoutXml);
+				//trace("DataXml:  "+_dataXml);
+				//trace("SetXml:  "+_settingXml);
 				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange));
 				
 			}

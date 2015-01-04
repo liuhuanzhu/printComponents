@@ -35,6 +35,7 @@ package com.nova.print.map
  * */
 		public function setData(value:XML):void
 		{
+			this.initialState();
 			_dataXml=value;
 			setTfData();
 			setGridData();
@@ -128,6 +129,18 @@ package com.nova.print.map
 				}
 			}
 			_gridData.refresh();
+		}
+/**
+ * 所有数据恢复到初始状态
+ * */		
+		private function initialState():void
+		{
+			_tfData=null;
+			_gridData=null;
+			_totalItem=null;
+			_dataXml=null;
+			_totalFieldArr=null;
+			_totalEllipsisArr=null;
 		}
 		public function get tfData():ArrayCollection
 		{

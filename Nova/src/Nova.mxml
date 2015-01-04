@@ -10,8 +10,8 @@
 	<fx:Script>
 		<![CDATA[
 			import com.nova.print.control.NovaText;
-			import com.nova.print.doc.PrintContinuous;
 			import com.nova.print.doc.PrintDoc;
+			import com.nova.print.doc.PrintMultiResolve;
 			import com.nova.print.event.PrintEvents;
 			import com.nova.print.map.DataMap;
 			import com.nova.print.map.LayoutMap;
@@ -50,6 +50,7 @@
 				 ExternalInterface.call("AsCreatComplete"); 
 				 if(ExternalInterface.available)
 				 {
+					 ExternalInterface.addCallback("getPrintType",getPrintType);
 					 ExternalInterface.addCallback("getProperties",getProperties);
 					 ExternalInterface.addCallback("getLayout",getLayout);
 					 ExternalInterface.addCallback("getData",getData);
@@ -57,6 +58,7 @@
 				 }
 				if(VERSION==1)
 				{
+					//SetupInfo.getInstance().multiPrintType=1;
 					 PrintUtil.getSimple().addEventListener(PrintEvents.PrintChange,layoutCompleteHandler);
 					 PrintUtil.getSimple().startLoad(VERSION);
 				}
@@ -78,13 +80,31 @@
 				layoutVersion();
 			}
 			
+			/**
+			 * 获取打印方式  
+			 * 连打为1
+			 * 单凭证打印为0
+			 *   */
+			private function getPrintType(printType:String):void
+			{
+				SetupInfo.getInstance().multiPrintType=int(printType);
+			}
+			
 			/** 
 			 * 打印来自设计局设计的mxml页面  保存所有的界面xml
 			 *   */
 			private function getLayout(_designerXml:String):void
 			{
 				var xml:XML=new XML(_designerXml);
-				LayoutMap.getSimple().setLayout(xml);
+				if(SetupInfo.getInstance().multiPrintType==0)
+				{
+					LayoutMap.getSimple().setLayout(xml);
+				}
+				else
+				{
+					PrintMultiResolve.getPc().getLayouts(xml);
+				}
+				
 			}
 			/**
 			 * 获取打印数据
@@ -92,7 +112,15 @@
 			private function getData(_printData:String):void
 			{
 				var xml:XML=new XML(_printData);
-				DataMap.getSimple().setData(xml);
+				if(SetupInfo.getInstance().multiPrintType==0)
+				{
+					DataMap.getSimple().setData(xml);
+				}
+				else
+				{
+					PrintMultiResolve.getPc().getData(xml);
+				}
+				
 			}
 			/**
 			 * 获取临时的打印设置
@@ -109,16 +137,24 @@
 			private function getProperties(_properties:String):void
 			{
 				var xml:XML=new XML(_properties);
-				if(xml.toString()=="")
+				if(SetupInfo.getInstance().multiPrintType==0)
 				{
-					SetupInfo.getInstance().gotoPropertiesDefault();
+					if(xml.toString()=="")
+					{
+						SetupInfo.getInstance().gotoPropertiesDefault();
+					}
+					else
+					{
+						SetupInfo.getInstance().getProperties(xml);
+					}
+					work=new Work();
+					this.addElement(work);
 				}
 				else
 				{
-					SetupInfo.getInstance().getProperties(xml);
+					PrintMultiResolve.getPc().getProperties(xml);
+					PrintMultiResolve.getPc().resolveXmls();
 				}
-				work=new Work();
-				this.addElement(work);
 			}
 		]]>
 	</fx:Script>

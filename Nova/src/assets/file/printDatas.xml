@@ -1,0 +1,78 @@
+﻿<multiDatas>
+	<Data>
+		<printCompanyName>中石化裕福支付技术有限公司1</printCompanyName>
+		<voucherCategory>记账凭证</voucherCategory>
+		<oppositeSubjectName></oppositeSubjectName>
+		<voucherDate>2014年11月19日</voucherDate>
+		<attachmentNum>1</attachmentNum>
+		<voucherCode>jz000004</voucherCode>
+		<supervisorName></supervisorName>
+		<cashierName></cashierName>
+		<reviewName>蔡鹏</reviewName>
+		<touchingName>邱晗</touchingName>
+		<transactor>超级管理员</transactor>
+		<DataGrid>
+			<TotalCol>
+				<Item summary="人民币（大写）：叁佰元整" elliName="summary" subjectName="" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="300.00" debit="300.00" credit="300.00" fieldName="summary"/>
+			</TotalCol>
+			<ColModel>
+				<HeaderText DataField="summary" text="摘要"/>
+				<HeaderText DataField="subjectName" text="科目"/>
+				<HeaderText DataField="subjectName2"/>
+				<HeaderText DataField="subjectName3"/>
+				<HeaderText DataField="subjectName4"/>
+				<HeaderText DataField="subjectName5"/>
+				<HeaderText DataField="subjectName6"/>
+				<HeaderText DataField="subjectName7"/>
+				<HeaderText DataField="subjectName8"/>
+				<HeaderText DataField="subjectName9"/>
+				<HeaderText DataField="subjectName10"/>
+				<HeaderText DataField="amount" text="金额"/>
+				<HeaderText DataField="debit" text="借方"/>
+				<HeaderText DataField="credit" text="贷方"/>
+			</ColModel>
+				<RowData>
+					<Item summary="支付开户手续费" subjectName="财务费用-其他费用-手续费-财务部" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="1234567890.00" debit="1234567890.00" credit=""/>
+					<Item summary="支付开户手续费" subjectName="银行存款-人民币-活期-工商银行-自有资金-0200337509200003630-中国工商银行股份有限公司北京中石化大厦支行" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="1234567890.00" debit="" credit="1234567890.00"/>
+				</RowData>
+		</DataGrid>
+	</Data> 
+	<Data>
+		<printCompanyName>中石化裕福支付技术有限公司2</printCompanyName>
+		<voucherCategory>记账凭证</voucherCategory>
+		<oppositeSubjectName></oppositeSubjectName>
+		<voucherDate>2014年11月19日</voucherDate>
+		<attachmentNum>1</attachmentNum>
+		<voucherCode>jz000004</voucherCode>
+		<supervisorName></supervisorName>
+		<cashierName></cashierName>
+		<reviewName>蔡鹏</reviewName>
+		<touchingName>邱晗</touchingName>
+		<transactor>超级管理员</transactor>
+		<DataGrid>
+			<TotalCol>
+				<Item summary="人民币（大写）：叁佰元整" elliName="summary" subjectName="" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="300.00" debit="300.00" credit="300.00" fieldName="summary"/>
+			</TotalCol>
+			<ColModel>
+				<HeaderText DataField="summary" text="摘要"/>
+				<HeaderText DataField="subjectName" text="科目"/>
+				<HeaderText DataField="subjectName2"/>
+				<HeaderText DataField="subjectName3"/>
+				<HeaderText DataField="subjectName4"/>
+				<HeaderText DataField="subjectName5"/>
+				<HeaderText DataField="subjectName6"/>
+				<HeaderText DataField="subjectName7"/>
+				<HeaderText DataField="subjectName8"/>
+				<HeaderText DataField="subjectName9"/>
+				<HeaderText DataField="subjectName10"/>
+				<HeaderText DataField="amount" text="金额"/>
+				<HeaderText DataField="debit" text="借方"/>
+				<HeaderText DataField="credit" text="贷方"/>
+			</ColModel>
+				<RowData>
+					<Item summary="支付开户手续费" subjectName="财务费用-其他费用-手续费-财务部" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="1234567890.00" debit="1234567890.00" credit=""/>
+					<Item summary="支付开户手续费" subjectName="银行存款-人民币-活期-工商银行-自有资金-0200337509200003630-中国工商银行股份有限公司北京中石化大厦支行" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="1234567890.00" debit="" credit="1234567890.00"/>
+				</RowData>
+		</DataGrid>
+	</Data> 
+</multiDatas>
