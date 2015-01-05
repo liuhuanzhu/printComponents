@@ -46,6 +46,7 @@
 			
 			private function init():void
 			{
+				
 				 Security.allowDomain("*");
 				 ExternalInterface.call("AsCreatComplete"); 
 				 if(ExternalInterface.available)
@@ -58,7 +59,7 @@
 				 }
 				if(VERSION==1)
 				{
-					//SetupInfo.getInstance().multiPrintType=1;
+					SetupInfo.getInstance().multiPrintType=0;
 					 PrintUtil.getSimple().addEventListener(PrintEvents.PrintChange,layoutCompleteHandler);
 					 PrintUtil.getSimple().startLoad(VERSION);
 				}
@@ -71,6 +72,7 @@
 				layoutXml=PrintUtil.getSimple().layoutXml;
 				setting=PrintUtil.getSimple().settingXml;
 				dataXml=PrintUtil.getSimple().dataXml;
+				getSetting(PrintUtil.getSimple().coverSetXml);
 				getLayout(layoutXml);
 				getData(dataXml);
 				getProperties(setting);
@@ -128,7 +130,15 @@
 			 private function getSetting(_setting:String):void
 			 {
 				 var xml:XML=new XML(_setting);
-				 PrintUtil.getSimple().coverSetXml=xml;
+				 if(SetupInfo.getInstance().multiPrintType==0)
+				 {
+					 PrintUtil.getSimple().coverSetXml=xml;
+				 }
+				 else
+				 {
+					 PrintMultiResolve.getPc().getCoverSet(xml);
+				 }
+				
 			 }
 			/**
 			 * 

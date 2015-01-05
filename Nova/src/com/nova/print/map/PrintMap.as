@@ -219,6 +219,7 @@ package com.nova.print.map
 			var array:Array=SetupInfo.getInstance().printRange;
 			trace("所有的列分页:"+SetupInfo.getInstance().rowPages);
 			trace("所有的行分页: "+SetupInfo.getInstance().colPages);
+			trace("array:  "+array[0]);
 			if(array[0]==-2)
 			{
 				return printAll();

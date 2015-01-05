@@ -42,7 +42,14 @@ package com.nova.print.map
 			SetupInfo.getInstance().colPages=Math.ceil(length/printNums);
 			if(SetupInfo.getInstance().colPages==1)
 			{
-				_dataArray.push(DataMap.getSimple().gridData);
+				//行数为1时 补齐相差于每页显示多少环的数据
+				var newsDatas:ArrayCollection=new ArrayCollection();
+				newsDatas.addAll(DataMap.getSimple().gridData);
+				for(var l:int=length;l<printNums;l++)
+				{
+					newsDatas.addItem(new Object());
+				}
+				_dataArray.push(newsDatas);
 				return;
 			}
 			for(var i:int=1;i<SetupInfo.getInstance().colPages;i++)

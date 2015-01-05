@@ -1,7 +1,7 @@
 <Properties>
-  <printRange>0</printRange>
+  <printRange>-2</printRange>
   <paperWidthSize>650</paperWidthSize>
-  <paperHeightSize>832</paperHeightSize>
+  <paperHeightSize>350</paperHeightSize>
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
   <printRowNumber>6</printRowNumber>
@@ -18,8 +18,8 @@
   <printHeaderNum>0</printHeaderNum>
   <printFooter/>
   <printHeader/>
-  <printLeft>15</printLeft>
-  <printRight>15</printRight>
+  <printLeft>20</printLeft>
+  <printRight>20</printRight>
   <printTop>0</printTop>
   <printBottom>0</printBottom>
   <rowPages>1</rowPages>

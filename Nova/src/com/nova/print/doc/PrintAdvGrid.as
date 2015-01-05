@@ -371,10 +371,12 @@ package com.nova.print.doc
 					{
 						txt=obj[field];
 					}
-					if(obj.nova=="total" && colCurrentPage<SetupInfo.getInstance().colPages-1)
+					if(obj.nova=="total" && colCurrentPage<SetupInfo.getInstance().colPages-1 && colCurrentPage>-1)
 					{
+						
 						if(DataMap.getSimple().totalEllipsisArr.indexOf(field)!=-1)
 						{
+							trace("colCurrentPage:  "+colCurrentPage+"||||||"+SetupInfo.getInstance().colPages);
 							txt="..."	
 						}
 					}
@@ -390,7 +392,7 @@ package com.nova.print.doc
 					{
 						nt.creatBg();
 					}
-				//	trace("printContent:  "+txt+"| "+field+"|   "+DataMap.getSimple().totalFieldArr.indexOf(field)+"|  nova:"+obj.nova);
+					trace("printContent:  "+txt+"| "+field+"|   "+DataMap.getSimple().totalFieldArr.indexOf(field)+"|  nova:"+obj.nova+"|"+DataMap.getSimple().totalEllipsisArr.indexOf(field));
 					this.addChild(nt);
 				}
 			}

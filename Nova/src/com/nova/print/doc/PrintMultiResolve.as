@@ -20,6 +20,7 @@ package com.nova.print.doc
 		private var _layoutXmls:XML=null;
 		private var _dataXmls:XML=null;
 		private var _proXml:XML=null;
+		private var _covXml:XML=null;
 		private static var instance:PrintMultiResolve=null;
 		private var printSpriteArr:Array=[];
 		public static function getPc():PrintMultiResolve
@@ -41,7 +42,10 @@ package com.nova.print.doc
 		public function getProperties(_xml:XML):void
 		{
 			_proXml=_xml;
-			trace("_proXml: "+_proXml);
+		}
+		public function getCoverSet(_xml:XML):void
+		{
+			_covXml=_xml;
 		}
 		public function resolveXmls():void
 		{
@@ -54,8 +58,10 @@ package com.nova.print.doc
 					var lx:XML=_layoutXmls.children()[i] as XML;
 					var dx:XML=_dataXmls.children()[i] as XML;
 					var px:XML=_proXml.children()[i] as XML;
+					var cx:XML=_covXml.children()[i] as XML;
 					LayoutMap.getSimple().setLayout(lx);
 					DataMap.getSimple().setData(dx);
+					PrintUtil.getSimple().coverSetXml=cx;
 					if(String(px.paperWidthSize).length>1)
 					{
 						SetupInfo.getInstance().getProperties(px);

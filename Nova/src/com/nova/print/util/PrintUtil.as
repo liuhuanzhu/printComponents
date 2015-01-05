@@ -21,6 +21,10 @@ package com.nova.print.util
 		private var type:int=0;
 		private var _loader:URLLoader=null;
 		private var version:int;
+		private var coverSetUrl:String;
+		private var layoutUrl:String;
+		private var dataUrl:String;
+		private var setUrl:String;
 		public function PrintUtil()
 		{
 			
@@ -41,7 +45,11 @@ package com.nova.print.util
 				_loader=new URLLoader();
 			}
 			version=_version;
-			_loader.load(new URLRequest("assets/file/coverSet.xml"));
+			coverSetUrl=SetupInfo.getInstance().multiPrintType==0?"assets/file/coverSet.xml":"assets/file/coverSets.xml";
+			layoutUrl=SetupInfo.getInstance().multiPrintType==0?"assets/file/printLayout.xml":"assets/file/printLayouts.xml";
+			dataUrl=SetupInfo.getInstance().multiPrintType==0?"assets/file/printData.xml":"assets/file/printDatas.xml";
+			setUrl=SetupInfo.getInstance().multiPrintType==0?"assets/file/printSet.xml":"assets/file/printSets.xml";
+			_loader.load(new URLRequest(coverSetUrl));
 			_loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 			_loader.addEventListener(IOErrorEvent.IO_ERROR,loadErrorHandler);
 		}
@@ -57,7 +65,7 @@ package com.nova.print.util
 					if(version==1)
 					{
 						trace("继续加载");
-						_loader.load(new URLRequest("assets/file/printLayouts.xml"));
+						_loader.load(new URLRequest(layoutUrl));
 						_loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					}
 					else
@@ -73,7 +81,7 @@ package com.nova.print.util
 				{
 					_loader.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 					_layoutXml=new XML(event.target.data);
-					_loader.load(new URLRequest("assets/file/printDatas.xml"));
+					_loader.load(new URLRequest(dataUrl));
 					_loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					break;
 				}
@@ -81,7 +89,7 @@ package com.nova.print.util
 				{
 					_loader.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 					_dataXml=new XML(event.target.data);
-					_loader.load(new URLRequest("assets/file/printSets.xml"));
+					_loader.load(new URLRequest(setUrl));
 					_loader.addEventListener(Event.COMPLETE,loadCompleteHandler);
 					break;
 				}

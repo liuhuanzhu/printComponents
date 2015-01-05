@@ -46,7 +46,7 @@ package com.nova.print.util
 		private var _isPrintLines:Boolean=false;
 		private var _isPirntOrder:Boolean=true;
 		private var _isEmptyRow:Boolean=false;
-		private var _printRange:Array=[0];
+		private var _printRange:Array=[-2];
 		private var _printFoldMax:int=0;
 		private var _printFixMax:int=0;
 		private var _printFirstRow:int=1;
@@ -115,7 +115,7 @@ package com.nova.print.util
 		public function exportProperties():void
 		{
 			_exportPropertiesXml=<Properties></Properties>;
-			_exportPropertiesXml.appendChild(<printRange>{_printRange}</printRange>);
+			_exportPropertiesXml.appendChild(<printRange>{_printRange.toString()}</printRange>);
 			_exportPropertiesXml.appendChild(<paperWidthSize>{_paperWidthSize}</paperWidthSize>);
 			_exportPropertiesXml.appendChild(<paperHeightSize>{_paperHeightSize}</paperHeightSize>);
 			_exportPropertiesXml.appendChild(<paperType>{_paperType}</paperType>);
@@ -173,6 +173,7 @@ package com.nova.print.util
 			this._printBottom=int(xml.printBottom);
 			this._printTop=int(xml.printTop);
 			this._rowPages=int(xml.rowPages);
+			this._printRange=String(xml.printRange).split(",");
 			this._printInitPaperArr=[_paperWidthSize,_paperHeightSize];
 			setCoverSet();
 			if(SetupInfo.getInstance().hasGrid)
