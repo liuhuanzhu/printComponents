@@ -51,7 +51,7 @@ package com.nova.print.util
 		private var _printFixMax:int=0;
 		private var _printFirstRow:int=1;
 		private var _printEndRow:int=5;
-		private var _printTotalPages:int=0;
+		private var _printTotalPages:int=1;
 		
 		private var _rowToCol:Boolean=true;
 		

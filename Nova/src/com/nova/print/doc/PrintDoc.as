@@ -65,9 +65,16 @@ package com.nova.print.doc
 			bottom.y=grid.getHeight()+gridY;
 			
 			var header:PrintHeader=new PrintHeader();
-			header.creatHeader(grid.getGridWidth());
+			if(SetupInfo.getInstance().hasGrid)
+			{
+				header.creatHeader(grid.getGridWidth());
+				header.x+=offsetX;
+			}
+			else
+			{
+				header.creatHeader(SetupInfo.getInstance().paperRealWidth);
+			}
 			header.y+=offsetY;
-			header.x+=offsetX;
 			this.addChild(header);
 			
 			
@@ -75,6 +82,8 @@ package com.nova.print.doc
 			page.Creat(_colCurrentPage,grid);
 			ground.addChild(page);
 			
+			
+			trace("打印坐标:  "+this.x+"||||"+top.x+"|||"+top.y);
 			
 		}
 		

@@ -1,7 +1,7 @@
 <Properties>
   <printRange>-2</printRange>
-  <paperWidthSize>650</paperWidthSize>
-  <paperHeightSize>350</paperHeightSize>
+  <paperWidthSize>842</paperWidthSize>
+  <paperHeightSize>595</paperHeightSize>
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
   <printRowNumber>6</printRowNumber>

@@ -1,40 +1,58 @@
 <Layouts>
-			<Label y="20" width="700" id="printCompanyName" fontSize="18"/>
-			<Label x="250" y="45" width="700" text="收款凭证2" fontSize="22"/>
-			<BorderContainer x="0" y="20" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
-					<Label x="0" y="65" text="借方科目:" height="20"/>
-					<Label x="45" y="65" id="oppositeSubjectName"/>
-					<Label x="268" y="65" id="voucherDate"/>
-					<Label x="400" y="65" text="附件:" height="20" width="30"/>
-					<Label x="440" y="65" id="attachmentNum" width="40"/>
-					<Label x="458" y="65" text="张" height="20" />
-					<Label x="510" y="65" text="凭证号:" height="20" width="40"/>
-					<Label x="546" y="65" id="voucherCode"/>
+			<Label y="20" width="700" text="" id="fhdId" fontSize="18"/>
+			<BorderContainer x="40" y="-40" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
+					<!-- top-->
+					<Label x="0" y="125" text="发货单类型:" height="22" width="100"/>
+					<Label x="60" y="125" text="" id="fhdlx" height="22" width="100"/>
+					<Label x="600" y="125" text="开单时间:" height="22" width="100"/>
+					<Label x="650" y="125" text="" id="kdsj" height="22" width="100"/>
+					<!--f -->
+					<Label x="0" y="142" text="发货单编号" height="22" width="90" border="true"/>
+					<Label x="90" y="142" text="" id="fhdbh" height="22" width="90"  border="true"/>
+					<Label x="180" y="142" text="产品名称" height="22" width="90"  border="true"/>
+					<Label x="270" y="142" text=""  height="22" width="270"  border="true"/>
+					<Label x="540" y="142" text="车行车号" height="22" width="90"  border="true"/>
+					<Label x="630" y="142" text=""  height="22" width="90"  border="true"/>
+					<!--f -->
+					<Label x="0" y="164" text="售达单位" height="22" width="90"  border="true"/>
+					<Label x="90" y="164" text=""  height="22" width="270"  border="true"/>
+					<Label x="360" y="164" text="实装量(吨)" height="22" width="90"  border="true"/>
+					<Label x="450" y="164" text="" height="22"  width="90"  border="true"/>
+					<Label x="540" y="164" text="产品等级" height="22" width="90"  border="true"/>
+					<Label x="630" y="164" text="" height="22"  width="90"  border="true"/>
+					<!--f -->
+					<Label x="0" y="186" text="订单编号" height="22" width="90"  border="true"/>
+					<Label x="90" y="186" text="" id="thdd" height="22" width="90"  border="true"/>
+					<Label x="180" y="186" text="订单量(吨)" height="22" width="90"  border="true"/>
+					<Label x="270" y="186" text="A"   height="22" width="90"  border="true"/>
+					<Label x="360" y="186" text="已提量(吨)" height="22" width="90"  border="true"/>
+					<Label x="450" y="186" text="" height="22" width="90"  border="true"/>
+					<Label x="540" y="186" text="未交量(吨)" height="22" width="90"  border="true"/>
+					<Label x="630" y="186" text="" height="22" width="90"  border="true"/>
+					<!--f --->
+					<Label x="0" y="208" text="预装量(吨)" height="22" width="90"  border="true"/>
+					<Label x="90" y="208" text=""  id="yzl" height="22" width="180"  border="true"/>
+					<Label x="270" y="208" text="" id="zwyzl" height="22" width="90" border="true"/>
+					<Label x="360" y="208" text="订单未交量(吨)" height="22" width="90"  border="true"/>
+					<Label x="450" y="208" text="" id="wjl" height="22" width="90"  border="true"/>
+					<Label x="540" y="208" text="运输方式" height="22" width="90"  border="true"/>
+					<Label x="630" y="208" text="" id="ysfs" height="22" width="90"  border="true"/>
+					<!--f -->
+					<Label x="0" y="230" text="包装名称" height="22" width="90"  border="true"/>
+					<Label x="90" y="230" text="" id="kcl" height="22" width="90"  border="true"/>
+					<Label x="180" y="230" text="包装数量" height="22" width="90" border="true"/>
+					<Label x="270" y="230" text="" id="zcl" height="22" width="90"  border="true"/>
+					<Label x="360" y="230" text="提货地点" height="22" width="90"  border="true"/>
+					<Label x="450" y="230" text=""  height="22" width="270"  border="true"/>
+					<!--f -->
+					<Label x="0" y="252" text="发货单位盖章：" height="110" width="90"  border="true"/>
+					<Label x="0" y="252" text="" height="110" width="720"  border="true"/>
+					<!--f -->
+					<Label x="0" y="362" text="提示：1、每月末最后一天停止发货，进行盘点，请合理安排时间；2、秤重时车内请不要载人或物；3、单据内容手写无效" height="22" width="720"  border="true"/>
+					<!--bottom -->
+					<Label x="0" y="384" text="发货管理员：" />
+					<Label x="60" y="384" id="fhgly" />
+					<Label x="400" y="384" text="提货人：" />
+					<Label x="440" y="384" text="" id="thr" />
 				</BorderContainer>
-			<BorderContainer x="0" y="100" width="659" height="153" id="bottom" xmlns="library://ns.adobe.com/flex/spark">
-				<Label x="0" y="1" text="会计主管:" height="20"/>
-				<Label x="50" y="1" id="supervisorName"/>
-				<Label x="140" y="1" text="出纳:" height="20" width="30"/>
-				<Label x="165" y="1" id="cashierName"/>
-				<Label x="235" y="1" text="复核:" height="20" width="30"/>
-				<Label x="260" y="1" id="reviewName"/>
-				<Label x="335" y="1" text="制单:" height="20" width="30"/>
-				<Label x="360" y="1" id="touchingName"/>
-				<Label x="455" y="1" text="经办人:" height="20" width="40"/>
-			</BorderContainer>
-<Grids id="entry" x="0" y="100" width="404" height="305">
-    <column dataField="summary" headerText="摘要" unique="1" letterSpace="10"/>
-    <columns headerText="贷方科目" letterSpace="20">
-      <column dataField="subjectName" headerText="总账科目" unique="2" letterSpace="5" width="90"/>
-      <column dataField="subjectName2" headerText="二级科目" unique="2" letterSpace="5" width="87"/>
-      <column dataField="subjectName3" headerText="明细科目" unique="2" letterSpace="10" width="196"/>
-    </columns>
-    <column dataField="credit" headerText="金额" unique="3" visible="" textAlign="right" letterSpace="5"/>
-  </Grids>
-			<Declarations xmlns="http://ns.adobe.com/mxml/2009">
-				<column>1</column>
-				<column>2</column>
-				<column>3</column>
-				<column>4</column>
-			</Declarations>
 		</Layouts>

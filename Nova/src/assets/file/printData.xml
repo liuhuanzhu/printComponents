@@ -1,12 +1,32 @@
-﻿<Data><printCompanyName>胜利油田华滨实业有限公司</printCompanyName><voucherCategory>机关收款凭证</voucherCategory><oppositeSubjectName>库存现金</oppositeSubjectName><voucherDate>2014年01月06日</voucherDate><attachmentNum>0</attachmentNum><voucherCode>JG1002</voucherCode><supervisorName></supervisorName><cashierName></cashierName><reviewName>姚立娟</reviewName><touchingName>刘红红</touchingName><transactor>赵黎明</transactor><DataGrid>
-<TotalCol><Item summary="人民币（大写）：捌拾肆元整" elliName="credit,summary" subjectName="" subjectName2="" subjectName3="" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00" fieldName="summary,subjectName,subjectName2"/></TotalCol><ColModel><HeaderText DataField="summary" text="摘要"/><HeaderText DataField="subjectName" text="科目"/><HeaderText DataField="subjectName2"/><HeaderText DataField="subjectName3"/><HeaderText DataField="subjectName4"/><HeaderText DataField="subjectName5"/><HeaderText DataField="subjectName6"/><HeaderText DataField="subjectName7"/><HeaderText DataField="subjectName8"/><HeaderText DataField="subjectName9"/><HeaderText DataField="subjectName10"/><HeaderText DataField="amount" text="金额"/><HeaderText DataField="debit" text="借方"/><HeaderText DataField="credit" text="贷方"/></ColModel>
-<RowData>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-<Item summary="更正2013.12.4收款4#凭证" subjectName="其他应付款" subjectName2="其他往来" subjectName3="会费" subjectName4="" subjectName5="" subjectName6="" subjectName7="" subjectName8="" subjectName9="" subjectName10="" amount="84.00" debit="" credit="84.00"/>
-</RowData></DataGrid></Data>
+﻿<Data>
+	<fhdId>XXX出门证</fhdId>
+	<fhdlx>燕化炼油统销交货</fhdlx>
+	<kdsj>2014/9/11</kdsj>
+	<fhdbh>80406099</fhdbh>
+	<ddbh>7300007738</ddbh>
+	<cpmc>4号A石油焦</cpmc>
+	<thdw>内容古煤通顺碳素有限责任公司</thdw>
+	<jhly>属地销售</jhly>
+	<thdd>油品散装</thdd>
+	<cpdj>A</cpdj>
+	<dateto>2016/9/11</dateto>
+	<yzl>40.000</yzl>
+	<zwyzl>肆拾吨</zwyzl>
+	<wjl>100.000</wjl>
+	<ysfs>公路运输</ysfs>
+	<kcl></kcl>
+	<zcl></zcl>
+	<szl></szl>
+	<szdj></szdj>
+	<bzmc></bzmc>
+	<sj></sj>
+	<bzsl></bzsl>
+	<cxch>鲁P42003</cxch>
+	<qzr1></qzr1>
+	<qzr2></qzr2>
+	<qzr3></qzr3>
+	<qzr4></qzr4>
+	<qzr5></qzr5>
+	<fhgly>XXX</fhgly>
+	<thr>xxx</thr>
+</Data>

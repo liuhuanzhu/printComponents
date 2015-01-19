@@ -38,6 +38,9 @@ package com.nova.print.doc
 				var ty:Number=Number(xx.@y);
 				var size:String=xx.@fontSize;
 				var align:String=xx.@textAlign;
+				var height:int=Number(xx.@height);
+				
+				var border:Boolean=xx.@border=="true"?true:false;
 				if(align.length==0)
 				{
 					align="left";
@@ -52,16 +55,15 @@ package com.nova.print.doc
 					}
 					else
 					{
-						var nt:NovaText=new NovaText(findById(ID),align,size,width);
+						var nt:NovaText=new NovaText(findById(ID),align,size,width,height,border);
 						nt.x=tx;
 						nt.y=ty;
-						trace("加载动态赋值的数据为:  "+findById(ID)+"   X: "+tx+"    Y:"+ty+"   --"+nt.width);
 						this.addChild(nt);
 					}
 				}
 				if(!SetupInfo.getInstance().printIsTaoda && ID.length==0)
 				{
-					var bt:NovaText=new NovaText(xx.@text,"left",size,width);
+					var bt:NovaText=new NovaText(xx.@text,"left",size,width,height,border);
 					bt.x=tx;
 					bt.y=ty;
 					this.addChild(bt);

@@ -42,7 +42,7 @@
 			 * 0 为发布版
 			 * 1为测试版
 			 *   */
-			private var VERSION:int=0;
+			private var VERSION:int=1;
 			
 			private function init():void
 			{

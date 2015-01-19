@@ -2,28 +2,42 @@ package com.nova.print.control
 {
 	import com.nova.print.util.SetupInfo;
 	
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
+	import flash.text.engine.SpaceJustifier;
 	
-	public class NovaText extends TextField
+	public class NovaText extends Sprite
 	{
 		private var txtFormat:TextFormat=null;
-		public function NovaText(txt:String,align:String,size:String,_width:int=0)
+		private var tf:TextField;
+		public function NovaText(txt:String,align:String,size:String,_width:int=0,_height:int=0,_border:Boolean=false)
 		{
 			super();
+			tf=new TextField();
+			this.addChild(tf);
 			if(txt==null)
 			{
 				txt="";
 			}
-			this.text=txt;
+			tf.text=txt;
 			if(_width!=0)
 			{
-				this.width=_width;
+				tf.width=_width;
 			}
 			else
 			{
-				this.width=this.textWidth+20;
+				tf.width=tf.textWidth+20;
+			}
+			if(_height!=0)
+			{
+				tf.height=_height;
+			}
+			else
+			{
+				tf.height=40;
 			}
 			txtFormat=new TextFormat();
 			if(size.length==0)
@@ -38,11 +52,24 @@ package com.nova.print.control
 			txtFormat.align=align;
 			txtFormat.font="SONG";
 			txtFormat.bold=true;
-			this.embedFonts=true;
-			this.setTextFormat(txtFormat);
-			this.mouseEnabled=false;
-			this.wordWrap=false;
-			this.height=40;
+			tf.embedFonts=true;
+			tf.setTextFormat(txtFormat);
+			tf.mouseEnabled=false;
+			tf.wordWrap=false;
+			if(_border)
+			{
+				creatLine();
+			}
+		}
+		private function creatLine():void
+		{
+			tf.y=5;
+			var shape:Shape=new Shape();
+			shape.graphics.lineStyle(1,0x000000);
+			shape.graphics.beginFill(0x000000,0);
+			shape.graphics.drawRect(0,0,tf.width,tf.height);
+			shape.graphics.endFill();
+			this.addChild(shape);
 		}
 	}
 }
