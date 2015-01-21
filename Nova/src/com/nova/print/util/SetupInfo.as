@@ -162,8 +162,16 @@ package com.nova.print.util
 			this._printFixChangeBol=getBoolean(xml.printFixChangeBol);
 			this._isEmptyRow=getBoolean(xml.isEmptyRow);
 			this._printRowNumber=int(xml.printRowNumber);
+			if(this._printRowNumber==0)
+			{
+				this._printRowNumber=DataMap.getSimple().gridData.length;
+			}
 			this._printFirstRow=int(xml.printFirstRow);
 			this._printEndRow=int(xml.printEndRow);
+			if(this._printEndRow==0)
+			{
+				this._printEndRow=LayoutMap.getSimple().allColumnIndex;
+			}
 			this._printFooterNum=int(xml.printFooterNum);
 			this._printHeaderNum=int(xml.printHeaderNum);
 			this._printFooter=xml.printFooter;
