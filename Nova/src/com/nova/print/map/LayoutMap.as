@@ -74,6 +74,10 @@ package com.nova.print.map
 			{
 				_topXml= new XML(<BorderContainer x="0" y="0" id="top"/>);
 			}
+			if(_declarationsXml==null)
+			{
+				_declarationsXml= new XML(<Declarations></Declarations>);
+			}
 			layoutTrace();
 		}
 		private function creatHeader(xx:XML):void

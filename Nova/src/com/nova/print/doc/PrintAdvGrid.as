@@ -392,7 +392,6 @@ package com.nova.print.doc
 					{
 						nt.creatBg();
 					}
-					trace("printContent:  "+txt+"| "+field+"|   "+DataMap.getSimple().totalFieldArr.indexOf(field)+"|  nova:"+obj.nova+"|"+DataMap.getSimple().totalEllipsisArr.indexOf(field));
 					this.addChild(nt);
 				}
 			}
