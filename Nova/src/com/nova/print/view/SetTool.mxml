@@ -33,12 +33,17 @@
 			
 			import spark.filters.DropShadowFilter;
 			[Bindable]
-			private var paperArray:ArrayCollection=null;
+			private var paperArray:ArrayCollection=new ArrayCollection([{name:"A4[595*842]",pw:595,ph:842},
+																		  {name:"A3[842*1191]",pw:842,ph:1191},
+																		  {name:"A5[420*595]",pw:420,ph:595},
+																		  {name:"B4[729*1032]",pw:729,ph:1032},
+																		  {name:"B5[516*729]",pw:516,ph:729},
+																		  {name:"凭证",pw:350,ph:650}
+																		]);
 			public static   var gridArray:ArrayCollection;
 			private var localX:int=-310;
 			private function init():void
 			{
-				paperArray=SetupInfo.getInstance().paperArray;
 				if(!SetupInfo.getInstance().hasGrid)
 				{
 					accordion.removeElement(page);
@@ -82,12 +87,16 @@
 					layoutVer.filters=[dropshow];
 					layoutHor.filters=[];
 					SetupInfo.getInstance().printLayout="ver";
+					SetupInfo.getInstance().paperWidthSize=SetupInfo.getInstance().printInitPaperArr[0];
+					SetupInfo.getInstance().paperHeightSize=SetupInfo.getInstance().printInitPaperArr[1];
 				}
 				else
 				{
 					layoutVer.filters=[];
 					layoutHor.filters=[dropshow];
 					SetupInfo.getInstance().printLayout="hor";
+					SetupInfo.getInstance().paperWidthSize=SetupInfo.getInstance().printInitPaperArr[1];
+					SetupInfo.getInstance().paperHeightSize=SetupInfo.getInstance().printInitPaperArr[0];
 				}
 				Image(event.target.parent).mouseEnabled=false;
 				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"printLayout")); 
@@ -103,9 +112,12 @@
 				var dropshow:spark.filters.DropShadowFilter=new spark.filters.DropShadowFilter(0);
 				var item:Object=paperList.selectedItem;
 				SetupInfo.getInstance().paperSelectIndex=paperList.selectedIndex;
+				SetupInfo.getInstance().paperWidthSize=Number(item.pw);
+				SetupInfo.getInstance().paperHeightSize=Number(item.ph);
 				layoutVer.filters=[dropshow];
 				layoutHor.filters=[];
 				SetupInfo.getInstance().printLayout="ver";
+				SetupInfo.getInstance().printInitPaperArr=[SetupInfo.getInstance().paperWidthSize,SetupInfo.getInstance().paperHeightSize];
 				this.dispatchEvent(new PrintEvents(PrintEvents.PrintChange,"paperSize"));
 				
 			}
@@ -114,6 +126,9 @@
 				var dropshow:spark.filters.DropShadowFilter=new spark.filters.DropShadowFilter(0);
 				paperList.selectedIndex=SetupInfo.getInstance().paperSelectIndex;
 				var item:Object=paperList.selectedItem;
+				SetupInfo.getInstance().paperWidthSize=Number(item.pw);
+				SetupInfo.getInstance().paperHeightSize=Number(item.ph);
+				SetupInfo.getInstance().printInitPaperArr=[SetupInfo.getInstance().paperWidthSize,SetupInfo.getInstance().paperHeightSize];
 				if(SetupInfo.getInstance().printLayout=="ver")
 				{
 					layoutVer.filters=[dropshow];

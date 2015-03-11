@@ -13,9 +13,7 @@ package com.nova.print.util
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
-	import mx.core.INavigatorContent;
 	import mx.graphics.ImageSnapshot;
 	
 	import spark.components.BorderContainer;
@@ -26,6 +24,8 @@ package com.nova.print.util
 	[Bindable]
 	public class SetupInfo
 	{
+		private var _paperWidthSize:int=595;
+		private var _paperHeightSize:int=842;
 		private var _infor:String="0";
 		private var _printNumber:int=1;
 		private var _printLayout:String="ver";
@@ -41,6 +41,7 @@ package com.nova.print.util
 		private var _printHeaderNum:Number=0;
 		private var _printFooterNum:Number=0;
 		private var _printRowNumber:int=1;
+		private var _printInitPaperArr:Array=[];
 		private var _isPrintHeader:Boolean=false;
 		private var _isPrintLines:Boolean=false;
 		private var _isPirntOrder:Boolean=true;
@@ -85,15 +86,6 @@ package com.nova.print.util
 		private var _exportPropertiesXml:XML=null;
 		
 		
-		private var _paperArray:ArrayCollection=new ArrayCollection([{name:"A4[595*842]",pw:595,ph:842},
-			{name:"A3[842*1191]",pw:842,ph:1191},
-			{name:"A5[420*595]",pw:420,ph:595},
-			{name:"B4[729*1032]",pw:729,ph:1032},
-			{name:"B5[516*729]",pw:516,ph:729},
-			{name:"凭证",pw:350,ph:650}
-		]);
-		
-		
 		private var _offsetX:int=0;
 		
 		private var _offsetY:int=0;
@@ -124,6 +116,8 @@ package com.nova.print.util
 		{
 			_exportPropertiesXml=<Properties></Properties>;
 			_exportPropertiesXml.appendChild(<printRange>{_printRange.toString()}</printRange>);
+			_exportPropertiesXml.appendChild(<paperWidthSize>{_paperWidthSize}</paperWidthSize>);
+			_exportPropertiesXml.appendChild(<paperHeightSize>{_paperHeightSize}</paperHeightSize>);
 			_exportPropertiesXml.appendChild(<paperType>{_paperType}</paperType>);
 			_exportPropertiesXml.appendChild(<isEmptyRow>{_isEmptyRow}</isEmptyRow>);
 			_exportPropertiesXml.appendChild(<printRowNumber>{_printRowNumber}</printRowNumber>);
@@ -159,7 +153,8 @@ package com.nova.print.util
 			_setXml=xml;
 			this._paperType=xml.paperType;
 			this._paperSelectIndex=int(xml.paperSelectIndex);
-			
+			this._paperWidthSize=int(xml.paperWidthSize);
+			this._paperHeightSize=int(xml.paperHeightSize);
 			this._printLayout=xml.printLayout;
 			this._printIsTaoda=getBoolean(xml.printIsTaoda);
 			this._isPrintHeader=getBoolean(xml.isPrintHeader);
@@ -187,6 +182,7 @@ package com.nova.print.util
 			this._printTop=int(xml.printTop);
 			this._rowPages=int(xml.rowPages);
 			this._printRange=String(xml.printRange).split(",");
+			this._printInitPaperArr=[_paperWidthSize,_paperHeightSize];
 			setCoverSet();
 			if(SetupInfo.getInstance().hasGrid)
 			{
@@ -248,8 +244,7 @@ package com.nova.print.util
 		}
 		public function gotoPropertiesDefault():void
 		{
-			setupInfo.paperSelectIndex=0;
-			setupInfo.printLayout="ver";
+			_printInitPaperArr=[595,842];
 			setCoverSet();
 			if(SetupInfo.getInstance().hasGrid)
 			{
@@ -266,23 +261,6 @@ package com.nova.print.util
 			{
 				SetupInfo.getInstance().printTotalPages=1;
 			}
-		}
-/**
- * 		直接获取纸张宽度和高度
- * */
-		public function getPaperArrays():Array
-		{
-			var array:Array=[];
-			var layout:String=setupInfo._printLayout;
-			var index:int=setupInfo._paperSelectIndex;
-			var pw:int=setupInfo.paperArray[index].pw;
-			var ph:int=setupInfo.paperArray[index].ph;
-			array=[pw,ph];
-			if(layout=="hor")
-			{
-				array=[ph,pw];
-			}
-			return array;
 		}
 		/** 打印布局方向
 		 * landscape 为水平打印
@@ -674,6 +652,30 @@ package com.nova.print.util
 			_infor = value;
 		}
 
+		/** 打印纸的宽度*/
+		public function get paperWidthSize():int
+		{
+			return _paperWidthSize;
+		}
+
+		/**
+		 * /** 打印纸的高度
+		 */
+		public function set paperWidthSize(value:int):void
+		{
+			_paperWidthSize = value;
+		}
+
+		public function get paperHeightSize():int
+		{
+			return _paperHeightSize;
+		}
+
+		public function set paperHeightSize(value:int):void
+		{
+			_paperHeightSize = value;
+		}
+
 
 		/**检测是否有表格　　没有的话不进行任何折页*/
 		public function get hasGrid():Boolean
@@ -981,6 +983,19 @@ package com.nova.print.util
 			_offsetY = value;
 		}
 /**
+ * 初始化记录纸张的宽度和高度大小。
+ * 只有在初始化的时候使用。
+ * */
+		public function get printInitPaperArr():Array
+		{
+			return _printInitPaperArr;
+		}
+
+		public function set printInitPaperArr(value:Array):void
+		{
+			_printInitPaperArr = value;
+		}
+/**
  * 设置每行的行高  并且动态计算是否自动换行。
  * */
 		public function get colHeight():int
@@ -1016,18 +1031,6 @@ package com.nova.print.util
 		public function set multiPrintType(value:int):void
 		{
 			_multiPrintType = value;
-		}
-/**
- * 初始化所有纸张大小
- * */
-		public function get paperArray():ArrayCollection
-		{
-			return _paperArray;
-		}
-
-		public function set paperArray(value:ArrayCollection):void
-		{
-			_paperArray = value;
 		}
 
 

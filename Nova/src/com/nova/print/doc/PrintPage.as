@@ -16,9 +16,9 @@ package com.nova.print.doc
 		}
 		public  function Creat(_colCurrentPage:int,_grid:PrintGrids):void
 		{
-			headTxt=new NovaText(SetupInfo.getInstance().printHeader,"center","",SetupInfo.getInstance().getPaperArrays()[0]);
+			headTxt=new NovaText(SetupInfo.getInstance().printHeader,"center","",SetupInfo.getInstance().paperWidthSize);
 			this.addChild(headTxt);
-			footTxt=new NovaText(SetupInfo.getInstance().printFooter,"center","",SetupInfo.getInstance().getPaperArrays()[1]);
+			footTxt=new NovaText(SetupInfo.getInstance().printFooter,"center","",SetupInfo.getInstance().paperWidthSize);
 			this.addChild(footTxt);
 			
 			var pageNumTxt:String="";
@@ -30,7 +30,7 @@ package com.nova.print.doc
 			pageNum=new NovaText(pageNumTxt,"right","",50);
 			this.addChild(pageNum);
 			headTxt.y=0;
-			footTxt.y=SetupInfo.getInstance().getPaperArrays()[1]-SetupInfo.getInstance().printFooterNum-15;
+			footTxt.y=SetupInfo.getInstance().paperHeightSize-SetupInfo.getInstance().printFooterNum-15;
 			pageNum.x=_grid.x+_grid.width-35;
 			pageNum.y=_grid.y-15;
 		}

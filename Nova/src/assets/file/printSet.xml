@@ -5,7 +5,7 @@
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
   <printRowNumber>0</printRowNumber>
-  <paperSelectIndex>0</paperSelectIndex>
+  <paperSelectIndex>5</paperSelectIndex>
   <printLayout>hor</printLayout>
   <printIsTaoda>false</printIsTaoda>
   <isPrintHeader>false</isPrintHeader>
@@ -24,5 +24,5 @@
   <printBottom>0</printBottom>
   <rowPages>1</rowPages>
   <colPages>1</colPages>
-  <printFoldMax>4</printFoldMax>
+  <printFoldMax>8</printFoldMax>
 </Properties>

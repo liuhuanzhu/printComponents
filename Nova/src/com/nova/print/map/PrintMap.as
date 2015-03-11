@@ -197,8 +197,8 @@ package com.nova.print.map
 		public function saveLocalXY():void
 		{
 			_localXY=[];
-			var paperWidth:int=SetupInfo.getInstance().getPaperArrays()[0];
-			var paperHeight:int=SetupInfo.getInstance().getPaperArrays()[1];
+			var paperWidth:int=SetupInfo.getInstance().printInitPaperArr[0];
+			var paperHeight:int=SetupInfo.getInstance().printInitPaperArr[1];
 			var cxWidth:int=paperWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
 			var cxHeight:int=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
 			var viewWidth:int=SetupInfo.getInstance().printPaperWidth;
