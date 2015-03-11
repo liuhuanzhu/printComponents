@@ -76,7 +76,7 @@ package com.nova.print.map
 			PagesByFixInit();
 			_columnIndexArray=[];
 			/** 纸张宽度*/
-			var paperWidth:int=SetupInfo.getInstance().paperWidthSize;
+			var paperWidth:int=SetupInfo.getInstance().getPaperArrays()[0];
 			/** 默认固定列*/
 			var fixRow:int=SetupInfo.getInstance().printFirstRow;
 			/** 得到的变动的最列数目*/
@@ -124,7 +124,7 @@ package com.nova.print.map
 			PagesByFixInit();
 			_columnIndexArray=[];
 			/** 纸张宽度*/
-			var paperWidth:int=SetupInfo.getInstance().paperWidthSize;
+			var paperWidth:int=SetupInfo.getInstance().getPaperArrays()[0];
 			/** 默认第一页列数*/
 			var changeRow:int=SetupInfo.getInstance().printFirstRow;
 			/** 后几页列数*/
@@ -170,6 +170,7 @@ package com.nova.print.map
 		public function getColumnArrByID(value:int):Array
 		{
 			var col:int=Math.ceil((value+1)/SetupInfo.getInstance().rowPages);
+			trace(SetupInfo.getInstance().rowPages);
 			var page:int=value-(col-1)*SetupInfo.getInstance().rowPages;
 			trace("获取表格的相关数据-------------------------------------------------------start");
 			trace("当前的页数:  "+value);

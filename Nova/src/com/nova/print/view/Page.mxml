@@ -53,8 +53,8 @@
 			}
 			public function creat():void
 			{
-				paperWidth=SetupInfo.getInstance().paperWidthSize;
-				paperHeight=SetupInfo.getInstance().paperHeightSize;
+				paperWidth=SetupInfo.getInstance().getPaperArrays()[0];
+				paperHeight=SetupInfo.getInstance().getPaperArrays()[1];
 				pageWidth=paperWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
 				pageHeight=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
 				uiMask=new UIComponent();
@@ -80,7 +80,7 @@
 			{
 				topSprite=new PrintText("top");
 				printHeader=new PrintHeader();
-				printHeader.creatHeader(SetupInfo.getInstance().paperWidthSize);
+				printHeader.creatHeader(SetupInfo.getInstance().getPaperArrays()[0]);
 				uiSprite.addChild(printHeader);
 				uiSprite.addChild(topSprite);
 				bottomSprite=new PrintText("bottom");
@@ -91,7 +91,7 @@
  *   */
 			private function coorLocataXY():void
 			{
-				var paperWidth:int=SetupInfo.getInstance().paperWidthSize-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight-5;
+				var paperWidth:int=SetupInfo.getInstance()..getPaperArrays()[0]-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight-5;
 				var marginLeft:int=SetupInfo.getInstance().printLeft;
 				var marginTop:int=SetupInfo.getInstance().printTop;
 				var headNum:int=SetupInfo.getInstance().printHeaderNum;
@@ -168,8 +168,8 @@
 			 *   */
 			public function creatMaskSprite():void
 			{
-				var paperWidth:int=SetupInfo.getInstance().paperWidthSize;
-				var paperHeight:int=SetupInfo.getInstance().paperHeightSize;
+				var paperWidth:int=SetupInfo.getInstance()..getPaperArrays()[0];
+				var paperHeight:int=SetupInfo.getInstance()..getPaperArrays()[1];
 				var width:int=paperWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
 				var height:int=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
 				if(maskSprite==null)

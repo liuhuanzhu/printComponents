@@ -40,7 +40,7 @@ package  com.nova.print.control
 				dataProvider.removeItemAt(dataProvider.getItemIndex(DataMap.getSimple().totalItem));
 			}
 			var currentPage:int=SetupInfo.getInstance().rowCurrentPage-((SetupInfo.getInstance().colCurrentPage-1)*SetupInfo.getInstance().rowPages)-1;
-			var paperHeight:int=SetupInfo.getInstance().paperHeightSize;
+			var paperHeight:int=SetupInfo.getInstance().getPaperArrays()[1];
 			var viewheight:int=paperHeight-SetupInfo.getInstance().printHeaderNum-SetupInfo.getInstance().printFooterNum-SetupInfo.getInstance().printBottom-SetupInfo.getInstance().printTop;
 			var columnIndexArr:Array=FoldAdvancedGridMap.getSimple().getColumnArrByID(currentPage) as Array;
 			var emptyRowNum:int=0;

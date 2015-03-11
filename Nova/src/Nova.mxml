@@ -48,7 +48,7 @@
 			{
 				
 				 Security.allowDomain("*");
-				 ExternalInterface.call("AsCreatComplete"); 
+				 ExternalInterface.call("AsCreatComplete");
 				 if(ExternalInterface.available)
 				 {
 					 ExternalInterface.addCallback("getPrintType",getPrintType);
