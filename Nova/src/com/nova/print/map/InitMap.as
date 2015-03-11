@@ -30,15 +30,7 @@ package com.nova.print.map
 			var allColumnNum:int=LayoutMap.getSimple().allColumnIndex;
 			if(fixBol)
 			{
-				if(allColumnNum>=4)
-				{
-					SetupInfo.getInstance().printFirstRow=1;
-					SetupInfo.getInstance().printEndRow=3;
-				}
-				else
-				{
-					SetupInfo.getInstance().printEndRow=allColumnNum-1;
-				}
+				SetupInfo.getInstance().printEndRow=allColumnNum-1;
 			}
 			else
 			{

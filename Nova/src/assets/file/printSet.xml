@@ -1,11 +1,9 @@
 <Properties>
   <printRange>-2</printRange>
-  <paperWidthSize>842</paperWidthSize>
-  <paperHeightSize>595</paperHeightSize>
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
   <printRowNumber>0</printRowNumber>
-  <paperSelectIndex>5</paperSelectIndex>
+  <paperSelectIndex>0</paperSelectIndex>
   <printLayout>hor</printLayout>
   <printIsTaoda>false</printIsTaoda>
   <isPrintHeader>false</isPrintHeader>
