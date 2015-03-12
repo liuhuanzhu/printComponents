@@ -51,7 +51,7 @@ package com.nova.print.doc
 			var gridY:int=LayoutMap.getSimple().getGridY()+offsetY;
 			var bottomX:Number=offsetX;
 			var bottomY:Number=LayoutMap.getSimple().getBottomY()+offsetY;
-			var top:PrintText=new PrintText("top");
+			var top:PrintText=new PrintText("top",true);
 			this.addChild(top);
 			top.x=topX;
 			top.y=topY;
@@ -59,7 +59,7 @@ package com.nova.print.doc
 			this.addChild(grid);
 			grid.x=offsetX;
 			grid.y=gridY;
-			var bottom:PrintText=new PrintText("bottom");
+			var bottom:PrintText=new PrintText("bottom",true);
 			this.addChild(bottom);
 			bottom.x=bottomX;
 			bottom.y=grid.getHeight()+gridY;

@@ -28,7 +28,8 @@ package com.nova.print.doc
 		private var gridHeight:int=0;//表格高度
 		private var gridHeadArray:Array=[];//表格的列的数字
 		private var gridColumnWidth:int=0;
-		private var borderWidth:int=0;
+		private var borderWidth:int=0;//表格的边框
+		private var lineWidth:int=1;//表格内的线条宽度
 		private var dataArray:ArrayCollection;
 		private var colHeight:int=25;//表格的每行高度
 		private var dynamicGridWidthArray:Array=[];//动态计算并存储每一列的列宽
@@ -41,9 +42,15 @@ package com.nova.print.doc
 		private var headYArray:Array=[];//存储表格标题的y坐标
 		private var headHeight:int=0;//设置标题的高度
 		private var iswrap:Boolean=false;//动态计算是否换行。
+		private var isTaoDa:Boolean=false;//是否套打
+		private var isPrintHeader:Boolean=false;//是否打印表头
+		private var isPrintLines:Boolean=false;//是否打印表格线
 		public function PrintAdvGrid(_rowCurrentPage:int,_colCurrentPage:int)
 		{
 			if(!SetupInfo.getInstance().hasGrid) return;
+			isTaoDa=SetupInfo.getInstance().printIsTaoda;
+			isPrintHeader=SetupInfo.getInstance().isPrintHeader;
+			isPrintLines=SetupInfo.getInstance().isPrintLines;
 			isTotalCol=SetupInfo.getInstance().isTotalCol;
 			rowCurrentPage=_rowCurrentPage;
 			colCurrentPage=_colCurrentPage;
@@ -200,13 +207,17 @@ package com.nova.print.doc
  * */
 		private function graphicsRow():void
 		{
+			if(isTaoDa && !isPrintLines)
+			{
+				return;
+			}
 			this.graphics.clear();
 			this.graphics.lineStyle(borderWidth);
 			this.graphics.moveTo(0,0);
 			this.graphics.lineTo(gridWidth,0);
 			this.graphics.moveTo(0,0);
 			this.graphics.lineTo(0,gridHeight);
-			this.graphics.lineStyle(1,0x000000,0.4);
+			this.graphics.lineStyle(lineWidth,0x000000,0.4);
 			this.graphics.moveTo(0,headHeight);
 			this.graphics.lineTo(gridWidth,headHeight);
 			for(var i:int=1;i<=dataLength;i++)
@@ -256,7 +267,10 @@ package com.nova.print.doc
 					graphicsRowByGroupMap(gm,i);
 				}
 			}
-			
+			if(isTaoDa && !isPrintLines)
+			{
+				this.graphics.clear();
+			}
 		}
 /**
  * 单个的列进行画线
@@ -276,7 +290,7 @@ package com.nova.print.doc
 			}
 			if(index<advGridHeadTxtArray.length-1)
 			{
-				this.graphics.lineStyle(1,0x000000,0.4);
+				this.graphics.lineStyle(lineWidth,0x000000,0.4);
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],0);
 				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight);
 				this.graphics.endFill();
@@ -287,6 +301,10 @@ package com.nova.print.doc
 			this.addChild(header);
 			header.x=simpleColumnWidth[simpleColumnWidth.length-2];
 			header.y=headYArray[0];
+			if(isTaoDa && !isPrintHeader)
+			{
+				header.visible=false;
+			}
 			//trace("加载单个列: 列名："+gm.parentHeader+"|宽度|"+columnWidth+"|位置|"+header.x);
 		}
 /**
@@ -297,7 +315,7 @@ package com.nova.print.doc
 			var parentHeader:String=gm.parentHeader;
 			var columnWidth:int=0;
 			var length:int=gm.sonHeaderArray.length;
-			this.graphics.lineStyle(1,0x000000,0.4);
+			this.graphics.lineStyle(lineWidth,0x000000,0.4);
 			for(var i:int=0;i<gm.sonHeaderArray.length-1;i++)
 			{
 				var sonHeader:String=gm.sonHeaderArray[i];
@@ -315,6 +333,10 @@ package com.nova.print.doc
 				trace("执行画线sonField:  "+sonField+"|||lineHeight: "+lineHeight+"|开始坐标: "+headHeight/2);
 				var header:PrintDocTxt=new PrintDocTxt(sonHeader,"center",columnWidth,gm.letterSpacArr[i]);
 				this.addChild(header);
+				if(isTaoDa && !isPrintHeader)
+				{
+					header.visible=false;
+				}
 				header.x=simpleColumnWidth[simpleColumnWidth.length-2];
 				header.y=headYArray[2];
 			}
@@ -345,6 +367,13 @@ package com.nova.print.doc
 			this.addChild(parentDoc);
 			parentDoc.x=firstLocal;
 			parentDoc.y=headYArray[1];
+			
+			
+			if(isTaoDa && !isPrintHeader)
+			{
+				endHeaderDoc.visible=false;
+				parentDoc.visible=false;
+			}
 		}
 		private function printContent():void
 		{

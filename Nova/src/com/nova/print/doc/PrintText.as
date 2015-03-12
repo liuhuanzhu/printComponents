@@ -13,9 +13,11 @@ package com.nova.print.doc
 	{
 		private var type:String;
 		private var xml:XML;
-		public function PrintText(_type:String)
+		private var isPrint:Boolean=false;//是否执行打印
+		public function PrintText(_type:String,_isPrint:Boolean=false)
 		{
 			type=_type;
+			isPrint=_isPrint;
 			creat();
 		}
 		private function creat():void
@@ -61,12 +63,16 @@ package com.nova.print.doc
 						this.addChild(nt);
 					}
 				}
-				if(!SetupInfo.getInstance().printIsTaoda && ID.length==0)
+				else
 				{
 					var bt:NovaText=new NovaText(xx.@text,"left",size,width,height,border);
 					bt.x=tx;
 					bt.y=ty;
 					this.addChild(bt);
+					if(SetupInfo.getInstance().printIsTaoda && isPrint)
+					{
+						bt.visible=false;
+					}
 					//trace("加载标题的数据为:  "+xx.@text+"   X: "+tx+"    Y:"+ty);
 				}
 			}

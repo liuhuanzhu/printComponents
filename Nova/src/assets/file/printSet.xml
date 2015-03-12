@@ -5,7 +5,7 @@
   <printRowNumber>0</printRowNumber>
   <paperSelectIndex>0</paperSelectIndex>
   <printLayout>hor</printLayout>
-  <printIsTaoda>false</printIsTaoda>
+  <printIsTaoda>true</printIsTaoda>
   <isPrintHeader>false</isPrintHeader>
   <isPrintLines>false</isPrintLines>
   <printFixChangeBol>true</printFixChangeBol>

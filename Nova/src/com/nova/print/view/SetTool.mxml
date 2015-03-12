@@ -509,8 +509,8 @@
 								selectedIndex="0" change="changePrintPaper(event)">
 				</s:DropDownList>
 				<s:CheckBox x="21" y="72" id="taoDa" change="taoDaChange()" selected="{SetupInfo.getInstance().printIsTaoda}"/>
-				<s:CheckBox x="90" y="95"  id="showHeader" enabled="false"  selected="{SetupInfo.getInstance().isPrintHeader}" change="taoDaChange()"/>
-				<s:CheckBox x="90" y="123" id="showLine" enabled="false" selected="{SetupInfo.getInstance().isPrintLines}" change="taoDaChange()"/>
+				<s:CheckBox x="90" y="95"  id="showHeader" enabled="{SetupInfo.getInstance().printIsTaoda}"  selected="{SetupInfo.getInstance().isPrintHeader}" change="taoDaChange()"/>
+				<s:CheckBox x="90" y="123" id="showLine" enabled="{SetupInfo.getInstance().printIsTaoda}" selected="{SetupInfo.getInstance().isPrintLines}" change="taoDaChange()"/>
 				<s:Image x="88" y="34" source="assets/image/ver.png" filters="{[new spark.filters.DropShadowFilter(0)]}" id="layoutVer" click="changePaperLayout(event)"/>
 				<s:Image x="118" y="38" source="assets/image/hor.png" id="layoutHor" click="changePaperLayout(event)"/>
 			</s:BorderContainer>
