@@ -39,8 +39,7 @@ package com.nova.print.doc
 			maskSprite.graphics.beginFill(0xffcccc,0.1);
 			maskSprite.graphics.drawRect(1,0,_width-1,_height);
 			maskSprite.graphics.endFill();
-			
-			
+
 			this.addChild(txtField);
 		}
 		public function creatBg(bol:Boolean=true):void

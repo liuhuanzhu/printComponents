@@ -1,66 +1,77 @@
 <Layouts>
-	<Label y="20" width="700" text="服务商送货单详情" fontSize="18"/>
-	<BorderContainer x="30" y="-40" width="677" height="163" id="top" xmlns="library://ns.adobe.com/flex/spark">
-					<!-- top-->
-					<!--f -->
-					<Label x="0" y="142" text="送货单编号" height="24" width="120" border="true"/>
-					<Label x="120" y="142" text="" id="fhdbh" height="24" width="120"  border="true"/>
-					<Label x="240" y="142" text="厂商品牌" height="24" width="120"  border="true"/>
-					<Label x="360" y="142" text="厂商品牌"  height="24" width="140"  border="true" />
-					<!--f -->
-					
-					<!--f -->
-					<Label x="0" y="166" text="站点编号" height="22" width="120" border="true"/>
-					<Label x="120" y="166" text="" id="zdbh" height="22" width="380"  border="true"/>
-					<!--f -->
-					
-					<!--f -->
-					<Label x="0" y="188" text="站点名称" height="22" width="120" border="true"/>
-					<Label x="120" y="188" text="" id="zdmc" height="22" width="380"  border="true"/>
-					<!--f -->
-					
-					<!--f -->
-					<Label x="0" y="210" text="站点联系人" height="22" width="120" border="true"/>
-					<Label x="120" y="210" text="" id="fhdbh" height="22" width="120"  border="true"/>
-					<Label x="240" y="210" text="站点电话:" height="22" width="120"  border="true"/>
-					<Label x="360" y="210" text="厂商品牌"  height="22" width="140"  border="true" />
-					<!--f -->
-					
-					<!--f -->
-					<Label x="0" y="232" text="服务商名称" height="22" width="120" border="true"/>
-					<Label x="120" y="232" text="" id="fhdbh" height="22" width="120"  border="true"/>
-					<Label x="240" y="232" text="服务商编号" height="22" width="120"  border="true"/>
-					<Label x="360" y="232" text="厂商品牌"  height="22" width="140"  border="true" />
-					<!--f -->
-					
-					<!--f -->
-					<Label x="0" y="254" text="服务商联系电话" height="22" width="120" border="true"/>
-					<Label x="120" y="254" text="" id="zdmc" height="22" width="380"  border="true"/>
-					<!--f -->
-					
-					<!--f -->
-					<Label x="0" y="276" text="总代编号" height="22" width="120" border="true"/>
-					<Label x="120" y="276" text="" id="fhdbh" height="22" width="120"  border="true"/>
-					<Label x="240" y="276" text="总代名称" height="22" width="120"  border="true"/>
-					<Label x="360" y="276" text="厂商品牌"  height="22" width="140"  border="true" />
-					<!--f -->
-					
-					<!--f -->
-					<Label x="0" y="298" text="站点详细地址" height="22" width="120" border="true"/>
-					<Label x="120" y="298" text="" id="zdmc" height="22" width="380"  border="true"/>
-					<!--f -->
-				</BorderContainer>
-	<Grids id="entry" x="30" y="300" height="305" width="500">
-	    <column dataField="t1" headerText="产品编号" unique="1" width="125"/>
-	    <column dataField="t2" headerText="产品名称" unique="2" width="191"/>
-	    <column dataField="t3" headerText="产品数量" unique="3" width="72"/>
-	    <column dataField="t4" headerText="包装规格" unique="4" width="125"/>
-	</Grids>
-	<BorderContainer x="30" y="390"  height="163" id="bottom" >
-		<Label x="0" y="10"  text="送货人:"/>
-		<Label x="200" y="10"  text="收货人:"/>
-		<Label x="0" y="40"  text="送货时间:"/>
-		<Label x="200" y="40"  text="收货时间:"/>
+	<Label y="10" width="700" text="上海易贸供应链管理有限公司" fontSize="18"/>
+	<Label y="30" width="700" text="送货单" fontSize="18"/>
+	<BorderContainer x="30" y="-50" width="677" height="163" id="top" >
+			<Label x="0" y="122" text="发货方:" height="22" width="50" border="true" />
+			<Label x="50" y="122" text=""  height="22" width="130"  border="true" id="fhf"/>
+			<Label x="180" y="122" text="客户名称：" height="22" width="50"  border="true"/>
+			<Label x="230" y="122" text=""  height="22" width="130"  border="true" id="khmc"/>
+			<Label x="360" y="122" text="客户编号:" height="22" width="90"  border="true"/>
+			<Label x="450" y="122" text=""  height="22" width="90"  border="true" id="khbh"/>
+			<Label x="540" y="122" text="承运人:" height="22" width="90"  border="true"/>
+			<Label x="630" y="122" text=""  height="22" width="90"  border="true" id="cyr"/>
+			
+			
+			<Label x="724" y="122" text="第一联：发货方仓库存档"  height="122" width="18"  wrap="true"/>
+			<Label x="724" y="240" text="第二联：财务存档"  height="122" width="18"  wrap="true"/>
+			<Label x="724" y="342" text="第三联：客户存档"  height="122" width="18"  wrap="true"/>
+			<Label x="724" y="442" text="第四联：承运人存档"  height="122" width="18"  wrap="true"/>
+			
+			
+<!--			f -->
+			<Label x="0" y="144" text="发货日期:" height="22" width="50" border="true"/>
+			<Label x="50" y="144" text="" height="22" width="130"  border="true" id="fhrq"/>
+			<Label x="180" y="144" text="联系人：" height="22" width="50"  border="true"/>
+			<Label x="230" y="144" text=""  height="22" width="130"  border="true" id="lxr"/>
+			<Label x="360" y="144" text="联系电话：" height="22" width="90"  border="true"/>
+			<Label x="450" y="144" text="18763546278"  height="22" width="90"  border="true" id="lxdh"/>
+			<Label x="540" y="144" text="车辆牌号:" height="22" width="90"  border="true"/>
+			<Label x="630" y="144" text="鲁P42003"  height="22" width="90"  border="true" id="clph"/>
+<!--			f -->
+			<Label x="0" y="166" text="送货单号:" height="22" width="50" border="true"/>
+			<Label x="50" y="166" text=""  height="22" width="130"  border="true" id="shdh"/>
+			<Label x="180" y="166" text="联系地址：" height="22" width="50"  border="true"/>
+			<Label x="230" y="166" text=""  height="22" width="310"  border="true" id="lxdz"/>
+			<Label x="540" y="166" text="司机姓名:" height="22" width="90"  border="true"/>
+			<Label x="630" y="166" text=""  height="22" width="90"  border="true" id="sjxm"/>
+			
+			<Label x="0" y="188" text="发货记录" height="22" width="720" border="true" textAlign="center"/>
+			
+			<Label x="0" y="334" text="发货备注：" height="80" width="390"  border="true"/>
+			<Label x="50" y="338" text="" height="80" width="323"  id="fhbz"/>
+			<Label x="390" y="334" text="合计:" height="22" width="67"  border="true"/>
+			<Label x="457" y="334" text="" height="22" width="67"  border="true" id="hj1"/>
+			<Label x="524" y="334" text="" height="22" width="66"  border="true" id="hj2"/>
+			<Label x="590" y="334" text="" height="22" width="64"  border="true" id="hj3"/>
+			<Label x="654" y="334" text="" height="22" width="64"  border="true" id="hj4"/>
+			<Label x="390" y="356" text="托盘数:" height="22" width="67"  border="true"/>
+			<Label x="457" y="356" text="" height="22" width="261"  border="true" id="tps"/>
+			<Label x="390" y="378" text="异常备注:" height="36" width="67"  border="true"/>
+			<Label x="457" y="378" text="" height="36" width="261"  border="true" id="ycbz"/>
+			<Label x="0" y="420" text="仓库(发货人)签字/盖章：" height="40" width="718"  border="true"/>
+			<Label x="0" y="445" text="日期" />
+			<Label x="0" y="470" text="客户(收货人)签字/盖章：" height="40" width="718"  border="true"/>
+			<Label x="0" y="495" text="日期" />
+			<Label x="0" y="530" text="以上货物和单据完全一致,货物外包装完好,装载质量符合运输要求,特此签字。" height="50" width="718"  border="true"/>
+			<Label x="590" y="540" text="承运人/司机确认:" />
+			<Label x="590" y="560" text="日期:" />
 	</BorderContainer>
-	   
+	<Grids id="entry" x="30" y="170" width="720" height="305">
+		<columns headerText="订单信息">
+			<column dataField="t1" headerText="序号" unique="1"/>
+	    	<column dataField="t2" headerText="订单号码" unique="1"/>
+	    	<column dataField="t3" headerText="商品编号" unique="1"/>
+	    	<column dataField="t4" headerText="商品名称" unique="1"/>
+	    	<column dataField="t5" headerText="商品类型" unique="1"/>
+	    	<column dataField="t6" headerText="单位" unique="1"/>
+	    	<column dataField="t7" headerText="订单数量" unique="1"/>
+		</columns>
+	    <columns headerText="出库信息">
+			<column dataField="t8" headerText="实出库数" unique="2"/>
+	    	<column dataField="t9" headerText="单位" unique="2"/>
+	    	<column dataField="t10" headerText="重量" unique="2"/>
+	    	<column dataField="t11" headerText="体积" unique="2"/>
+	    	<column dataField="t12" headerText="件数" unique="2"/>
+		</columns>
+	  </Grids>
 </Layouts>

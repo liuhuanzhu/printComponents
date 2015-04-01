@@ -1,32 +1,27 @@
 ﻿<Data>
-	<shdh>送货编号</shdh>
-	<cspp>厂商品牌</cspp>
-	<zdbh>站点编号</zdbh>
-	<zdmc>站点名称</zdmc>
-	<zdlxr>站点联系人</zdlxr>
-	<zddh>站点电话</zddh>
-	<fwsmc>服务商名称</fwsmc>
-	<fwslxdh>服务商联系电话</fwslxdh>
-	<zdmc>总代名称</zdmc>
-	<zdbh>总代编号</zdbh>
-	<zdxxdz>站点详细地址</zdxxdz>
+	<fhf>我是发货方</fhf> <!-- 发货方 -->
+	<khmc>齐鲁银行</khmc> <!-- 客户名称 -->
+	<khbh>12928383</khbh> <!-- 客户编号 -->
+	<cyr>张三丰</cyr> <!-- 承运人 -->
+	<fhrq>2014-04-02</fhrq> <!-- 发货日期 -->
+	<lxr>联系人</lxr> <!-- 联系人 -->
+	<lxdh>18763546278</lxdh> <!-- 联系电话 -->
+	<clph>鲁P42003</clph> <!-- 车辆牌号 -->
+	<shdh>2938464</shdh> <!-- 送货单号 -->
+	<lxdz>山东济南齐鲁软件园</lxdz> <!-- 联系地址 -->
+	<sjxm>张无忌</sjxm> <!-- 司机姓名 -->
+	<hj1>12</hj1> <!-- 实出库数 -->
+	<hj2>2736.22</hj2>
+	<hj3>20</hj3> <!-- 重量 -->
+	<hj4>2984</hj4> <!-- 件数 -->
+	<tps>345</tps> <!-- 托盘数 -->
+	<ycbz>无异常</ycbz> <!-- 异常编号 -->
+	<fhbz>紧急快件，需快速到达</fhbz> <!-- 发货备注 -->
 	<DataGrid>
-		<ColModel>
-			<HeaderText DataField="t1"/>
-			<HeaderText DataField="t2"/>
-			<HeaderText DataField="t3"/>
-			<HeaderText DataField="t4"/>
-		</ColModel>
-	<RowData>
-		<Item t1="33333" t2="哑光清漆 1L" t3="20" t4="5L/桶"/>
-		<Item t1="33333" t2="哑光清漆 1L" t3="10" t4="5L/桶"/>
-		<Item t1="33333" t2="哑光清漆 1L" t3="4" t4="5L/桶"/>
-		<Item t1="33333" t2="哑光清漆 1L" t3="6" t4="5L/桶"/>
-		<Item t1="33333" t2="哑光清漆 1L" t3="5" t4="5L/桶"/>
-	</RowData>
+		<RowData>
+			<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31" t11=""/>
+			<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
+			<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
+		</RowData>
 	</DataGrid>
-	<fwslxdh>服务商联系电话</fwslxdh>
-	<zdmc>总代名称</zdmc>
-	<zdbh>总代编号</zdbh>
-	<zdxxdz>站点详细地址</zdxxdz>
 </Data>

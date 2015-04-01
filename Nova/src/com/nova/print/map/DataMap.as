@@ -76,7 +76,7 @@ package com.nova.print.map
 			if(!SetupInfo.getInstance().hasGrid) return;
 			_totalFieldArr=[];
 			var dataXml:XML=new XML(_dataXml.DataGrid.RowData);
-			var colXml:XML=new XML(_dataXml.DataGrid.ColModel);
+			var colXml:XML=LayoutMap.getSimple().gridCol;
 			var totalXml:XML=null;
 			var totalLength:int=_dataXml.DataGrid.elements("TotalCol").length();
 			if(totalLength!=0)
@@ -86,7 +86,7 @@ package com.nova.print.map
 			var colArr:Array=[];
 			for(var i:int=0;i<colXml.children().length();i++)
 			{
-				colArr.push(colXml.children()[i].@DataField);
+				colArr.push(colXml.children()[i].@dataField);
 			}
 			for(var j:int=0;j<dataXml.children().length();j++)
 			{

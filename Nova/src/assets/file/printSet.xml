@@ -1,13 +1,15 @@
 <Properties>
   <printRange>-2</printRange>
+  <paperWidthSize>842</paperWidthSize>
+  <paperHeightSize>595</paperHeightSize>
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
   <printRowNumber>3</printRowNumber>
   <paperSelectIndex>0</paperSelectIndex>
-  <printLayout>ver</printLayout>
+  <printLayout>hor</printLayout>
   <printIsTaoda>false</printIsTaoda>
-  <isPrintHeader>false</isPrintHeader>
-  <isPrintLines>false</isPrintLines>
+  <isPrintHeader>true</isPrintHeader>
+  <isPrintLines>true</isPrintLines>
   <printFixChangeBol>true</printFixChangeBol>
   <printFirstRow>1</printFirstRow>
   <printEndRow>0</printEndRow>
@@ -17,7 +19,7 @@
   <printFooter/>
   <printHeader/>
   <printLeft>20</printLeft>
-  <printRight>20</printRight>
+  <printRight>5</printRight>
   <printTop>0</printTop>
   <printBottom>0</printBottom>
   <rowPages>1</rowPages>

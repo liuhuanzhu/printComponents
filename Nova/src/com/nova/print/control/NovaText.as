@@ -15,7 +15,7 @@ package com.nova.print.control
 		private var tf:TextField;
 		private var shape:Shape;
 		private var border:Boolean;
-		public function NovaText(txt:String,align:String,size:String,_width:int=0,_height:int=0,_border:Boolean=false)
+		public function NovaText(txt:String,align:String,size:String,_width:int=0,_height:int=0,_border:Boolean=false,wrap:Boolean=false)
 		{
 			super();
 			tf=new TextField();
@@ -57,7 +57,7 @@ package com.nova.print.control
 			tf.embedFonts=true;
 			tf.setTextFormat(txtFormat);
 			tf.mouseEnabled=false;
-			tf.wordWrap=false;
+			tf.wordWrap=wrap;
 			border=_border;
 			if(_border)
 			{

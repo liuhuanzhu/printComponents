@@ -69,7 +69,8 @@ package com.nova.print.doc
 				}
 				else
 				{
-					var bt:NovaText=new NovaText(xx.@text,align,size,width,height,border);
+					var blo:Boolean=(wrap=="true")?true:false
+					var bt:NovaText=new NovaText(xx.@text,align,size,width,height,border,blo);
 					bt.x=tx;
 					bt.y=ty;
 					this.addChild(bt);

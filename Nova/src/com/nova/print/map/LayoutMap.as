@@ -14,6 +14,7 @@ package com.nova.print.map
 		private var _topXml:XML=null;
 		private var _bottomXml:XML=null;
 		private var _gridXml:XML=null;
+		private var _gridCol:XML=null;//用于记录表格行的数据
 		private var _layoutXml:XML=null;
 		private var _declarationsXml:XML=null;
 		private var _headingArray:Array=null;
@@ -97,6 +98,7 @@ package com.nova.print.map
 		{
 			SetupInfo.getInstance().hasGrid=true;
 			_gridXml=xx;
+			_gridCol=new XML(<colData></colData>);
 			for(var j:int=0;j<xx.children().length();j++)
 			{
 				var xxx:XML=xx.children()[j] as XML;
@@ -109,6 +111,7 @@ package com.nova.print.map
 						PrintMap.getSimple().creatRecordDataFieldArray(xxx.@dataField,xxx.@width);
 						PrintMap.getSimple().recordSpacing.push(xxx.@dataField,xxx.@letterSpace);
 					}
+					_gridCol.appendChild(<HeaderText dataField={xxx.@dataField} headerText={xxx.headerText}/>);
 				}
 				else
 				{
@@ -123,6 +126,7 @@ package com.nova.print.map
 							PrintMap.getSimple().creatRecordDataFieldArray(xxxx.@dataField,xxxx.@width);
 							PrintMap.getSimple().recordSpacing.push(xxxx.@dataField,xxxx.@letterSpace);
 						}
+						_gridCol.appendChild(<HeaderText dataField={xxxx.@dataField} headerText={xxxx.headerText}/>);
 					}
 				}
 			}
@@ -454,6 +458,16 @@ package com.nova.print.map
 		public function set headerXml(value:XML):void
 		{
 			_headerXml = value;
+		}
+
+		public function get gridCol():XML
+		{
+			return _gridCol;
+		}
+
+		public function set gridCol(value:XML):void
+		{
+			_gridCol = value;
 		}
 
 

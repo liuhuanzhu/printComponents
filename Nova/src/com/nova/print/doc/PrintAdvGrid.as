@@ -337,15 +337,15 @@ package com.nova.print.doc
 				}
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],headHeight/2);
 				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],lineHeight);
-				trace("执行画线sonField:  "+sonField+"|||lineHeight: "+lineHeight+"|开始坐标: "+headHeight/2);
-				var header:PrintDocTxt=new PrintDocTxt(sonHeader,"center",columnWidth,gm.letterSpacArr[i]);
-				this.addChild(header);
+				var header:PrintDocTxt=new PrintDocTxt(sonHeader,"center",columnWidth,headHeight,true,gm.letterSpacArr[i]);
 				if(isTaoDa && !isPrintHeader)
 				{
 					header.visible=false;
 				}
 				header.x=simpleColumnWidth[simpleColumnWidth.length-2];
 				header.y=headYArray[2];
+				this.addChild(header);
+				trace("创建标题: 标题名称: "+sonHeader+"|X:"+header.x+"|Y: "+header.y+"|visible: "+header.visible+"|alpha: "+header.alpha+"|"+this.getChildIndex(header));
 			}
 			var endHeader:String=gm.sonHeaderArray[gm.sonHeaderArray.length-1];
 			var endArray:Array=indexGridHeader(parentHeader,endHeader);
@@ -356,7 +356,7 @@ package com.nova.print.doc
 			{
 				this.graphics.moveTo(simpleColumnWidth[simpleColumnWidth.length-1],0);
 				this.graphics.lineTo(simpleColumnWidth[simpleColumnWidth.length-1],gridHeight);
-				trace("复杂列的最后一个画线"+sonField+"|||lineHeight: "+lineHeight+"|开始坐标: "+0);
+				
 			}
 			var firstLocal:int=simpleColumnWidth[simpleColumnWidth.length-length-1];
 			var endLocal:int=simpleColumnWidth[simpleColumnWidth.length-1];
@@ -364,11 +364,12 @@ package com.nova.print.doc
 			this.graphics.moveTo(firstLocal,20);
 			this.graphics.lineTo(endLocal,20);
 			this.graphics.endFill();
+			
 			var endHeaderDoc:PrintDocTxt=new PrintDocTxt(endHeader,"center",columnWidth,headHeight,true,gm.letterSpacArr[gm.letterSpacArr.length-1]);
 			this.addChild(endHeaderDoc);
 			endHeaderDoc.x=simpleColumnWidth[simpleColumnWidth.length-2];
 			endHeaderDoc.y=headYArray[2];
-			
+			trace("创建标题: 标题名称: "+endHeader+"|X:"+endHeaderDoc.x+"|Y: "+endHeaderDoc.y);
 			//trace("加载复杂列: 列名："+gm.parentHeader+"|宽度|"+columnWidth+"|位置|"+simpleColumnWidth[simpleColumnWidth.length-1]);
 			var parentDoc:PrintDocTxt=new PrintDocTxt(gm.parentHeader,"center",endLocal-firstLocal,headHeight,true,gm.letterSpac);
 			this.addChild(parentDoc);
