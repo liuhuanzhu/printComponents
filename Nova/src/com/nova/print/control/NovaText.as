@@ -13,6 +13,8 @@ package com.nova.print.control
 	{
 		private var txtFormat:TextFormat=null;
 		private var tf:TextField;
+		private var shape:Shape;
+		private var border:Boolean;
 		public function NovaText(txt:String,align:String,size:String,_width:int=0,_height:int=0,_border:Boolean=false)
 		{
 			super();
@@ -56,6 +58,7 @@ package com.nova.print.control
 			tf.setTextFormat(txtFormat);
 			tf.mouseEnabled=false;
 			tf.wordWrap=false;
+			border=_border;
 			if(_border)
 			{
 				creatLine();
@@ -64,12 +67,19 @@ package com.nova.print.control
 		private function creatLine():void
 		{
 			tf.y=5;
-			var shape:Shape=new Shape();
+			shape=new Shape();
 			shape.graphics.lineStyle(1,0x000000);
 			shape.graphics.beginFill(0x000000,0);
 			shape.graphics.drawRect(0,0,tf.width,tf.height);
 			shape.graphics.endFill();
 			this.addChild(shape);
+		}
+		public function clearLine():void
+		{
+			if(border)
+			{
+				shape.graphics.clear();
+			}
 		}
 	}
 }

@@ -1,30 +1,32 @@
 ﻿<Data>
-	<djbh>236451212263</djbh>
-	<khmc>张三1212丰</khmc>
-	<shrdz>山东省济南市历下区解放路</shrdz>
-	<scrq>2014-02-04</scrq>
-	<shrxm>张三丰</shrxm>
-	<ddbh>23456567</ddbh>
-	<shrdh>18762536352</shrdh>
-	<khbh>23456567</khbh>
-	<ckdzt>已出库</ckdzt>
-	<djdyzt>已打印</djdyzt>
+	<shdh>送货编号</shdh>
+	<cspp>厂商品牌</cspp>
+	<zdbh>站点编号</zdbh>
+	<zdmc>站点名称</zdmc>
+	<zdlxr>站点联系人</zdlxr>
+	<zddh>站点电话</zddh>
+	<fwsmc>服务商名称</fwsmc>
+	<fwslxdh>服务商联系电话</fwslxdh>
+	<zdmc>总代名称</zdmc>
+	<zdbh>总代编号</zdbh>
+	<zdxxdz>站点详细地址</zdxxdz>
 	<DataGrid>
 		<ColModel>
 			<HeaderText DataField="t1"/>
 			<HeaderText DataField="t2"/>
 			<HeaderText DataField="t3"/>
 			<HeaderText DataField="t4"/>
-			<HeaderText DataField="t5"/>
 		</ColModel>
 	<RowData>
-		<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
-		<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
-		<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
-		<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
-		<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
-		<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
-		<Item t1="油漆仓库1号" t2="33333" t3="PRW001" t4="新进哑光清漆" t5="哑光清漆" t6="L" t7="1" t8="2015-02-02" t9="46" t10="2015-3-31"/>
+		<Item t1="33333" t2="哑光清漆 1L" t3="20" t4="5L/桶"/>
+		<Item t1="33333" t2="哑光清漆 1L" t3="10" t4="5L/桶"/>
+		<Item t1="33333" t2="哑光清漆 1L" t3="4" t4="5L/桶"/>
+		<Item t1="33333" t2="哑光清漆 1L" t3="6" t4="5L/桶"/>
+		<Item t1="33333" t2="哑光清漆 1L" t3="5" t4="5L/桶"/>
 	</RowData>
 	</DataGrid>
+	<fwslxdh>服务商联系电话</fwslxdh>
+	<zdmc>总代名称</zdmc>
+	<zdbh>总代编号</zdbh>
+	<zdxxdz>站点详细地址</zdxxdz>
 </Data>

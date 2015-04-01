@@ -2,10 +2,10 @@
   <printRange>-2</printRange>
   <paperType>A4[595*842]</paperType>
   <isEmptyRow>true</isEmptyRow>
-  <printRowNumber>0</printRowNumber>
+  <printRowNumber>3</printRowNumber>
   <paperSelectIndex>0</paperSelectIndex>
-  <printLayout>hor</printLayout>
-  <printIsTaoda>true</printIsTaoda>
+  <printLayout>ver</printLayout>
+  <printIsTaoda>false</printIsTaoda>
   <isPrintHeader>false</isPrintHeader>
   <isPrintLines>false</isPrintLines>
   <printFixChangeBol>true</printFixChangeBol>

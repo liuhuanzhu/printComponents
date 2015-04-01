@@ -61,11 +61,15 @@ package com.nova.print.doc
 						nt.x=tx;
 						nt.y=ty;
 						this.addChild(nt);
+						if(SetupInfo.getInstance().printIsTaoda && isPrint)
+						{
+							nt.clearLine();
+						}
 					}
 				}
 				else
 				{
-					var bt:NovaText=new NovaText(xx.@text,"left",size,width,height,border);
+					var bt:NovaText=new NovaText(xx.@text,align,size,width,height,border);
 					bt.x=tx;
 					bt.y=ty;
 					this.addChild(bt);

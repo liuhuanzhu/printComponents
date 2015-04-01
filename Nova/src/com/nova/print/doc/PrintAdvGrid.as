@@ -99,8 +99,15 @@ package com.nova.print.doc
 		}
 		public function getWidth():int
 		{
-			var pageWidth:int=SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight-SetupInfo.getInstance().offsetX;
-			return pageWidth;
+			var gridWidth:String=LayoutMap.getSimple().gridXml.@width;
+			if(gridWidth.length==0)
+			{
+				return SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight-SetupInfo.getInstance().offsetX;
+			}
+			else
+			{
+				return int(gridWidth);
+			}
 		}
 /**
  * 解析表格数据集合  根据坐标取得header  然后进行配对分组

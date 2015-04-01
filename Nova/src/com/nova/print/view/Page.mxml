@@ -99,15 +99,15 @@
 				var topY:int=Number(LayoutMap.getSimple().topXml.@y);
 				var bottomX:int=Number(LayoutMap.getSimple().bottomXml.@x);
 				var bottomY:int=Number(LayoutMap.getSimple().bottomXml.@y);
-				var gridX:int=0;
-				var gridY:int=0;
 				topSprite.x=topX+marginLeft;
 				topSprite.y=marginTop+headNum+topY;
 				if(SetupInfo.getInstance().hasGrid)
 				{
+					var gridX:int=LayoutMap.getSimple().gridXml.@x;
+					var gridY:int=LayoutMap.getSimple().gridXml.@y;
 					gridX=Number(LayoutMap.getSimple().gridXml.@x);
 					gridY=Number(LayoutMap.getSimple().gridXml.@y);
-					advancedGrid.x=marginLeft;
+					advancedGrid.x=marginLeft+gridX;
 					advancedGrid.y=gridY+marginTop+headNum;
 					advancedGrid.height-=10;
 					bottomSprite.x=bottomX+marginLeft;
@@ -160,7 +160,19 @@
 			private function dataGridCreat(event:FlexEvent):void
 			{
 				advancedGrid.height=NovaAdvancedDataGrid.getInstance().dataGridHeight;
-				advancedGrid.width=pageWidth;
+				var layoutGirdWidth:String=LayoutMap.getSimple().gridXml.@width;
+				/*
+					当layout中传递表格宽度 则设置表格宽度 否则表格宽度自适应
+				*/
+				if(layoutGirdWidth.length==0)
+				{
+					advancedGrid.width=pageWidth;
+				}
+				else
+				{
+					advancedGrid.width=int(layoutGirdWidth);
+				}
+				
 				coorLocataXY();
 			}
 			/** 
