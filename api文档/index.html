@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>打印组件API</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/sunburst.css">
+</head>
+<body>
+	<div class="bgContainer">
+		<div class="wrapper">
+			<div class="header">
+				Flex 打印组件
+			</div>
+			<div class="main">
+				<ul class="leftSide">
+					<li><a href="#">打印组件</a></li>
+					<li><a href="#">组件介绍</a></li>
+					<li><a href="#">关于表格</a></li>
+					<li><a href="#">关于文本</a></li>
+					<li><a href="#">打印设置介绍</a></li>
+					<li><a href="#">界面模版介绍</a></li>
+					<li><a href="#">数据模版介绍</a></li>
+					<li><a href="#">前后台传值</a></li>
+					<li><a href="#">打印例子</a></li>
+					<li><a href="#">模版范例</a></li>
+					<li><a href="#">模版设计器</a></li>
+					<li><a href="#">文件介绍</a></li>
+					<li><a href="#">更新情况</a></li>
+				</ul>
+				<div class="rightSide" id="rightSide">
+					<div id="page" class="page">
+							<div  class="box">
+								<h2>组件介绍</h2>
+								<p>打印组件是以AS3语言开发，通过与页面js通信以xml为数据传输格式开发的一款功能组件，在组件初始化之前需要传递布局模版(<strong>必须</strong>)，数据模版（<strong>必须</strong>），打印设置模版（<strong>可为空</strong>）三个模版。初始化之后可通过打印面板对打印界面进行一些调整。还可针对表格设置显示列和隐藏列，可以进行折页的调整，还可动态调整记录表格列宽 。可以对打印设置进行保存等功能。在传递打印设置之前，需要传递打印模式，即单张打印还是连续打印。默认为单张打印。连打没有预览模式。<strong>0</strong>为单张打印，<strong>1</strong>为连打。另外提供套打功能。</p>
+								<h3>系统架构</h3>
+								<img src="img/arc_icon.png"/>
+								<h3>组件暴露外部接口</h3>
+								<pre class="prettyprint">
+								    ExternalInterface.addCallback("getPrintType",getPrintType);
+									ExternalInterface.addCallback("getProperties",getProperties);
+									ExternalInterface.addCallback("getLayout",getLayout);
+									ExternalInterface.addCallback("getData",getData);
+								</pre>
+								<h3>暴露接口介绍</h3>
+								<ul class="list">
+									<li><span>getPrintType:</span>获取打印模式，连续打印还是单张打印。</li>
+									<li><span>getProperties:</span>获取打印设置。为空时自定义打印设置</li>
+									<li><span>getLayout:</span>获取界面模版。为组件初始化做准备。</li>
+									<li><span>getData:</span>获取数据模版，为组件初始化做准备。</li>
+								</ul>
+							</div >
+							<div class="box" id="aboutGrid">
+								<h2>关于表格</h2>
+	                            <h3>表格相关属性列表</h3>
+	                            <ul class="list">
+									<li><span>x|y:</span>表格的x|y坐标。</li>
+									<li><span>width:</span>当设置该属性时，该表格宽度为该属性值，当没有设置该宽度时，该表格宽度默认自适应纸张大小。当该属性作用于表格某一列时，为某一列的表格宽度。</li>
+									<li><span>height:</span>设置表格高度值，当设置补空行或者变动列变动行时该表格高度无效。</li>
+									<li><span>borderWidth:</span>设置外围表格线的宽度。</li>
+	                                <li><span>colHeight:</span>设置行高大小。</li>
+	                                <li><span>columns:</span>设置复杂列表格时。需要此属性作为复杂列父级标签。</li>
+	                                <li><span>column:</span>单列的标签名称。</li>
+	                                <li><span>dataField:</span>表格列的字段名跟数据相对应。</li>
+	                                <li><span>headerText:</span>表格列标题的内容。</li>
+	                                <li><span>unique:</span>当为复杂表格时需要此属性来区分父级列。</li>
+	                                <li><span>letterSpace:</span>设置表格标题的文字间距。</li>
+	                                <li><span>textAlign:</span>设置每一列的对齐方式。</li>
+	                                <li><span>visible:</span>设置打印列隐藏或显示。</li>
+								</ul>
+	                            <h3>复杂表格模版样式</h3>
+	                            <img src="img/grid_1.png"/>
+	                            <h3>简单表格模版样式</h3>
+	                            <img src="img/grid_2.png"/>
+							</div>
+							<div class="box">
+								<h2>关于文本</h2>
+	                            <p>单独的文本默认以<strong>label</strong>为标签命名，当文本单独存在时，默认标题创建，文本内容居中。文本也可包裹在一个box中以整体的形式出现。表格上部以<strong>top</strong>为id命名，表格下部以<strong>bottom</strong>为id命名。</p>
+								<h3>文本相关属性列表</h3>
+								<ul class="list">
+									<li><span>id:</span>设置文本的唯一标识，与数据模版的相应标签名一一对应。</li>
+									<li><span>x|y:</span>文本的x|y坐标。</li>
+									<li><span>fontSize:</span>设置文本字体大小</li>
+									<li><span>width:</span>文本的宽度，当设置border为true时，该属性有效。</li>
+									<li><span>height:</span>设置文本的高度。当设置border为true时，该属性有效。</li>
+	                                <li><span>textAlign:</span>设置文本对齐方式</li>
+	                                <li><span>border:</span>设置为true时，文本显示外边框。</li>
+	                                <li><span>visible:</span>设置文本显示或者隐藏</li>
+								</ul>
+								<h3>文本模版样式</h3>
+								<img src="img/grid_3.png"/>
+							</div>
+							<div class="box" id="set">
+								<h2>打印设置介绍</h2>
+	                            <p>打印设置是为打印预览服务的，当传递给打印组件为<strong>空</strong>字符串时，组件自动创建默认打印设置，当不为空时，组件解析打印设置内容并创建界面。打印预览时调整相应打印面板时，点击保存，可保存当前打印设置。</p>
+	                            <h3>打印设置相关属性列表</h3>
+	                            <ul class="list">
+									<li><span>printRange:</span>打印范围，为-2时表示打印所有页。为-1时表示打印当前页。为-3为打印奇数页。为-4时表示打印偶数页。也可为一个打印范围值如[1-5,8,11-13]。</li>
+									<li><span>paperType:</span>打印纸张大小可不传。</li>
+									<li><span>isEmptyRow:</span>是否补空行。true为补空行，false为不补空行。</li>
+									<li><span>printRowNumber:</span>每页显示行数，当值为0时默认显示全部行。当不为0时候行数显示为该值。</li>
+									<li><span>paperSelectIndex:</span>选择的打印纸张列表的下标。</li>
+	                                <li><span>printLayout:</span>打印方向：横向或纵向。横向为hor 纵向为ver.</li>
+	                                <li><span>printIsTaoda:</span>是否套打。true为套打。</li>
+	                                <li><span>isPrintHeader:</span>当为套打时，显示是否打印标题。依托printIsTaoda而存在。</li>
+	                                <li><span>isPrintLines:</span>当为套打时，显示是否打印表格线。依托printIsTaoda而存在。</li>
+	                                <Li><span>printFixChangeBol</span>折页中是否选择固定列还是变动列。默认为true为固定列。</li>
+	                                <Li><span>printFirstRow</span>当为固定列时候表示固定列，即每页中都有该几列。当为变动列时表示第一页的列数。</li>
+	                                <Li><span>printEndRow</span>当为变动列时候表示变动列，即动态的列数。当为变动列表示除第一页外每页显示几列。</li>
+	                                <Li><span>rowToCol</span>标识打印时先列后行还是先行后列。</li>
+	                                <Li><span>printFooterNum</span>表示页脚距离底端的距离</li>
+	                                <Li><span>printHeaderNum</span>表示页眉距离顶端的距离</li>
+	                                <Li><span>printFooter</span>表示页脚文本内容</li>
+	                                <Li><span>printHeader</span>标识页眉文本内容</li>
+	                                <Li><span>printLeft</span>左边距</li>
+	                                <Li><span>printRight</span>右边距</li>
+	                                <Li><span>printTop</span>上边距</li>
+	                                <Li><span>printBottom</span>下边距</li>
+								</ul>
+								<h3>打印设置模版样式</h3>
+								<img src="img/grid_4.png"/>
+							</div>
+							<div class="box">
+								<h2>界面模版介绍</h2>
+								<p>单个界面模版标签默认为<strong>Layouts</strong>,表格默认为<strong>Grids</strong>,当文本以整体的情况时默认节点为<strong>BorderContainer</strong>,当打印模式为连打时，以<strong>multiLayouts</strong>为标签内嵌多个<strong>Layouts</strong>标签。</p>
+								<h3>界面模版样式</h3>
+								<img src="img/grid_5.png"/>
+							</div>
+							<div class="box" id="test">
+								<h2>数据模版介绍</h2>
+								<p>数据模版最外层标签默认为<strong>Data</strong>,每个文本的数据标签名称为界面模版中的<strong>id</strong>名。比如界面模版中有一个文本id为<strong>comName</strong>则与之对应的数据模版标签名为<strong>comName</strong></p>
+								<h3>关于合计行</h3>
+								<p>如果需要加合计行，需要在<strong>DataGrid</strong>标签下加入合计行数据。标签为<strong>TotalCol</strong>,需要加入合计行的字段名，以逗号隔开。属性名为<strong>fieldName</strong>,比如需要合计的字段名为：fiedl1,filed2,filed3,约定的字段应写为<strong>filedName="field1,filed2,field3"</strong>。当打印多页并且存在合计行时，一般采取在除最后一页之外的其他页面合计行内容改为省略号，则需要把添加省略号的字段添加到<strong>elliName</strong>中，如<strong>elliName="field1,filed2,field3"</strong></p>
+								<h3>数据模版样式</h3>
+								<img src="img/grid_6.png"/>
+							</div>
+							<div class="box">
+								<h2>前后台传值</h2>
+								<p>前后台传值是通过组件跟js在页面内进行数据传输。在组件创建加载完成做好准备工作后，组件给页面发出指令，要求页面给组件传值，创建完成接口为<strong>AsCreatComplete</strong>。之后页面通过js传递给组件界面xml，数据xml和打印设置xml。打印设置可为空字符串。<strong>组件只负责接收数据，后台如何传值可根据实际情况自定义。</strong></p>
+							</div>
+							<div class="box">
+								<h2>打印范例</h2>
+								<p>见文件。</p>
+							</div>
+							<div class="box">
+								<h2>模版范例</h2>
+								<p>见文件。</p>
+							</div>
+							<div class="box">
+								<h2>模版设计器介绍</h2>
+								<p>正在开发。</p>
+							</div>
+							<div class="box">
+								<h2>组件文件</h2>
+								<ul class="list">
+									<li><span>res</span>------------所有文件夹</li>
+									<li><span>file</span>------------静态模版文件，当从后台传递时，可为空。</li>
+									<li><span>Nova.swf</span>------------打印组件</li>
+									<li><span>Print.html</span>------------弹出的打印文件。</li>
+								</ul>
+							</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/prettify.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript">
+		var boxScroll;
+		$(document).ready(function(e)
+		{
+			prettyPrint();
+			boxScroll = new IScroll('#rightSide', { mouseWheel: true, click: true });
+		})
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+		$(".leftSide>li>a").click(function(e)
+		{
+			var index=$(this).parent().index();
+			if(index==0) return;
+			var scrollElement=$(".page").find(".box").eq(index-1).get(0);
+			boxScroll.scrollToElement(scrollElement);
+			e.preventDefault();
+		})
+	</script>
+</body>
+</html>

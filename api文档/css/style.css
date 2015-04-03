@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* reset */
+body, div, ul, li, h1, h2, h3, h4, h5, h6, form, fieldset, input, button, textarea, select, p, table, th, td, input,dl,dt,dd{margin:0;padding:0;}
+header, footer {display:block;margin:0;padding:0;}
+table {border-collapse:collapse;border-spacing:0;}
+fieldset, img {border:0;}
+li {list-style:none;}
+em{ font-style: normal; font-weight:bold;}
+hr{height:1px;border:none;border-top:1px solid Black;margin:0;*+margin:0 0 -14px 0;float:none;*+float:left;display:block;}
+a{ text-decoration:none;color:#333333;}
+ul{ list-style:none}
+/* base */
+.fl{float:left;}
+.fr{float:right;}
+.left{ text-align:left;}
+.center{ text-align:center;}
+a{color:#444444;}
+a:hover{color:#0E90D2;text-decoration: underline;}
+/* clearfix */
+.clearfix{_zoom:1;}
+.clearfix:after{content:".";display:block;visibility:hidden;height:0;clear:both;}
+
+
+/* common */
+body{ font-family:"微软雅黑","宋体"; font-size:14px; color:#2a2a2a;overflow:hidden;}
+.bgContainer{}
+.wrapper{ width:1200px; margin:0 auto;}
+
+
+.wrapper .header{position:fixed;top:0;z-index:995;width:1200px;height:90px;line-height: 90px;background-color: #0E90D2;font-size: 24px;color:#ffffff;padding-left: 20px;}
+
+
+.wrapper .main{margin-top: 90px;}
+.wrapper .main .leftSide{position:absolute;z-index:991;width:150px;padding: 20px;border-right: 1px solid #e5e5e5;}
+.wrapper .main .leftSide li{border-bottom: 1px dotted #e5e5e5;}
+.wrapper .main .leftSide li a{display:inline-block;height: 30px;line-height: 30px;padding-left: 15px;}
+.wrapper .main .leftSide li:nth-child(1){border-bottom: none;margin-bottom: 20px;}
+.wrapper .main .leftSide li:nth-child(1) a{font-size: 24px;color: #000000;border-left: 3px solid #0E90D2;padding-left: 15px;}
+
+.wrapper .main .rightSide{position:absolute;left:300px;z-index:990;padding: 20px;width: 690px;height: 500px;}
+.wrapper .main .rightSide .page{margin-top: 20px;}
+.wrapper .main .rightSide .box h2{font-size: 22px;color: #000000;height:24px;line-height:24px;padding-left:10px;margin:30px 0;font-weight: normal;border-left: 3px solid #0E90D2;}
+.wrapper .main .rightSide .box p{text-indent: 30px;line-height: 30px;letter-spacing: 1px;}
+.wrapper .main .rightSide .box img{display: block;box-shadow: 1px 1px 5px rgba(0,0,0,.5)}
+.wrapper .main .rightSide .box p strong{color: #C50023;font-style: normal;}
+.wrapper .main .rightSide .box h3{font-size: 16px;color: #000000;height: 24px;line-height: 24px;margin:15px 0;border-left: 3px solid #0E90D2;padding-left:10px}
+.wrapper .main .rightSide .box ul.list li{line-height:30px;padding-left: 10px;}
+.wrapper .main .rightSide .box ul.list li span{margin-right: 10px;font-weight: bolder;}
