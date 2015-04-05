@@ -56,7 +56,7 @@
 			<Label x="590" y="540" text="承运人/司机确认:" />
 			<Label x="590" y="560" text="日期:" />
 	</BorderContainer>
-	<Grids id="entry" x="30" y="170" width="720" height="305">
+	<Grids id="entry" x="30" y="170" width="720" height="305" colHeight="20" borderWidth="1">
 		<columns headerText="订单信息">
 			<column dataField="t1" headerText="序号" unique="1"/>
 	    	<column dataField="t2" headerText="订单号码" unique="1"/>

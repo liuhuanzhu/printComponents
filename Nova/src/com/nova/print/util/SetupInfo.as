@@ -93,9 +93,7 @@ package com.nova.print.util
 		private var _exportPropertiesXml:XML=null;
 		
 		
-		private var _offsetX:int=0;
 		
-		private var _offsetY:int=0;
 		
 		private var _colHeight:int=25;
 		
@@ -219,22 +217,7 @@ package com.nova.print.util
  * */
 		public function setCoverSet():void
 		{
-			if(PrintUtil.getSimple().coverSetXml==null)
-			{
-				PrintUtil.getSimple().coverSetXml=<sets>
-													<colHeight>25</colHeight>
-													<borderWidth>2</borderWidth>  
-												  	<offsetX>80</offsetX>  
-												  	<offsetY>30</offsetY> 
-												</sets>;
-			}
 			if(_setXml==null){_setXml=<Properties></Properties>;}
-			var xml:XML=new XML(PrintUtil.getSimple().coverSetXml);
-			this._borderWidth=xml.borderWidth;
-			this._colHeight=xml.colHeight;
-			this._offsetX=xml.offsetX;
-			this._offsetY=xml.offsetY;
-			_setXml.appendChild(xml.children());
 		}
 		private function getBoolean(bolStr:String):Boolean
 		{
@@ -968,30 +951,7 @@ package com.nova.print.util
 		{
 			_isTotalCol = value;
 		}
-/**
- * 打印时 设置偏离纸张的X的偏移距离
- * */
-		public function get offsetX():int
-		{
-			return _offsetX;
-		}
 
-		public function set offsetX(value:int):void
-		{
-			_offsetX = value;
-		}
-/**
- * 打印时 设置偏离纸张的Y的偏移距离
- * */
-		public function get offsetY():int
-		{
-			return _offsetY;
-		}
-
-		public function set offsetY(value:int):void
-		{
-			_offsetY = value;
-		}
 
 /**
  * 设置每行的行高  并且动态计算是否自动换行。

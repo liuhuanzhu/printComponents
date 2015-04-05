@@ -97,6 +97,8 @@ package com.nova.print.map
 		private function creatGridsXml(xx:XML):void
 		{
 			SetupInfo.getInstance().hasGrid=true;
+			SetupInfo.getInstance().colHeight=(String(xx.@colHeight).length>0)?int(xx.@colHeight):25;
+			SetupInfo.getInstance().borderWidth=(String(xx.@borderWidth).length>0)?int(xx.@borderWidth):1;
 			_gridXml=xx;
 			_gridCol=new XML(<colData></colData>);
 			for(var j:int=0;j<xx.children().length();j++)

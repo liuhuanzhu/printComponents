@@ -55,7 +55,6 @@
 					 ExternalInterface.addCallback("getProperties",getProperties);
 					 ExternalInterface.addCallback("getLayout",getLayout);
 					 ExternalInterface.addCallback("getData",getData);
-					 ExternalInterface.addCallback("getSetting",getSetting);
 				 }
 				if(VERSION==1)
 				{
@@ -72,7 +71,6 @@
 				layoutXml=PrintUtil.getSimple().layoutXml;
 				setting=PrintUtil.getSimple().settingXml;
 				dataXml=PrintUtil.getSimple().dataXml;
-				getSetting(PrintUtil.getSimple().coverSetXml);
 				getLayout(layoutXml);
 				getData(dataXml);
 				getProperties(setting);
@@ -124,22 +122,7 @@
 				}
 				
 			}
-			/**
-			 * 获取临时的打印设置
-			 * */
-			 private function getSetting(_setting:String):void
-			 {
-				 var xml:XML=new XML(_setting);
-				 if(SetupInfo.getInstance().multiPrintType==0)
-				 {
-					 PrintUtil.getSimple().coverSetXml=xml;
-				 }
-				 else
-				 {
-					 PrintMultiResolve.getPc().getCoverSet(xml);
-				 }
-				
-			 }
+
 			/**
 			 * 
 			 * 获取打印设置

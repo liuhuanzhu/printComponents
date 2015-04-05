@@ -17,7 +17,6 @@ package com.nova.print.util
 		private var _layoutXml:XML=null;
 		private var _dataXml:XML=null;
 		private var _settingXml:XML=null;
-		private var _coverSetXml:XML=null;
 		private var type:int=0;
 		private var _loader:URLLoader=null;
 		private var version:int;
@@ -61,7 +60,6 @@ package com.nova.print.util
 				case 1:
 				{
 					_loader.removeEventListener(Event.COMPLETE,loadCompleteHandler);
-					_coverSetXml=new XML(event.target.data);
 					if(version==1)
 					{
 						trace("继续加载");
@@ -97,10 +95,6 @@ package com.nova.print.util
 				{
 					_loader.removeEventListener(Event.COMPLETE,loadCompleteHandler);
 					_settingXml=new XML(event.target.data);
-					if(SetupInfo.getInstance().multiPrintType==0)
-					{
-						_settingXml.appendChild(_coverSetXml.children());
-					}
 					break;
 				}
 			}
@@ -150,15 +144,6 @@ package com.nova.print.util
 			_settingXml = value;
 		}
 
-		public function get coverSetXml():XML
-		{
-			return _coverSetXml;
-		}
-
-		public function set coverSetXml(value:XML):void
-		{
-			_coverSetXml = value;
-		}
 
 
 	}

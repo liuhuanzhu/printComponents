@@ -102,7 +102,7 @@ package com.nova.print.doc
 			var gridWidth:String=LayoutMap.getSimple().gridXml.@width;
 			if(gridWidth.length==0)
 			{
-				return SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight-SetupInfo.getInstance().offsetX;
+				return SetupInfo.getInstance().paperRealWidth-SetupInfo.getInstance().printLeft-SetupInfo.getInstance().printRight;
 			}
 			else
 			{

@@ -22,7 +22,7 @@ package com.nova.print.doc
 		 * 打印机偏移距离
 		 * */
 		private var offsetX:int=0;
-		private var offsetY:int=50;
+		private var offsetY:int=0;
 		private var rotationSprite:int=0;
 		private var rotationArr:Array=[];
 		private var localArr:Array=[];
@@ -42,8 +42,8 @@ package com.nova.print.doc
 			ground.graphics.endFill();
 			this.addChild(ground);
 			
-			offsetX=SetupInfo.getInstance().offsetX+SetupInfo.getInstance().printLeft;
-			offsetY=SetupInfo.getInstance().offsetY+SetupInfo.getInstance().printTop;
+			offsetX=SetupInfo.getInstance().printLeft;
+			offsetY=SetupInfo.getInstance().printTop;
 			
 			var topX:Number=offsetX;
 			var topY:Number=LayoutMap.getSimple().getTopY()+offsetY;
